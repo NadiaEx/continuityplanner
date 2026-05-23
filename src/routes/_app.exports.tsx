@@ -2,6 +2,43 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
 import { Download, FileText, Cloud, ShieldCheck, Sun, Users, Stethoscope, Compass, Contact } from "lucide-react";
 
+function PdfThumbnail({
+  icon: Icon,
+  label,
+  pages,
+}: {
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  label: string;
+  pages: string;
+}) {
+  return (
+    <div className="flex aspect-[3/4] flex-col rounded-xl border border-border bg-[#f6f5f3] p-4 shadow-sm">
+      <div className="mb-3 flex items-center gap-2">
+        <div className="grid size-7 place-items-center rounded-md bg-sage-50 text-sage-700">
+          <Icon className="size-3.5" strokeWidth={1.75} />
+        </div>
+        <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+          {label}
+        </span>
+      </div>
+      <div className="flex-1 space-y-2 rounded-lg bg-white p-3 shadow-sm">
+        <div className="h-1.5 w-1/2 rounded bg-sage-100" />
+        <div className="h-1 w-full rounded bg-muted/60" />
+        <div className="h-1 w-5/6 rounded bg-muted/60" />
+        <div className="h-1 w-4/5 rounded bg-muted/60" />
+        <div className="h-1 w-2/3 rounded bg-muted/60" />
+        <div className="mt-2 h-16 w-full rounded bg-mist-50/60" />
+        <div className="h-1 w-3/4 rounded bg-muted/60" />
+        <div className="h-1 w-full rounded bg-muted/60" />
+      </div>
+      <div className="mt-3 flex items-center justify-between text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
+        <span>{pages}</span>
+        <span>PDF · DOCX</span>
+      </div>
+    </div>
+  );
+}
+
 export const Route = createFileRoute("/_app/exports")({
   head: () => ({ meta: [{ title: "Exports — Continuity" }] }),
   component: Exports,
@@ -29,22 +66,7 @@ export default function Exports() {
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {packets.map(({ name, desc, icon: Icon, pages }) => (
           <Card key={name}>
-            <div className="mb-4 flex aspect-[3/4] flex-col rounded-xl border border-border bg-surface-soft p-5">
-              <div className="mb-4 grid size-9 place-items-center rounded-lg bg-sage-50 text-sage-700">
-                <Icon className="size-4" strokeWidth={1.75} />
-              </div>
-              <div className="space-y-1.5">
-                <div className="h-1.5 w-3/4 rounded bg-muted" />
-                <div className="h-1 w-full rounded bg-muted/70" />
-                <div className="h-1 w-5/6 rounded bg-muted/70" />
-                <div className="h-1 w-2/3 rounded bg-muted/70" />
-              </div>
-              <div className="mt-4 flex-1 rounded-lg bg-card" />
-              <div className="mt-3 flex items-center justify-between text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-                <span>{pages}</span>
-                <span>PDF · DOCX</span>
-              </div>
-            </div>
+            <PdfThumbnail icon={Icon} label={name} pages={pages} />
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <h4 className="truncate font-medium">{name}</h4>

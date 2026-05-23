@@ -2,6 +2,36 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
 import { Upload, Search, FileText, FileImage, FileLock } from "lucide-react";
 
+function DocThumbnail({ name, category }: { name: string; category: string }) {
+  const isPdf = name.endsWith(".pdf") || name.endsWith(".docx");
+  return (
+    <div className={`mb-4 flex aspect-[4/3] flex-col rounded-xl border border-border p-3 shadow-sm ${isPdf ? "bg-[#f6f5f3]" : "bg-surface-soft"}`}>
+      {isPdf ? (
+        <>
+          <div className="mb-2 flex items-center gap-1.5">
+            <div className="h-1.5 w-8 rounded bg-sage-100" />
+            <div className="h-1 w-6 rounded bg-muted/40" />
+          </div>
+          <div className="flex-1 space-y-1.5 rounded-md bg-white p-2 shadow-sm">
+            <div className="h-1 w-3/4 rounded bg-muted/50" />
+            <div className="h-1 w-full rounded bg-muted/40" />
+            <div className="h-1 w-5/6 rounded bg-muted/40" />
+            <div className="h-1 w-2/3 rounded bg-muted/40" />
+          </div>
+        </>
+      ) : (
+        <div className="grid flex-1 place-items-center">
+          <FileImage className="size-10 text-muted-foreground/40" strokeWidth={1.5} />
+        </div>
+      )}
+      <div className="mt-2 flex items-center justify-between text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
+        <span>{category}</span>
+        <span>{isPdf ? "PDF" : "JPG"}</span>
+      </div>
+    </div>
+  );
+}
+
 export const Route = createFileRoute("/_app/documents")({
   head: () => ({ meta: [{ title: "Documents — Continuity" }] }),
   component: Documents,
@@ -53,20 +83,19 @@ export default function Documents() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {docs.map(({ name, category, size, date, icon: Icon }) => (
+        {docs.map(({ name, category, size, date }) => (
           <Card key={name}>
-            <div className="mb-4 flex items-start justify-between">
-              <div className="grid size-10 place-items-center rounded-xl bg-sage-50 text-sage-700">
-                <Icon className="size-5" strokeWidth={1.75} />
+            <DocThumbnail name={name} category={category} />
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-medium">{name}</p>
+                <div className="mt-1.5 flex items-center gap-2 text-xs text-muted-foreground">
+                  <span>{size}</span>
+                  <span>·</span>
+                  <span>{date}</span>
+                </div>
               </div>
-              <FileLock className="size-3.5 text-muted-foreground" />
-            </div>
-            <p className="truncate font-medium">{name}</p>
-            <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
-              <Chip tone="mist">{category}</Chip>
-              <span>{size}</span>
-              <span>·</span>
-              <span>{date}</span>
+              <FileLock className="size-3.5 shrink-0 text-muted-foreground" />
             </div>
           </Card>
         ))}
