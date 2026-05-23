@@ -9,38 +9,189 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppSettingsRouteImport } from './routes/_app.settings'
+import { Route as AppRoutinesRouteImport } from './routes/_app.routines'
+import { Route as AppProfileRouteImport } from './routes/_app.profile'
+import { Route as AppMedicalRouteImport } from './routes/_app.medical'
+import { Route as AppFutureRouteImport } from './routes/_app.future'
+import { Route as AppExportsRouteImport } from './routes/_app.exports'
+import { Route as AppEmergencyRouteImport } from './routes/_app.emergency'
+import { Route as AppDocumentsRouteImport } from './routes/_app.documents'
+import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
+import { Route as AppCareTeamRouteImport } from './routes/_app.care-team'
+import { Route as AppAssistantRouteImport } from './routes/_app.assistant'
 
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRoutinesRoute = AppRoutinesRouteImport.update({
+  id: '/routines',
+  path: '/routines',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMedicalRoute = AppMedicalRouteImport.update({
+  id: '/medical',
+  path: '/medical',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFutureRoute = AppFutureRouteImport.update({
+  id: '/future',
+  path: '/future',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppExportsRoute = AppExportsRouteImport.update({
+  id: '/exports',
+  path: '/exports',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEmergencyRoute = AppEmergencyRouteImport.update({
+  id: '/emergency',
+  path: '/emergency',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDocumentsRoute = AppDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCareTeamRoute = AppCareTeamRouteImport.update({
+  id: '/care-team',
+  path: '/care-team',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssistantRoute = AppAssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assistant': typeof AppAssistantRoute
+  '/care-team': typeof AppCareTeamRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/documents': typeof AppDocumentsRoute
+  '/emergency': typeof AppEmergencyRoute
+  '/exports': typeof AppExportsRoute
+  '/future': typeof AppFutureRoute
+  '/medical': typeof AppMedicalRoute
+  '/profile': typeof AppProfileRoute
+  '/routines': typeof AppRoutinesRoute
+  '/settings': typeof AppSettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assistant': typeof AppAssistantRoute
+  '/care-team': typeof AppCareTeamRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/documents': typeof AppDocumentsRoute
+  '/emergency': typeof AppEmergencyRoute
+  '/exports': typeof AppExportsRoute
+  '/future': typeof AppFutureRoute
+  '/medical': typeof AppMedicalRoute
+  '/profile': typeof AppProfileRoute
+  '/routines': typeof AppRoutinesRoute
+  '/settings': typeof AppSettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/_app/assistant': typeof AppAssistantRoute
+  '/_app/care-team': typeof AppCareTeamRoute
+  '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/documents': typeof AppDocumentsRoute
+  '/_app/emergency': typeof AppEmergencyRoute
+  '/_app/exports': typeof AppExportsRoute
+  '/_app/future': typeof AppFutureRoute
+  '/_app/medical': typeof AppMedicalRoute
+  '/_app/profile': typeof AppProfileRoute
+  '/_app/routines': typeof AppRoutinesRoute
+  '/_app/settings': typeof AppSettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/assistant'
+    | '/care-team'
+    | '/dashboard'
+    | '/documents'
+    | '/emergency'
+    | '/exports'
+    | '/future'
+    | '/medical'
+    | '/profile'
+    | '/routines'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/assistant'
+    | '/care-team'
+    | '/dashboard'
+    | '/documents'
+    | '/emergency'
+    | '/exports'
+    | '/future'
+    | '/medical'
+    | '/profile'
+    | '/routines'
+    | '/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/_app/assistant'
+    | '/_app/care-team'
+    | '/_app/dashboard'
+    | '/_app/documents'
+    | '/_app/emergency'
+    | '/_app/exports'
+    | '/_app/future'
+    | '/_app/medical'
+    | '/_app/profile'
+    | '/_app/routines'
+    | '/_app/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +199,119 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/routines': {
+      id: '/_app/routines'
+      path: '/routines'
+      fullPath: '/routines'
+      preLoaderRoute: typeof AppRoutinesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/profile': {
+      id: '/_app/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/medical': {
+      id: '/_app/medical'
+      path: '/medical'
+      fullPath: '/medical'
+      preLoaderRoute: typeof AppMedicalRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/future': {
+      id: '/_app/future'
+      path: '/future'
+      fullPath: '/future'
+      preLoaderRoute: typeof AppFutureRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/exports': {
+      id: '/_app/exports'
+      path: '/exports'
+      fullPath: '/exports'
+      preLoaderRoute: typeof AppExportsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/emergency': {
+      id: '/_app/emergency'
+      path: '/emergency'
+      fullPath: '/emergency'
+      preLoaderRoute: typeof AppEmergencyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/documents': {
+      id: '/_app/documents'
+      path: '/documents'
+      fullPath: '/documents'
+      preLoaderRoute: typeof AppDocumentsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/care-team': {
+      id: '/_app/care-team'
+      path: '/care-team'
+      fullPath: '/care-team'
+      preLoaderRoute: typeof AppCareTeamRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assistant': {
+      id: '/_app/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof AppAssistantRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAssistantRoute: typeof AppAssistantRoute
+  AppCareTeamRoute: typeof AppCareTeamRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppDocumentsRoute: typeof AppDocumentsRoute
+  AppEmergencyRoute: typeof AppEmergencyRoute
+  AppExportsRoute: typeof AppExportsRoute
+  AppFutureRoute: typeof AppFutureRoute
+  AppMedicalRoute: typeof AppMedicalRoute
+  AppProfileRoute: typeof AppProfileRoute
+  AppRoutinesRoute: typeof AppRoutinesRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAssistantRoute: AppAssistantRoute,
+  AppCareTeamRoute: AppCareTeamRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppDocumentsRoute: AppDocumentsRoute,
+  AppEmergencyRoute: AppEmergencyRoute,
+  AppExportsRoute: AppExportsRoute,
+  AppFutureRoute: AppFutureRoute,
+  AppMedicalRoute: AppMedicalRoute,
+  AppProfileRoute: AppProfileRoute,
+  AppRoutinesRoute: AppRoutinesRoute,
+  AppSettingsRoute: AppSettingsRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
