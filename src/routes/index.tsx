@@ -105,30 +105,30 @@ function Hero({ onJoin }: { onJoin: () => void }) {
         <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
           <div className="w-full lg:w-[55%]">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-[11px] font-medium uppercase tracking-[0.15em] text-muted-foreground">
-              <span className="size-1.5 rounded-full bg-primary" />
-              AI-guided care planning
+              <Sparkle className="size-3 fill-sage-600/40 text-sage-700" strokeWidth={1.5} />
+              Founding Family Pilot — now welcoming
             </div>
             <h1 className="text-balance font-display text-4xl font-medium leading-[1.1] tracking-tight text-foreground lg:text-5xl xl:text-6xl">
-              Help protect your child's future, one step at a time.
+              A calm place to plan for the people who depend on you.
             </h1>
             <p className="mt-6 max-w-[52ch] text-pretty text-lg leading-relaxed text-muted-foreground">
-              Continuity helps families organize routines, medical information,
-              emergency plans, caregiver instructions, and future care guidance
-              for loved ones who may need lifelong support.
+              Continuity is being built alongside caregiving families. Organize
+              routines, medical info, emergency plans, and future care — at your
+              own pace, with a community that's shaping the tool with you.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link
-                to="/dashboard"
+              <button
+                onClick={onJoin}
                 className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
               >
-                Start your plan
+                Join the pilot
                 <ArrowRight className="size-4" />
-              </Link>
+              </button>
               <Link
-                to="/exports"
+                to="/onboarding"
                 className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium text-foreground transition hover:bg-muted"
               >
-                View example care packet
+                Begin gently
               </Link>
             </div>
             <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-muted-foreground">
