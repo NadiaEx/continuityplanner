@@ -60,7 +60,7 @@ function Landing() {
   );
 }
 
-function SiteHeader() {
+function SiteHeader({ onJoin }: { onJoin: () => void }) {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 lg:px-8">
@@ -74,9 +74,9 @@ function SiteHeader() {
         </Link>
         <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
           <a href="#why" className="hover:text-foreground">Why Continuity</a>
+          <a href="#pilot" className="hover:text-foreground">Founding pilot</a>
           <a href="#ai" className="hover:text-foreground">AI guidance</a>
-          <a href="#creates" className="hover:text-foreground">What it creates</a>
-          <a href="#emergency" className="hover:text-foreground">Emergency mode</a>
+          <Link to="/pricing" className="hover:text-foreground">Pricing</Link>
         </nav>
         <div className="flex items-center gap-2">
           <Link
@@ -85,20 +85,20 @@ function SiteHeader() {
           >
             Open app
           </Link>
-          <Link
-            to="/dashboard"
+          <button
+            onClick={onJoin}
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
           >
-            Start your plan
+            Join the pilot
             <ArrowRight className="size-3.5" />
-          </Link>
+          </button>
         </div>
       </div>
     </header>
   );
 }
 
-function Hero() {
+function Hero({ onJoin }: { onJoin: () => void }) {
   return (
     <section className="px-6 pb-16 pt-20 lg:px-8 lg:pb-24 lg:pt-28">
       <div className="mx-auto max-w-6xl">
