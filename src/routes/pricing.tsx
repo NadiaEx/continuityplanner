@@ -78,7 +78,7 @@ function PricingPage() {
             to="/dashboard"
             className="text-sm text-muted-foreground hover:text-foreground"
           >
-            Open app →
+            Demo Account →
           </Link>
         </div>
       </header>
