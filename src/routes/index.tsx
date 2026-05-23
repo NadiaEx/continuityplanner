@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import heroImage from "@/assets/hero.jpg";
 import { WaitlistModal } from "@/components/waitlist-modal";
-import { HearthIllustration, HandsIllustration } from "@/components/soft-illustration";
+import { HearthIllustration } from "@/components/soft-illustration";
 
 export const Route = createFileRoute("/")({
   head: () => ({
