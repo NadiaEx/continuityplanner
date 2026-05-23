@@ -194,6 +194,25 @@ export default function Dashboard() {
           </Link>
         </Card>
       </div>
+
+      <div className="mt-8 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+        <FeedbackPrompt question="How did this section feel today?" />
+        <Card className="bg-gradient-to-br from-mist-50/40 to-card">
+          <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
+            Save for later
+          </p>
+          <h3 className="mt-2 font-display text-lg font-medium">
+            You can revisit this anytime.
+          </h3>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Everything is saved as you go. Step away whenever you need — your
+            plan will be here, exactly where you left it.
+          </p>
+          <Button variant="secondary" className="mt-5">
+            <BookmarkCheck className="size-4" /> Continue later
+          </Button>
+        </Card>
+      </div>
     </PageShell>
   );
 }
