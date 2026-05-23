@@ -12,7 +12,10 @@ import {
   Download,
   Settings,
   Leaf,
+  HeartHandshake,
+  LineChart,
 } from "lucide-react";
+import { FoundingBadge } from "@/components/founding-badge";
 
 const nav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -25,15 +28,18 @@ const nav = [
   { to: "/documents", label: "Documents", icon: FolderLock },
   { to: "/assistant", label: "AI Assistant", icon: Sparkles },
   { to: "/exports", label: "Exports", icon: Download },
+  { to: "/insights", label: "Pilot Insights", icon: LineChart },
   { to: "/settings", label: "Settings", icon: Settings },
 ] as const;
+
+void HeartHandshake;
 
 export function AppSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
     <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 flex-col border-r border-border bg-sidebar p-5 lg:flex">
-      <Link to="/" className="mb-8 flex items-center gap-2 px-2">
+      <Link to="/" className="mb-6 flex items-center gap-2 px-2">
         <span className="grid size-7 place-items-center rounded-md bg-primary ring-1 ring-sage-700/10">
           <Leaf className="size-3.5 text-primary-foreground" />
         </span>
@@ -41,6 +47,9 @@ export function AppSidebar() {
           Continuity
         </span>
       </Link>
+      <div className="mb-6 px-2">
+        <FoundingBadge size="sm" />
+      </div>
 
       <nav className="flex flex-1 flex-col gap-0.5">
         {nav.map(({ to, label, icon: Icon }) => {
