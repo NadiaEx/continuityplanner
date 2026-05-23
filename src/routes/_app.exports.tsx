@@ -66,22 +66,7 @@ export default function Exports() {
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {packets.map(({ name, desc, icon: Icon, pages }) => (
           <Card key={name}>
-            <div className="mb-4 flex aspect-[3/4] flex-col rounded-xl border border-border bg-surface-soft p-5">
-              <div className="mb-4 grid size-9 place-items-center rounded-lg bg-sage-50 text-sage-700">
-                <Icon className="size-4" strokeWidth={1.75} />
-              </div>
-              <div className="space-y-1.5">
-                <div className="h-1.5 w-3/4 rounded bg-muted" />
-                <div className="h-1 w-full rounded bg-muted/70" />
-                <div className="h-1 w-5/6 rounded bg-muted/70" />
-                <div className="h-1 w-2/3 rounded bg-muted/70" />
-              </div>
-              <div className="mt-4 flex-1 rounded-lg bg-card" />
-              <div className="mt-3 flex items-center justify-between text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-                <span>{pages}</span>
-                <span>PDF · DOCX</span>
-              </div>
-            </div>
+            <PdfThumbnail icon={Icon} label={name} pages={pages} />
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <h4 className="truncate font-medium">{name}</h4>
