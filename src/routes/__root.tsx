@@ -77,14 +77,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Continuity — Care planning for lifelong support" },
+      { title: "Continuity | Future Care Planning for Disabled Dependents" },
       {
         name: "description",
         content:
           "Continuity helps families organize routines, medical information, emergency plans, and future care guidance for loved ones who need lifelong support.",
       },
       { name: "author", content: "Continuity" },
-      { property: "og:title", content: "Continuity — Care planning for lifelong support" },
+      { property: "og:title", content: "Continuity | Future Care Planning for Disabled Dependents" },
       {
         property: "og:description",
         content:
@@ -92,6 +92,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Continuity | Future Care Planning for Disabled Dependents" },
+      { name: "description", content: "A compassionate care planning platform for parents of autistic and disabled children with lifelong support needs." },
+      { property: "og:description", content: "A compassionate care planning platform for parents of autistic and disabled children with lifelong support needs." },
+      { name: "twitter:description", content: "A compassionate care planning platform for parents of autistic and disabled children with lifelong support needs." },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
