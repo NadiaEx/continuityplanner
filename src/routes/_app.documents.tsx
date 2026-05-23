@@ -83,7 +83,7 @@ export default function Documents() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {docs.map(({ name, category, size, date, icon: Icon }) => (
+        {docs.map(({ name, category, size, date }) => (
           <Card key={name}>
             <DocThumbnail name={name} category={category} />
             <div className="flex items-start justify-between gap-2">
