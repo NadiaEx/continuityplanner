@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   ShieldCheck,
   Users,
@@ -15,17 +16,23 @@ import {
   Stethoscope,
   Compass,
   Contact,
+  Sparkle,
+  MessagesSquare,
+  Infinity as InfinityIcon,
+  Gift,
 } from "lucide-react";
 import heroImage from "@/assets/hero.jpg";
+import { WaitlistModal } from "@/components/waitlist-modal";
+import { HearthIllustration } from "@/components/soft-illustration";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Continuity — Help protect your child's future, one step at a time" },
+      { title: "Continuity — A community-built future care planning platform" },
       {
         name: "description",
         content:
-          "An AI-guided care planning platform that helps families organize routines, medical info, and emergency plans for loved ones who need lifelong support.",
+          "Continuity is being built alongside caregiving families. Organize routines, medical info, and emergency plans during our pay-what-you-can pilot.",
       },
     ],
   }),
@@ -33,24 +40,27 @@ export const Route = createFileRoute("/")({
 });
 
 function Landing() {
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
   return (
     <div className="min-h-dvh bg-background text-foreground">
-      <SiteHeader />
+      <SiteHeader onJoin={() => setWaitlistOpen(true)} />
       <main>
-        <Hero />
+        <Hero onJoin={() => setWaitlistOpen(true)} />
         <WhyFamilies />
+        <PilotSection onJoin={() => setWaitlistOpen(true)} />
         <AiPreview />
         <Creates />
         <EmergencySection />
         <GentleProgress />
-        <CtaBand />
+        <CtaBand onJoin={() => setWaitlistOpen(true)} />
       </main>
       <SiteFooter />
+      <WaitlistModal open={waitlistOpen} onClose={() => setWaitlistOpen(false)} />
     </div>
   );
 }
 
-function SiteHeader() {
+function SiteHeader({ onJoin }: { onJoin: () => void }) {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 lg:px-8">
@@ -64,9 +74,9 @@ function SiteHeader() {
         </Link>
         <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
           <a href="#why" className="hover:text-foreground">Why Continuity</a>
+          <a href="#pilot" className="hover:text-foreground">Founding pilot</a>
           <a href="#ai" className="hover:text-foreground">AI guidance</a>
-          <a href="#creates" className="hover:text-foreground">What it creates</a>
-          <a href="#emergency" className="hover:text-foreground">Emergency mode</a>
+          <Link to="/pricing" className="hover:text-foreground">Pricing</Link>
         </nav>
         <div className="flex items-center gap-2">
           <Link
@@ -75,50 +85,50 @@ function SiteHeader() {
           >
             Open app
           </Link>
-          <Link
-            to="/dashboard"
+          <button
+            onClick={onJoin}
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
           >
-            Start your plan
+            Join the pilot
             <ArrowRight className="size-3.5" />
-          </Link>
+          </button>
         </div>
       </div>
     </header>
   );
 }
 
-function Hero() {
+function Hero({ onJoin }: { onJoin: () => void }) {
   return (
     <section className="px-6 pb-16 pt-20 lg:px-8 lg:pb-24 lg:pt-28">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
           <div className="w-full lg:w-[55%]">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-[11px] font-medium uppercase tracking-[0.15em] text-muted-foreground">
-              <span className="size-1.5 rounded-full bg-primary" />
-              AI-guided care planning
+              <Sparkle className="size-3 fill-sage-600/40 text-sage-700" strokeWidth={1.5} />
+              Founding Family Pilot — now welcoming
             </div>
             <h1 className="text-balance font-display text-4xl font-medium leading-[1.1] tracking-tight text-foreground lg:text-5xl xl:text-6xl">
-              Help protect your child's future, one step at a time.
+              A calm place to plan for the people who depend on you.
             </h1>
             <p className="mt-6 max-w-[52ch] text-pretty text-lg leading-relaxed text-muted-foreground">
-              Continuity helps families organize routines, medical information,
-              emergency plans, caregiver instructions, and future care guidance
-              for loved ones who may need lifelong support.
+              Continuity is being built alongside caregiving families. Organize
+              routines, medical info, emergency plans, and future care — at your
+              own pace, with a community that's shaping the tool with you.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link
-                to="/dashboard"
+              <button
+                onClick={onJoin}
                 className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
               >
-                Start your plan
+                Join the pilot
                 <ArrowRight className="size-4" />
-              </Link>
+              </button>
               <Link
-                to="/exports"
+                to="/onboarding"
                 className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium text-foreground transition hover:bg-muted"
               >
-                View example care packet
+                Begin gently
               </Link>
             </div>
             <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-muted-foreground">
@@ -454,30 +464,102 @@ function GentleProgress() {
   );
 }
 
-function CtaBand() {
+function CtaBand({ onJoin }: { onJoin: () => void }) {
   return (
     <section className="px-6 py-20 lg:px-8">
-      <div className="mx-auto max-w-4xl rounded-3xl border border-border bg-card p-10 text-center lg:p-14">
-        <h3 className="font-display text-2xl font-medium tracking-tight lg:text-3xl">
+      <div className="mx-auto max-w-4xl rounded-3xl border border-border bg-gradient-to-br from-sage-50/70 via-card to-mist-50/40 p-10 text-center lg:p-14">
+        <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
+          Built alongside caregiving families
+        </p>
+        <h3 className="mt-3 font-display text-2xl font-medium tracking-tight lg:text-3xl">
           Start with one small section today.
         </h3>
         <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
           You don't have to do it all tonight. Continuity will be here whenever
-          you're ready.
+          you're ready — and shaped by every family who joins.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
-          <Link
-            to="/dashboard"
+          <button
+            onClick={onJoin}
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
           >
-            Start your plan <ArrowRight className="size-4" />
-          </Link>
+            Join the pilot <ArrowRight className="size-4" />
+          </button>
           <Link
-            to="/assistant"
+            to="/pricing"
             className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium transition hover:bg-muted"
           >
-            Try the AI assistant
+            See pay-what-you-can pricing
           </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const pilotBenefits = [
+  { icon: InfinityIcon, title: "Lifetime Founding Family status", body: "Reserved for families who join during the pilot — yours to keep." },
+  { icon: MessagesSquare, title: "Help shape future features", body: "Your reflections directly inform what we build next, in plain conversation." },
+  { icon: Sparkles, title: "Early access to new tools", body: "Try new care templates and AI guidance as soon as they're ready." },
+  { icon: Users, title: "Community-driven development", body: "A small, considered group of caregivers building this together." },
+  { icon: Gift, title: "Flexible pricing during pilot", body: "Pay what feels sustainable. Free access is always available, no questions asked." },
+  { icon: HeartPulse, title: "A direct line to the team", body: "We read every message personally and respond with care." },
+];
+
+function PilotSection({ onJoin }: { onJoin: () => void }) {
+  return (
+    <section id="pilot" className="px-6 py-24 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.1fr]">
+          <div className="overflow-hidden rounded-3xl border border-border bg-surface-soft">
+            <HearthIllustration className="h-full w-full" />
+          </div>
+          <div>
+            <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
+              Founding Family Pilot
+            </p>
+            <h2 className="mt-3 text-balance font-display text-3xl font-medium tracking-tight lg:text-4xl">
+              We're building this alongside families like yours.
+            </h2>
+            <p className="mt-5 max-w-[52ch] text-pretty leading-relaxed text-muted-foreground">
+              We're building Continuity alongside families caring for loved ones
+              with lifelong support needs. During this early pilot phase,
+              families can access the platform through a pay-what-you-can model
+              while helping shape the future of the product through feedback and
+              real-world use.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <button
+                onClick={onJoin}
+                className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
+              >
+                Join the pilot <ArrowRight className="size-4" />
+              </button>
+              <Link
+                to="/pricing"
+                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium hover:bg-muted"
+              >
+                Choose what feels sustainable
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {pilotBenefits.map(({ icon: Icon, title, body }) => (
+            <div
+              key={title}
+              className="rounded-2xl border border-border bg-card p-6 transition hover:-translate-y-0.5 hover:shadow-sm"
+            >
+              <div className="mb-4 grid size-9 place-items-center rounded-lg bg-sage-50 text-sage-700">
+                <Icon className="size-4" strokeWidth={1.75} />
+              </div>
+              <h3 className="font-display text-base font-medium">{title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                {body}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

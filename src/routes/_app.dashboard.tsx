@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
+import { FoundingBadge } from "@/components/founding-badge";
+import { FeedbackPrompt } from "@/components/feedback-prompt";
 import {
   ArrowRight,
   ShieldCheck,
@@ -10,6 +12,8 @@ import {
   Bell,
   CheckCircle2,
   Circle,
+  Save,
+  BookmarkCheck,
 } from "lucide-react";
 
 export const Route = createFileRoute("/_app/dashboard")({
@@ -42,15 +46,27 @@ export default function Dashboard() {
       <PageHeader
         eyebrow="Welcome back"
         title="Good morning, Maya."
-        description="You're building protection over time. Here's where you left off."
+        description="You're making progress. This does not need to be perfect — you can revisit anything, anytime."
         actions={
-          <Link to="/assistant">
-            <Button>
-              Continue with AI <ArrowRight className="size-4" />
-            </Button>
-          </Link>
+          <div className="flex flex-wrap items-center gap-2">
+            <FoundingBadge size="md" />
+            <Link to="/assistant">
+              <Button>
+                Continue with AI <ArrowRight className="size-4" />
+              </Button>
+            </Link>
+          </div>
         }
       />
+
+      <div className="mb-6 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-50 px-2.5 py-1 text-sage-700">
+          <Save className="size-3" /> Autosaved a moment ago
+        </span>
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-mist-50 px-2.5 py-1 text-mist-600">
+          <BookmarkCheck className="size-3" /> Pick up right where you left off
+        </span>
+      </div>
 
       {/* Hero readiness */}
       <Card className="mb-8 overflow-hidden bg-gradient-to-br from-sage-50 to-card p-8">
@@ -176,6 +192,25 @@ export default function Dashboard() {
               <Sparkles className="size-4" /> Open AI assistant
             </Button>
           </Link>
+        </Card>
+      </div>
+
+      <div className="mt-8 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+        <FeedbackPrompt question="How did this section feel today?" />
+        <Card className="bg-gradient-to-br from-mist-50/40 to-card">
+          <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
+            Save for later
+          </p>
+          <h3 className="mt-2 font-display text-lg font-medium">
+            You can revisit this anytime.
+          </h3>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Everything is saved as you go. Step away whenever you need — your
+            plan will be here, exactly where you left it.
+          </p>
+          <Button variant="secondary" className="mt-5">
+            <BookmarkCheck className="size-4" /> Continue later
+          </Button>
         </Card>
       </div>
     </PageShell>

@@ -9,12 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppSettingsRouteImport } from './routes/_app.settings'
 import { Route as AppRoutinesRouteImport } from './routes/_app.routines'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
 import { Route as AppMedicalRouteImport } from './routes/_app.medical'
+import { Route as AppInsightsRouteImport } from './routes/_app.insights'
 import { Route as AppFutureRouteImport } from './routes/_app.future'
 import { Route as AppExportsRouteImport } from './routes/_app.exports'
 import { Route as AppEmergencyRouteImport } from './routes/_app.emergency'
@@ -23,6 +26,16 @@ import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
 import { Route as AppCareTeamRouteImport } from './routes/_app.care-team'
 import { Route as AppAssistantRouteImport } from './routes/_app.assistant'
 
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppRoute = AppRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
@@ -50,6 +63,11 @@ const AppProfileRoute = AppProfileRouteImport.update({
 const AppMedicalRoute = AppMedicalRouteImport.update({
   id: '/medical',
   path: '/medical',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppInsightsRoute = AppInsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
   getParentRoute: () => AppRoute,
 } as any)
 const AppFutureRoute = AppFutureRouteImport.update({
@@ -90,6 +108,8 @@ const AppAssistantRoute = AppAssistantRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/onboarding': typeof OnboardingRoute
+  '/pricing': typeof PricingRoute
   '/assistant': typeof AppAssistantRoute
   '/care-team': typeof AppCareTeamRoute
   '/dashboard': typeof AppDashboardRoute
@@ -97,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/emergency': typeof AppEmergencyRoute
   '/exports': typeof AppExportsRoute
   '/future': typeof AppFutureRoute
+  '/insights': typeof AppInsightsRoute
   '/medical': typeof AppMedicalRoute
   '/profile': typeof AppProfileRoute
   '/routines': typeof AppRoutinesRoute
@@ -104,6 +125,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/onboarding': typeof OnboardingRoute
+  '/pricing': typeof PricingRoute
   '/assistant': typeof AppAssistantRoute
   '/care-team': typeof AppCareTeamRoute
   '/dashboard': typeof AppDashboardRoute
@@ -111,6 +134,7 @@ export interface FileRoutesByTo {
   '/emergency': typeof AppEmergencyRoute
   '/exports': typeof AppExportsRoute
   '/future': typeof AppFutureRoute
+  '/insights': typeof AppInsightsRoute
   '/medical': typeof AppMedicalRoute
   '/profile': typeof AppProfileRoute
   '/routines': typeof AppRoutinesRoute
@@ -120,6 +144,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
+  '/onboarding': typeof OnboardingRoute
+  '/pricing': typeof PricingRoute
   '/_app/assistant': typeof AppAssistantRoute
   '/_app/care-team': typeof AppCareTeamRoute
   '/_app/dashboard': typeof AppDashboardRoute
@@ -127,6 +153,7 @@ export interface FileRoutesById {
   '/_app/emergency': typeof AppEmergencyRoute
   '/_app/exports': typeof AppExportsRoute
   '/_app/future': typeof AppFutureRoute
+  '/_app/insights': typeof AppInsightsRoute
   '/_app/medical': typeof AppMedicalRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/routines': typeof AppRoutinesRoute
@@ -136,6 +163,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/onboarding'
+    | '/pricing'
     | '/assistant'
     | '/care-team'
     | '/dashboard'
@@ -143,6 +172,7 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/exports'
     | '/future'
+    | '/insights'
     | '/medical'
     | '/profile'
     | '/routines'
@@ -150,6 +180,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/onboarding'
+    | '/pricing'
     | '/assistant'
     | '/care-team'
     | '/dashboard'
@@ -157,6 +189,7 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/exports'
     | '/future'
+    | '/insights'
     | '/medical'
     | '/profile'
     | '/routines'
@@ -165,6 +198,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_app'
+    | '/onboarding'
+    | '/pricing'
     | '/_app/assistant'
     | '/_app/care-team'
     | '/_app/dashboard'
@@ -172,6 +207,7 @@ export interface FileRouteTypes {
     | '/_app/emergency'
     | '/_app/exports'
     | '/_app/future'
+    | '/_app/insights'
     | '/_app/medical'
     | '/_app/profile'
     | '/_app/routines'
@@ -181,10 +217,26 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
+  OnboardingRoute: typeof OnboardingRoute
+  PricingRoute: typeof PricingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app': {
       id: '/_app'
       path: ''
@@ -225,6 +277,13 @@ declare module '@tanstack/react-router' {
       path: '/medical'
       fullPath: '/medical'
       preLoaderRoute: typeof AppMedicalRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/insights': {
+      id: '/_app/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof AppInsightsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/future': {
@@ -287,6 +346,7 @@ interface AppRouteChildren {
   AppEmergencyRoute: typeof AppEmergencyRoute
   AppExportsRoute: typeof AppExportsRoute
   AppFutureRoute: typeof AppFutureRoute
+  AppInsightsRoute: typeof AppInsightsRoute
   AppMedicalRoute: typeof AppMedicalRoute
   AppProfileRoute: typeof AppProfileRoute
   AppRoutinesRoute: typeof AppRoutinesRoute
@@ -301,6 +361,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppEmergencyRoute: AppEmergencyRoute,
   AppExportsRoute: AppExportsRoute,
   AppFutureRoute: AppFutureRoute,
+  AppInsightsRoute: AppInsightsRoute,
   AppMedicalRoute: AppMedicalRoute,
   AppProfileRoute: AppProfileRoute,
   AppRoutinesRoute: AppRoutinesRoute,
@@ -312,6 +373,8 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
+  OnboardingRoute: OnboardingRoute,
+  PricingRoute: PricingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
