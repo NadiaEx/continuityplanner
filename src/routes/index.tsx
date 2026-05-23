@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   ShieldCheck,
   Users,
@@ -15,17 +16,23 @@ import {
   Stethoscope,
   Compass,
   Contact,
+  Sparkle,
+  MessagesSquare,
+  Infinity as InfinityIcon,
+  Gift,
 } from "lucide-react";
 import heroImage from "@/assets/hero.jpg";
+import { WaitlistModal } from "@/components/waitlist-modal";
+import { HearthIllustration, HandsIllustration } from "@/components/soft-illustration";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Continuity — Help protect your child's future, one step at a time" },
+      { title: "Continuity — A community-built future care planning platform" },
       {
         name: "description",
         content:
-          "An AI-guided care planning platform that helps families organize routines, medical info, and emergency plans for loved ones who need lifelong support.",
+          "Continuity is being built alongside caregiving families. Organize routines, medical info, and emergency plans during our pay-what-you-can pilot.",
       },
     ],
   }),
@@ -33,19 +40,22 @@ export const Route = createFileRoute("/")({
 });
 
 function Landing() {
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
   return (
     <div className="min-h-dvh bg-background text-foreground">
-      <SiteHeader />
+      <SiteHeader onJoin={() => setWaitlistOpen(true)} />
       <main>
-        <Hero />
+        <Hero onJoin={() => setWaitlistOpen(true)} />
         <WhyFamilies />
+        <PilotSection onJoin={() => setWaitlistOpen(true)} />
         <AiPreview />
         <Creates />
         <EmergencySection />
         <GentleProgress />
-        <CtaBand />
+        <CtaBand onJoin={() => setWaitlistOpen(true)} />
       </main>
       <SiteFooter />
+      <WaitlistModal open={waitlistOpen} onClose={() => setWaitlistOpen(false)} />
     </div>
   );
 }
