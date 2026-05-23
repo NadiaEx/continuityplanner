@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
-import { Download, Cloud, ShieldCheck, Sun, Users, Stethoscope, Compass, Contact } from "lucide-react";
+import { Download, FileText, Cloud, ShieldCheck, Sun, Users, Stethoscope, Compass, Contact } from "lucide-react";
 
 function PdfThumbnail({
   icon: Icon,
