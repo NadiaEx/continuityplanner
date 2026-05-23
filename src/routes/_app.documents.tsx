@@ -85,18 +85,17 @@ export default function Documents() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {docs.map(({ name, category, size, date, icon: Icon }) => (
           <Card key={name}>
-            <div className="mb-4 flex items-start justify-between">
-              <div className="grid size-10 place-items-center rounded-xl bg-sage-50 text-sage-700">
-                <Icon className="size-5" strokeWidth={1.75} />
+            <DocThumbnail name={name} category={category} />
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-medium">{name}</p>
+                <div className="mt-1.5 flex items-center gap-2 text-xs text-muted-foreground">
+                  <span>{size}</span>
+                  <span>·</span>
+                  <span>{date}</span>
+                </div>
               </div>
-              <FileLock className="size-3.5 text-muted-foreground" />
-            </div>
-            <p className="truncate font-medium">{name}</p>
-            <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
-              <Chip tone="mist">{category}</Chip>
-              <span>{size}</span>
-              <span>·</span>
-              <span>{date}</span>
+              <FileLock className="size-3.5 shrink-0 text-muted-foreground" />
             </div>
           </Card>
         ))}
