@@ -467,27 +467,99 @@ function GentleProgress() {
 function CtaBand({ onJoin }: { onJoin: () => void }) {
   return (
     <section className="px-6 py-20 lg:px-8">
-      <div className="mx-auto max-w-4xl rounded-3xl border border-border bg-card p-10 text-center lg:p-14">
-        <h3 className="font-display text-2xl font-medium tracking-tight lg:text-3xl">
+      <div className="mx-auto max-w-4xl rounded-3xl border border-border bg-gradient-to-br from-sage-50/70 via-card to-mist-50/40 p-10 text-center lg:p-14">
+        <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
+          Built alongside caregiving families
+        </p>
+        <h3 className="mt-3 font-display text-2xl font-medium tracking-tight lg:text-3xl">
           Start with one small section today.
         </h3>
         <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
           You don't have to do it all tonight. Continuity will be here whenever
-          you're ready.
+          you're ready — and shaped by every family who joins.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
-          <Link
-            to="/dashboard"
+          <button
+            onClick={onJoin}
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
           >
-            Start your plan <ArrowRight className="size-4" />
-          </Link>
+            Join the pilot <ArrowRight className="size-4" />
+          </button>
           <Link
-            to="/assistant"
+            to="/pricing"
             className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium transition hover:bg-muted"
           >
-            Try the AI assistant
+            See pay-what-you-can pricing
           </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const pilotBenefits = [
+  { icon: InfinityIcon, title: "Lifetime Founding Family status", body: "Reserved for families who join during the pilot — yours to keep." },
+  { icon: MessagesSquare, title: "Help shape future features", body: "Your reflections directly inform what we build next, in plain conversation." },
+  { icon: Sparkles, title: "Early access to new tools", body: "Try new care templates and AI guidance as soon as they're ready." },
+  { icon: Users, title: "Community-driven development", body: "A small, considered group of caregivers building this together." },
+  { icon: Gift, title: "Flexible pricing during pilot", body: "Pay what feels sustainable. Free access is always available, no questions asked." },
+  { icon: HeartPulse, title: "A direct line to the team", body: "We read every message personally and respond with care." },
+];
+
+function PilotSection({ onJoin }: { onJoin: () => void }) {
+  return (
+    <section id="pilot" className="px-6 py-24 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.1fr]">
+          <div className="overflow-hidden rounded-3xl border border-border bg-surface-soft">
+            <HearthIllustration className="h-full w-full" />
+          </div>
+          <div>
+            <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
+              Founding Family Pilot
+            </p>
+            <h2 className="mt-3 text-balance font-display text-3xl font-medium tracking-tight lg:text-4xl">
+              We're building this alongside families like yours.
+            </h2>
+            <p className="mt-5 max-w-[52ch] text-pretty leading-relaxed text-muted-foreground">
+              We're building Continuity alongside families caring for loved ones
+              with lifelong support needs. During this early pilot phase,
+              families can access the platform through a pay-what-you-can model
+              while helping shape the future of the product through feedback and
+              real-world use.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <button
+                onClick={onJoin}
+                className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
+              >
+                Join the pilot <ArrowRight className="size-4" />
+              </button>
+              <Link
+                to="/pricing"
+                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium hover:bg-muted"
+              >
+                Choose what feels sustainable
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {pilotBenefits.map(({ icon: Icon, title, body }) => (
+            <div
+              key={title}
+              className="rounded-2xl border border-border bg-card p-6 transition hover:-translate-y-0.5 hover:shadow-sm"
+            >
+              <div className="mb-4 grid size-9 place-items-center rounded-lg bg-sage-50 text-sage-700">
+                <Icon className="size-4" strokeWidth={1.75} />
+              </div>
+              <h3 className="font-display text-base font-medium">{title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                {body}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
