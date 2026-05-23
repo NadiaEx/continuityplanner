@@ -485,12 +485,6 @@ function CtaBand({ onJoin }: { onJoin: () => void }) {
           >
             Join the pilot <ArrowRight className="size-4" />
           </button>
-          <button
-            onClick={onJoin}
-            className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
-          >
-            Join the pilot <ArrowRight className="size-4" />
-          </button>
         </div>
       </div>
     </section>
