@@ -464,7 +464,7 @@ function GentleProgress() {
   );
 }
 
-function CtaBand() {
+function CtaBand({ onJoin }: { onJoin: () => void }) {
   return (
     <section className="px-6 py-20 lg:px-8">
       <div className="mx-auto max-w-4xl rounded-3xl border border-border bg-card p-10 text-center lg:p-14">
