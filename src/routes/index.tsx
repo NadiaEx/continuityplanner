@@ -128,7 +128,7 @@ function Hero({ onJoin }: { onJoin: () => void }) {
                 to="/onboarding"
                 className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium text-foreground transition hover:bg-muted"
               >
-                Begin gently
+                Set up your plan
               </Link>
             </div>
             <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-muted-foreground">
