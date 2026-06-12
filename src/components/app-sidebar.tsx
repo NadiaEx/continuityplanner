@@ -28,7 +28,7 @@ const nav = [
   { to: "/documents", label: "Documents", icon: FolderLock },
   { to: "/assistant", label: "AI Assistant", icon: Sparkles },
   { to: "/exports", label: "Exports", icon: Download },
-  { to: "/insights", label: "Pilot Insights", icon: LineChart },
+  { to: "/insights", label: "Insights", icon: LineChart },
   { to: "/settings", label: "Settings", icon: Settings },
 ] as const;
 

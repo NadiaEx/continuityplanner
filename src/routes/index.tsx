@@ -32,7 +32,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Continuity is being built alongside caregiving families. Organize routines, medical info, and emergency plans during our pay-what-you-can pilot.",
+          "Continuity is being built alongside caregiving families. Organize routines, medical info, and emergency plans. Pay what you can — nobody turned away.",
       },
     ],
   }),
@@ -121,7 +121,7 @@ function Hero({ onJoin }: { onJoin: () => void }) {
                 onClick={onJoin}
                 className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
               >
-                Join the pilot
+                Get started
                 <ArrowRight className="size-4" />
               </button>
               <Link
@@ -482,7 +482,7 @@ function CtaBand({ onJoin }: { onJoin: () => void }) {
             onClick={onJoin}
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
           >
-            Join the pilot <ArrowRight className="size-4" />
+            Get started <ArrowRight className="size-4" />
           </button>
         </div>
       </div>
@@ -516,17 +516,15 @@ function PilotSection({ onJoin }: { onJoin: () => void }) {
             </h2>
             <p className="mt-5 max-w-[52ch] text-pretty leading-relaxed text-muted-foreground">
               We're building Continuity alongside families caring for loved ones
-              with lifelong support needs. During this early pilot phase,
-              families can access the platform through a pay-what-you-can model
-              while helping shape the future of the product through feedback and
-              real-world use.
+              with lifelong support needs. Pay what you can. Nobody is turned
+              away. Free access is always available, no questions asked.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <button
                 onClick={onJoin}
                 className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
               >
-                Join the pilot <ArrowRight className="size-4" />
+                Get started <ArrowRight className="size-4" />
               </button>
               <Link
                 to="/pricing"

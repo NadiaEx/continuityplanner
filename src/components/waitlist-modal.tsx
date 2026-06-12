@@ -151,7 +151,7 @@ export function WaitlistModal({
               Request access
             </button>
             <p className="mt-3 text-center text-[11px] text-muted-foreground">
-              We'll never share your information. You can leave the pilot anytime.
+              We'll never share your information. You can leave anytime.
             </p>
           </form>
         )}
