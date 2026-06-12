@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
 import {
   Mic,
@@ -10,9 +10,78 @@ import {
   Check,
   Loader2,
   RotateCcw,
+  Lock,
+  FileText,
+  ShieldAlert,
+  HeartPulse,
+  Users,
+  Compass,
 } from "lucide-react";
+import { toast } from "sonner";
 import { analyzeDump, type Plan } from "@/lib/assistant-analysis";
 import { useSpeechRecognition } from "@/hooks/use-speech-recognition";
+
+/* -------------------- Unlocks -------------------- */
+// Each unlock fires once the caregiver crosses the threshold (% of total
+// questions answered). The copy is meant to feel like a confidence call —
+// "we now have enough to draft X" — not a gamified badge.
+type Unlock = {
+  id: string;
+  threshold: number; // 0..1
+  title: string;
+  doc: string;
+  confidence: string;
+  blurb: string;
+  icon: React.ComponentType<{ className?: string }>;
+};
+
+const UNLOCKS: Unlock[] = [
+  {
+    id: "one_page",
+    threshold: 0.15,
+    title: "One-Page About Them",
+    doc: "A printable one-pager any new caregiver can read in 90 seconds.",
+    confidence: "We have enough to say with 90% confidence you should print a One-Page About Them next.",
+    blurb: "Name, how they communicate, what soothes them, what to never do.",
+    icon: FileText,
+  },
+  {
+    id: "emergency_card",
+    threshold: 0.35,
+    title: "Emergency Wallet Card",
+    doc: "Pocket-sized card with the 5 things a first responder needs.",
+    confidence: "We have enough to say with 95% confidence you should generate an Emergency Wallet Card now.",
+    blurb: "Diagnoses, meds, allergies, who to call, what helps them regulate.",
+    icon: ShieldAlert,
+  },
+  {
+    id: "med_sheet",
+    threshold: 0.55,
+    title: "Medication & Provider Sheet",
+    doc: "A clean reference for any sitter, family member, or ER visit.",
+    confidence: "We have enough to draft a Medication & Provider Sheet with high confidence.",
+    blurb: "Daily meds, dosing windows, PRNs, and the providers behind each one.",
+    icon: HeartPulse,
+  },
+  {
+    id: "backup_plan",
+    threshold: 0.7,
+    title: "Backup Caregiver Brief",
+    doc: "What someone else needs to step in for a day, a week, or longer.",
+    confidence: "We have enough to draft a Backup Caregiver Brief you could hand to a real person today.",
+    blurb: "Routines, regulation, food, sleep, school, and the soft stuff that breaks first.",
+    icon: Users,
+  },
+  {
+    id: "future_letter",
+    threshold: 0.9,
+    title: "Letter to the Future",
+    doc: "Your long-horizon hopes, decisions, and lines you won't cross.",
+    confidence: "We have enough to draft a Letter to the Future — the document most families never get to.",
+    blurb: "What a good adult life looks like, who you'd want at the table, and what matters most.",
+    icon: Compass,
+  },
+];
 
 export const Route = createFileRoute("/_app/assistant")({
   head: () => ({ meta: [{ title: "First conversation — Continuity" }] }),
