@@ -167,10 +167,27 @@ export default function Assistant() {
           onAnswer={setCurrentAnswer}
           onBack={() => setStepIdx((i) => Math.max(0, i - 1))}
           onNext={() => {
-            if (stepIdx >= flatQuestions.length - 1) setStage("complete");
+            if (stepIdx >= flatQuestions.length - 1) setStage("ready");
             else setStepIdx((i) => i + 1);
           }}
           isLast={stepIdx === flatQuestions.length - 1}
+          answeredCount={
+            Object.values(answers).filter((v) => v?.trim()).length
+          }
+          onDraftNow={() => setStage("ready")}
+        />
+      )}
+
+      {stage === "ready" && plan && (
+        <ReadyStage
+          plan={plan}
+          answers={answers}
+          questions={flatQuestions}
+          onKeepGoing={(idx) => {
+            setStepIdx(idx);
+            setStage("wizard");
+          }}
+          onGenerate={() => setStage("complete")}
         />
       )}
 
