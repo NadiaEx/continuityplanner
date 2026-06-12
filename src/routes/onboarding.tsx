@@ -18,14 +18,16 @@ export const Route = createFileRoute("/onboarding")({
 });
 
 const reasons = [
-  "Emergency preparedness",
-  "Future planning",
-  "Organizing medical information",
-  "Caregiver support",
-  "Hospitalization concerns",
-  "Long-term continuity",
-  "Just getting started",
+  "Nobody else knows the full picture",
+  "If I get hit by a bus tomorrow, it's chaos",
+  "The medical history lives in my head",
+  "I'm burning out and need backup",
+  "ER visits go badly without me there",
+  "School / providers keep asking the same questions",
+  "I'm afraid of what happens when I'm gone",
+  "The paperwork is scattered everywhere",
 ];
+
 
 const personas = ["Child", "Teen", "Adult dependent", "Aging loved one", "Other"];
 
@@ -228,14 +230,11 @@ function Onboarding() {
 
         {step === 2 && (
           <Panel>
-            <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
-              Step 2 · Why you're here
-            </p>
-            <h2 className="mt-3 font-display text-3xl font-medium tracking-tight lg:text-4xl">
-              What are you building this for?
+            <h2 className="font-display text-3xl font-medium tracking-tight lg:text-4xl">
+              What brought you here?
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
-              Pick everything that applies — we'll prioritize accordingly.
+              Pick anything that hits. We'll prioritize the plan around it.
             </p>
             <div className="mt-7 flex flex-wrap gap-2">
               {reasons.map((r) => {
