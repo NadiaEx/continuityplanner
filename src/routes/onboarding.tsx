@@ -7,10 +7,10 @@ import { FoundingBadge } from "@/components/founding-badge";
 export const Route = createFileRoute("/onboarding")({
   head: () => ({
     meta: [
-      { title: "Begin gently — Continuity" },
+      { title: "Set up your plan — Continuity" },
       {
         name: "description",
-        content: "A gentle onboarding into Continuity, your pay-what-you-can future care planning companion.",
+        content: "Set up Continuity — the pay-what-you-can planning tool built for the people who already do the hardest work.",
       },
     ],
   }),
