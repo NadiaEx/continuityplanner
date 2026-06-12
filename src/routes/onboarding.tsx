@@ -308,8 +308,20 @@ function Onboarding() {
               </div>
             )}
 
-            <div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {personas.map((p) => {
+            <div className="mt-7">
+              <Field
+                label="Their name or nickname"
+                value={active.name}
+                onChange={(v) => updateDependent(activeIdx, { name: v })}
+                placeholder="e.g. Roggie"
+              />
+            </div>
+
+            <p className="mt-7 font-display text-lg">
+              {active.name ? active.name : "They"} {active.name ? "is" : "are"} my…
+            </p>
+            <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {relationships.map((p) => {
                 const isActive = active.persona === p;
                 return (
                   <button
@@ -325,21 +337,6 @@ function Onboarding() {
                   </button>
                 );
               })}
-            </div>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <Field
-                label="Their name or nickname"
-                value={active.name}
-                onChange={(v) => updateDependent(activeIdx, { name: v })}
-                placeholder="e.g. Sam"
-              />
-              <Field
-                label="Their age"
-                value={active.age}
-                onChange={(v) => updateDependent(activeIdx, { age: v })}
-                placeholder="e.g. 14"
-                inputMode="numeric"
-              />
             </div>
 
             <button
