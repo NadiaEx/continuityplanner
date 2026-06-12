@@ -53,7 +53,6 @@ type Dependent = {
   id: string;
   persona: string | null;
   name: string;
-  age: string;
   living: string | null;
   complexity: string[];
 };
@@ -69,7 +68,7 @@ const makeDependent = (): Dependent => ({
   id: Math.random().toString(36).slice(2, 9),
   persona: null,
   name: "",
-  age: "",
+  
   living: null,
   complexity: [],
 });
@@ -308,8 +307,20 @@ function Onboarding() {
               </div>
             )}
 
-            <div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {personas.map((p) => {
+            <div className="mt-7">
+              <Field
+                label="Their name or nickname"
+                value={active.name}
+                onChange={(v) => updateDependent(activeIdx, { name: v })}
+                placeholder="e.g. Roggie"
+              />
+            </div>
+
+            <p className="mt-7 font-display text-lg">
+              {active.name ? active.name : "They"} {active.name ? "is" : "are"} my…
+            </p>
+            <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {relationships.map((p) => {
                 const isActive = active.persona === p;
                 return (
                   <button
@@ -325,21 +336,6 @@ function Onboarding() {
                   </button>
                 );
               })}
-            </div>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <Field
-                label="Their name or nickname"
-                value={active.name}
-                onChange={(v) => updateDependent(activeIdx, { name: v })}
-                placeholder="e.g. Sam"
-              />
-              <Field
-                label="Their age"
-                value={active.age}
-                onChange={(v) => updateDependent(activeIdx, { age: v })}
-                placeholder="e.g. 14"
-                inputMode="numeric"
-              />
             </div>
 
             <button
@@ -525,8 +521,7 @@ function Onboarding() {
                   <div key={d.id} className="rounded-xl border border-border bg-card p-3">
                     <p className="font-medium">
                       {d.name || `Loved one ${i + 1}`}
-                      {d.age ? `, ${d.age}` : ""}
-                      {d.persona ? ` · ${d.persona}` : ""}
+                      {d.persona ? ` · your ${d.persona.toLowerCase()}` : ""}
                     </p>
                     <p className="mt-0.5 text-xs text-muted-foreground">
                       {d.living || "Living situation not set"}
