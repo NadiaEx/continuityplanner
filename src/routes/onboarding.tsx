@@ -470,15 +470,15 @@ function Onboarding() {
         {step === 5 && (
           <Panel illustration={<PathIllustration className="h-full w-full" />}>
             <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
-              A note before we begin
+              How this works
             </p>
             <h2 className="mt-3 font-display text-3xl font-medium leading-tight tracking-tight lg:text-4xl">
-              You can stop anytime.
+              You drive. We organize.
             </h2>
             <ul className="mt-6 space-y-2 text-pretty text-lg leading-relaxed text-muted-foreground">
-              <li>You can skip questions.</li>
-              <li>You can come back later.</li>
-              <li className="text-foreground">Small steps still matter.</li>
+              <li>Skip anything that doesn't apply.</li>
+              <li>Edit, expand, or rewrite any answer later.</li>
+              <li className="text-foreground">Every section you finish becomes a real, shareable document.</li>
             </ul>
             <button
               onClick={next}
