@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { ArrowRight, Leaf, Heart, Sparkles } from "lucide-react";
+import { ArrowRight, Leaf, Heart, Sparkles, Check } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/pricing")({
@@ -141,8 +141,88 @@ function PayWhatYouCan() {
         </div>
       </section>
 
+      {/* The bit: three identical SaaS tiers. Same price, same features.
+          The joke lands when the eye scans left-to-right and finds nothing
+          actually different. It's the entire pricing philosophy in one image. */}
+      <section className="px-6 pb-12 lg:px-8">
+        <div className="mx-auto max-w-5xl">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+            {[
+              { name: "Basic", tag: "For individuals" },
+              { name: "Pro", tag: "Most popular", featured: true },
+              { name: "Enterprise", tag: "For teams" },
+            ].map((t) => (
+              <div
+                key={t.name}
+                className={`relative flex flex-col rounded-3xl border p-7 transition ${
+                  t.featured
+                    ? "border-sage-600/30 bg-gradient-to-b from-sage-50/80 to-card shadow-sm"
+                    : "border-border bg-card"
+                }`}
+              >
+                {t.featured && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-primary-foreground">
+                    {t.tag}
+                  </span>
+                )}
+                <p
+                  className={`text-xs font-semibold uppercase tracking-widest ${
+                    t.featured ? "text-sage-700" : "text-muted-foreground"
+                  }`}
+                >
+                  {t.name}
+                </p>
+                {!t.featured && (
+                  <p className="mt-1 text-xs text-muted-foreground">{t.tag}</p>
+                )}
+                <div className="mt-3 flex items-baseline gap-1">
+                  <span className="font-display text-4xl font-medium tracking-tight">
+                    Pay what you can
+                  </span>
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  One time. Lifetime access. Nobody turned away.
+                </p>
+                <ul className="mt-6 space-y-2.5 text-sm">
+                  {[
+                    "Unlimited loved ones",
+                    "Every document & export",
+                    "AI-guided care conversations",
+                    "Care team sharing",
+                    "Lifetime access",
+                    "Future updates included",
+                  ].map((f) => (
+                    <li key={f} className="flex items-start gap-2">
+                      <Check className="mt-0.5 size-4 shrink-0 text-sage-700" />
+                      <span className="text-foreground/90">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href="#choose"
+                  className={`mt-7 inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-medium transition ${
+                    t.featured
+                      ? "bg-primary text-primary-foreground hover:bg-sage-700"
+                      : "border border-border bg-card text-foreground hover:bg-muted"
+                  }`}
+                >
+                  Choose {t.name} <ArrowRight className="size-3.5" />
+                </a>
+              </div>
+            ))}
+          </div>
+
+          {/* The punchline. Small, dry, in italics. */}
+          <p className="mx-auto mt-6 max-w-2xl text-center text-sm italic text-muted-foreground">
+            Same product. Same price. Same bullet points. Pick whichever tier
+            makes you feel best — they're all the same one.
+          </p>
+        </div>
+      </section>
+
       {/* Amount picker */}
-      <section className="px-6 pb-10 lg:px-8">
+      <section id="choose" className="px-6 pb-10 lg:px-8 scroll-mt-20">
+
         <div className="mx-auto max-w-2xl rounded-3xl border border-border bg-card p-6 shadow-sm lg:p-10">
           <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
             Choose your amount
