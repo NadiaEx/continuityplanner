@@ -179,17 +179,18 @@ function Onboarding() {
         {step === 0 && (
           <Panel illustration={<HearthIllustration className="h-full w-full" />}>
             <h1 className="text-balance font-display text-3xl font-medium leading-tight tracking-tight lg:text-4xl">
-              You do not have to organize everything today.
+              You're the expert. We're the system of record.
             </h1>
             <p className="mt-5 text-pretty text-muted-foreground">
-              Continuity helps you build a future care plan one small step at a
-              time. There's no rush, and nothing to prove.
+              You already carry the plan in your head. Continuity gives it a place
+              to live — structured, shareable, and ready the moment someone else
+              needs it.
             </p>
             <button
               onClick={next}
               className="mt-8 inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-sage-700"
             >
-              Begin gently <ArrowRight className="size-4" />
+              Let's set it up <ArrowRight className="size-4" />
             </button>
           </Panel>
         )}
