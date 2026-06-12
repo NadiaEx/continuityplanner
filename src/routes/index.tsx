@@ -341,8 +341,7 @@ function Creates() {
               Beautiful, exportable documentation.
             </h2>
             <p className="mt-3 text-muted-foreground">
-              Generated quietly in the background as you go. Export as PDF or DOCX
-              whenever you need.
+              Built as you go. Export polished PDFs or DOCX the moment you need them.
             </p>
           </div>
           <Link
