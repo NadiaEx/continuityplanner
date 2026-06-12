@@ -95,19 +95,19 @@ export default function Assistant() {
           stage === "dump"
             ? `Tell me about ${lovedOneName}.`
             : stage === "analyzing"
-              ? "Reading what you shared…"
+              ? "Structuring what you shared…"
               : stage === "wizard"
-                ? "A few gentle follow-ups."
+                ? "Sharpening the details."
                 : "Your first pages are drafted."
         }
         description={
           stage === "dump"
-            ? "Take as long as you need. There's no wrong way to begin — type or speak, in any order. I'll quietly read it back and shape the rest of our conversation around what matters to you."
+            ? "You know them better than anyone. Type or speak — in any order, as much as you want. I'll structure it and bring back the right follow-ups."
             : stage === "analyzing"
-              ? "I'm noticing what you said and drafting a small set of follow-up questions, tailored to what you've shared."
+              ? "Pulling themes from what you wrote and drafting targeted follow-ups."
               : stage === "wizard"
-                ? "One quiet question at a time. Skip anything that doesn't apply."
-                : "I've turned what you shared into the first sections of the plan."
+                ? "One question at a time. Skip whatever doesn't apply."
+                : "What you shared is now the first sections of the plan."
         }
         actions={
           stage !== "dump" && stage !== "analyzing" ? (
