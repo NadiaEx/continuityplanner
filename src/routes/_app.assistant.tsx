@@ -444,6 +444,31 @@ function WizardStage({
   onDraftNow: () => void;
 }) {
   const enoughForDraft = answeredCount >= Math.max(3, Math.ceil(total * 0.5));
+  const progress = total > 0 ? answeredCount / total : 0;
+
+  // Which unlocks the caregiver has crossed the threshold for.
+  const unlockedIds = useMemo(
+    () => UNLOCKS.filter((u) => progress >= u.threshold).map((u) => u.id),
+    [progress],
+  );
+  const nextLocked = UNLOCKS.find((u) => progress < u.threshold);
+
+  // Fire a toast + inline confidence callout the first time each unlock crosses.
+  const seenRef = useRef<Set<string>>(new Set());
+  const [justUnlocked, setJustUnlocked] = useState<Unlock | null>(null);
+  useEffect(() => {
+    for (const u of UNLOCKS) {
+      if (progress >= u.threshold && !seenRef.current.has(u.id)) {
+        seenRef.current.add(u.id);
+        setJustUnlocked(u);
+        toast.success(`Unlocked: ${u.title}`, {
+          description: u.confidence,
+          duration: 6000,
+        });
+      }
+    }
+  }, [progress]);
+
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_280px]">
       <div>
@@ -474,6 +499,27 @@ function WizardStage({
             rows={6}
             className="mt-6 w-full resize-y rounded-2xl border border-border bg-card px-5 py-4 text-base leading-relaxed outline-none transition placeholder:text-muted-foreground/60 focus:border-sage-600/40 focus:ring-2 focus:ring-sage-600/10"
           />
+
+          {justUnlocked && (
+            <div className="mt-5 flex items-start gap-3 rounded-2xl border border-sage-600/40 bg-sage-50 px-4 py-3">
+              <div className="grid size-8 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground">
+                <justUnlocked.icon className="size-4" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-sage-700">
+                  Unlocked · {justUnlocked.title}
+                </p>
+                <p className="mt-0.5 text-sm text-foreground">{justUnlocked.confidence}</p>
+              </div>
+              <button
+                onClick={() => setJustUnlocked(null)}
+                className="shrink-0 text-xs text-muted-foreground hover:text-foreground"
+                aria-label="Dismiss"
+              >
+                Dismiss
+              </button>
+            </div>
+          )}
 
           {enoughForDraft && !isLast && (
             <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-sage-600/30 bg-sage-50 px-4 py-3">
@@ -516,34 +562,67 @@ function WizardStage({
       </div>
 
       <div className="space-y-4">
+        <Card>
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              Unlocked documents
+            </p>
+            <span className="text-[11px] text-muted-foreground">
+              {unlockedIds.length}/{UNLOCKS.length}
+            </span>
+          </div>
+          <ul className="mt-3 space-y-2.5">
+            {UNLOCKS.map((u) => {
+              const unlocked = unlockedIds.includes(u.id);
+              const Icon = unlocked ? u.icon : Lock;
+              return (
+                <li
+                  key={u.id}
+                  className={`flex items-start gap-2.5 rounded-xl border px-3 py-2.5 transition ${
+                    unlocked
+                      ? "border-sage-600/30 bg-sage-50"
+                      : "border-dashed border-border bg-card opacity-70"
+                  }`}
+                >
+                  <div
+                    className={`grid size-7 shrink-0 place-items-center rounded-full ${
+                      unlocked
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    <Icon className="size-3.5" />
+                  </div>
+                  <div className="min-w-0">
+                    <p
+                      className={`text-sm font-medium ${
+                        unlocked ? "text-foreground" : "text-muted-foreground"
+                      }`}
+                    >
+                      {u.title}
+                    </p>
+                    <p className="mt-0.5 text-[11px] leading-snug text-muted-foreground">
+                      {unlocked ? u.blurb : `Unlocks at ${Math.round(u.threshold * 100)}% answered`}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+          {nextLocked && (
+            <p className="mt-3 text-[11px] text-muted-foreground">
+              Next: <span className="text-foreground">{nextLocked.title}</span> at{" "}
+              {Math.round(nextLocked.threshold * 100)}% (
+              {Math.max(0, Math.ceil(nextLocked.threshold * total) - answeredCount)} more answers).
+            </p>
+          )}
+        </Card>
+
         <Card className="bg-sage-50">
           <p className="text-xs font-semibold uppercase tracking-widest text-sage-700">
             What I heard
           </p>
           <p className="mt-2 text-sm text-foreground">{plan.summary}</p>
-        </Card>
-
-        <Card>
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            Sections drafted
-          </p>
-          <ul className="mt-3 space-y-1.5 text-sm">
-            {plan.sections.map((s) => (
-              <li
-                key={s.id}
-                className={`flex items-center gap-2 ${
-                  s.id === current.sectionId ? "text-foreground" : "text-muted-foreground"
-                }`}
-              >
-                <span
-                  className={`size-1.5 rounded-full ${
-                    s.id === current.sectionId ? "bg-primary" : "bg-muted-foreground/40"
-                  }`}
-                />
-                {s.title}
-              </li>
-            ))}
-          </ul>
         </Card>
 
         {plan.gaps.length > 0 && (
