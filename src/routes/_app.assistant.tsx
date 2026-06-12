@@ -290,19 +290,19 @@ function DumpStage({
       <div className="space-y-4">
         <Card className="bg-sage-50">
           <p className="text-xs font-semibold uppercase tracking-widest text-sage-700">
-            Some gentle prompts
+            Prompts to pull from
           </p>
           <ul className="mt-3 space-y-2 text-sm text-foreground">
-            <li>• What's something only you would know about {lovedOneName}?</li>
-            <li>• What does a good day look like?</li>
-            <li>• What worries you when you imagine not being there?</li>
-            <li>• Who else knows them well?</li>
+            <li>• What does only you know about {lovedOneName}?</li>
+            <li>• What does a great day actually look like?</li>
+            <li>• What would fall apart fastest without you?</li>
+            <li>• Who else already knows them well?</li>
           </ul>
         </Card>
         <Card>
           <p className="text-sm text-muted-foreground">
-            Nothing here is final. After you finish, I'll read it back and shape a small set
-            of follow-up questions around what you said.
+            Dump everything. After you finish, I'll structure it and bring back
+            targeted follow-ups based on what you actually said.
           </p>
         </Card>
       </div>
