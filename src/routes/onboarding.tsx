@@ -521,8 +521,7 @@ function Onboarding() {
                   <div key={d.id} className="rounded-xl border border-border bg-card p-3">
                     <p className="font-medium">
                       {d.name || `Loved one ${i + 1}`}
-                      {d.age ? `, ${d.age}` : ""}
-                      {d.persona ? ` · ${d.persona}` : ""}
+                      {d.persona ? ` · your ${d.persona.toLowerCase()}` : ""}
                     </p>
                     <p className="mt-0.5 text-xs text-muted-foreground">
                       {d.living || "Living situation not set"}
