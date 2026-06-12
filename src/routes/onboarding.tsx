@@ -18,14 +18,22 @@ export const Route = createFileRoute("/onboarding")({
 });
 
 const reasons = [
-  "Nobody else knows the full picture",
-  "If I get hit by a bus tomorrow, it's chaos",
-  "The medical history lives in my head",
-  "I'm burning out and need backup",
-  "ER visits go badly without me there",
-  "School / providers keep asking the same questions",
-  "I'm afraid of what happens when I'm gone",
-  "The paperwork is scattered everywhere",
+  "I'm holding all of this alone",
+  "Nobody would know what to do in an emergency",
+  "I don't know who takes over if I can't",
+  "If something happened to me, nobody would know where to start",
+  "I'm the only one who knows how to help them calm down",
+  "Every appointment falls on me",
+  "I need someone else to hold some of this",
+  "Their history is spread across a dozen places",
+  "I have to re-explain everything at every appointment",
+  "Providers keep making decisions without the full picture",
+  "The school calls and I freeze every time",
+  "I'm always one bad day away from a crisis",
+  "I don't know what happens when they age out of services",
+  "Nobody has asked me what I actually want for them long-term",
+  "I know I need a plan — I just never have time to make one",
+  "I've never written any of this down",
 ];
 
 
