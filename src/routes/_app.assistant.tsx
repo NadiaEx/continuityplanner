@@ -359,6 +359,8 @@ function WizardStage({
   onBack,
   onNext,
   isLast,
+  answeredCount,
+  onDraftNow,
 }: {
   plan: Plan;
   stepIdx: number;
@@ -369,7 +371,10 @@ function WizardStage({
   onBack: () => void;
   onNext: () => void;
   isLast: boolean;
+  answeredCount: number;
+  onDraftNow: () => void;
 }) {
+  const enoughForDraft = answeredCount >= Math.max(3, Math.ceil(total * 0.5));
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_280px]">
       <div>
