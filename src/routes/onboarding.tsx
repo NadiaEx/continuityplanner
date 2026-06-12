@@ -254,6 +254,16 @@ function Onboarding() {
                 );
               })}
             </div>
+
+            <div className="mt-8 rounded-2xl border border-border bg-muted/30 px-5 py-4">
+              <p className="font-display text-sm font-medium">
+                Before we go further — this is hard work, and you're doing it.
+              </p>
+              <p className="mt-1.5 text-sm text-muted-foreground">
+                Most people never sit down to write any of this out. You are. That's the
+                whole job, and you're doing it. I'm proud of you.
+              </p>
+            </div>
             <NavRow onBack={back} onNext={next} disabled={picked.length === 0} />
           </Panel>
         )}
