@@ -18,14 +18,16 @@ export const Route = createFileRoute("/onboarding")({
 });
 
 const reasons = [
-  "Emergency preparedness",
-  "Future planning",
-  "Organizing medical information",
-  "Caregiver support",
-  "Hospitalization concerns",
-  "Long-term continuity",
-  "Just getting started",
+  "Nobody else knows the full picture",
+  "If I get hit by a bus tomorrow, it's chaos",
+  "The medical history lives in my head",
+  "I'm burning out and need backup",
+  "ER visits go badly without me there",
+  "School / providers keep asking the same questions",
+  "I'm afraid of what happens when I'm gone",
+  "The paperwork is scattered everywhere",
 ];
+
 
 const personas = ["Child", "Teen", "Adult dependent", "Aging loved one", "Other"];
 
