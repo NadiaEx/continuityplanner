@@ -19,7 +19,7 @@ export const Route = createFileRoute("/_app/assistant")({
   component: Assistant,
 });
 
-type Stage = "dump" | "analyzing" | "wizard" | "complete";
+type Stage = "dump" | "analyzing" | "wizard" | "ready" | "complete";
 
 type StoredProfile = {
   caregiverName?: string;
