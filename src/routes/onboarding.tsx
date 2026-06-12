@@ -68,7 +68,7 @@ const makeDependent = (): Dependent => ({
   id: Math.random().toString(36).slice(2, 9),
   persona: null,
   name: "",
-  age: "",
+  
   living: null,
   complexity: [],
 });
