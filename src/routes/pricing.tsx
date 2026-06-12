@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { ArrowRight, Leaf, Heart, Sparkles } from "lucide-react";
+import { ArrowRight, Leaf, Heart, Sparkles, Check } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/pricing")({
