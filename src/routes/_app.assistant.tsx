@@ -318,9 +318,9 @@ function AnalyzingStage() {
       <div className="grid size-14 place-items-center rounded-full bg-sage-100 text-sage-700">
         <Loader2 className="size-6 animate-spin" strokeWidth={1.5} />
       </div>
-      <p className="mt-5 font-display text-lg">Reading what you shared…</p>
+      <p className="mt-5 font-display text-lg">Structuring what you shared…</p>
       <p className="mt-1 max-w-md text-sm text-muted-foreground">
-        Looking for the themes and shaping a few quiet follow-ups.
+        Pulling themes and drafting targeted follow-ups.
       </p>
     </Card>
   );
