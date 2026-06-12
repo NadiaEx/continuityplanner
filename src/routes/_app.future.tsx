@@ -39,8 +39,8 @@ export default function Future() {
     <PageShell>
       <PageHeader
         eyebrow="Future Planning"
-        title="Looking gently ahead."
-        description="A quiet place to write down what matters most for Leo's long future."
+        title="The long view."
+        description="Where Leo is headed, who's responsible, and the decisions you want made when you're not in the room."
         actions={<Button><Plus className="size-4" /> Add section</Button>}
       />
 
