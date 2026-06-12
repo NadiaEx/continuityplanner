@@ -53,7 +53,6 @@ type Dependent = {
   id: string;
   persona: string | null;
   name: string;
-  age: string;
   living: string | null;
   complexity: string[];
 };
