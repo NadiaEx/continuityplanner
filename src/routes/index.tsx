@@ -225,11 +225,11 @@ function AiPreview() {
             AI-guided planning
           </p>
           <h2 className="mt-3 text-balance font-display text-3xl font-medium tracking-tight lg:text-4xl">
-            A quiet conversation, gently organized.
+            A conversation that becomes a plan.
           </h2>
           <p className="mt-4 text-pretty text-muted-foreground">
-            Talk like a friend. Continuity listens, asks thoughtful follow-ups, and
-            quietly files everything into the right place.
+            Talk the way you'd brief a trusted backup. Continuity listens, asks
+            the right follow-ups, and files every detail into the right section.
           </p>
         </div>
 
