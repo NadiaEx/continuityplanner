@@ -430,22 +430,22 @@ function EmergencySection() {
 
 function GentleProgress() {
   const items = [
-    { title: "Save any time", body: "Progress is saved after every message. Pick up right where you left off." },
-    { title: "Editable forever", body: "As needs change, updating your plan is as simple as the first time." },
-    { title: "One section at a time", body: "Focus only on what feels manageable today — five minutes or an hour." },
-    { title: "Export anytime", body: "Generate polished PDFs for school, travel, or medical appointments." },
+    { title: "Save any time", body: "Every message is saved instantly. Walk away and pick up exactly where you left off." },
+    { title: "Editable forever", body: "Life changes. Update any section in seconds — the rest of your plan follows." },
+    { title: "Work in any order", body: "Start with what you know best. Five minutes or two hours, your call." },
+    { title: "Export on demand", body: "Generate ER-ready PDFs, school packets, and respite handoffs whenever you need them." },
   ];
   return (
     <section className="border-t border-border bg-surface-soft px-6 py-24 lg:px-8">
       <div className="mx-auto max-w-4xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full bg-sage-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-sage-700">
-          Your journey
+          How it fits your life
         </div>
         <h2 className="mt-6 text-balance font-display text-3xl font-medium tracking-tight lg:text-4xl">
-          Work at your own pace.
+          Built for the way you actually work.
         </h2>
         <p className="mt-4 text-muted-foreground">
-          You're building protection over years, not minutes. Small steps matter.
+          You're the one who knows. Continuity just makes sure everyone else can know it too.
         </p>
         <div className="mt-12 grid grid-cols-1 gap-10 text-left md:grid-cols-2">
           {items.map((it) => (
