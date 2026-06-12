@@ -29,7 +29,7 @@ const reasons = [
 ];
 
 
-const personas = ["Child", "Teen", "Adult dependent", "Aging loved one", "Other"];
+const relationships = ["Son", "Daughter", "Parent", "Partner", "Sibling", "Other"];
 
 const livingOptions = [
   "Lives with me",
