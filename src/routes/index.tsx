@@ -74,7 +74,7 @@ function SiteHeader({ onJoin }: { onJoin: () => void }) {
         </Link>
         <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
           <a href="#why" className="hover:text-foreground">Why Continuity</a>
-          <a href="#pilot" className="hover:text-foreground">Founding pilot</a>
+          <a href="#how" className="hover:text-foreground">How it works</a>
           <a href="#ai" className="hover:text-foreground">AI guidance</a>
           <Link to="/pricing" className="hover:text-foreground">Pricing</Link>
         </nav>
@@ -89,7 +89,7 @@ function SiteHeader({ onJoin }: { onJoin: () => void }) {
             onClick={onJoin}
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
           >
-            Join the pilot
+            Get started
             <ArrowRight className="size-3.5" />
           </button>
         </div>
@@ -106,7 +106,7 @@ function Hero({ onJoin }: { onJoin: () => void }) {
           <div className="w-full lg:w-[55%]">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-[11px] font-medium uppercase tracking-[0.15em] text-muted-foreground">
               <Sparkle className="size-3 fill-sage-600/40 text-sage-700" strokeWidth={1.5} />
-              Founding Family Pilot — now welcoming
+              For the people who do the hardest work
             </div>
             <h1 className="text-balance font-display text-4xl font-medium leading-[1.1] tracking-tight text-foreground lg:text-5xl xl:text-6xl">
               A calm place to plan for the people who depend on you.
@@ -491,17 +491,17 @@ function CtaBand({ onJoin }: { onJoin: () => void }) {
 }
 
 const pilotBenefits = [
-  { icon: InfinityIcon, title: "Lifetime Founding Family status", body: "Reserved for families who join during the pilot — yours to keep." },
-  { icon: MessagesSquare, title: "Help shape future features", body: "Your reflections directly inform what we build next, in plain conversation." },
-  { icon: Sparkles, title: "Early access to new tools", body: "Try new care templates and AI guidance as soon as they're ready." },
-  { icon: Users, title: "Community-driven development", body: "A small, considered group of caregivers building this together." },
-  { icon: Gift, title: "Flexible pricing during pilot", body: "Pay what feels sustainable. Free access is always available, no questions asked." },
+  { icon: InfinityIcon, title: "Lifetime access", body: "One time. No subscription, no renewal, no upsell email later. Yours to keep." },
+  { icon: MessagesSquare, title: "Help shape what comes next", body: "Your reflections directly inform what we build next, in plain conversation." },
+  { icon: Sparkles, title: "New tools as they land", body: "Try new care templates and AI guidance as soon as they're ready." },
+  { icon: Users, title: "Built with caregivers", body: "A small, considered group of caregivers building this together." },
+  { icon: Gift, title: "Pay what you can", body: "Pay what feels sustainable. Free access is always available, no questions asked." },
   { icon: HeartPulse, title: "A direct line to the team", body: "We read every message personally and respond with care." },
 ];
 
 function PilotSection({ onJoin }: { onJoin: () => void }) {
   return (
-    <section id="pilot" className="px-6 py-24 lg:px-8">
+    <section id="how" className="px-6 py-24 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.1fr]">
           <div className="overflow-hidden rounded-3xl border border-border bg-surface-soft">
@@ -509,7 +509,7 @@ function PilotSection({ onJoin }: { onJoin: () => void }) {
           </div>
           <div>
             <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
-              Founding Family Pilot
+              How it works
             </p>
             <h2 className="mt-3 text-balance font-display text-3xl font-medium tracking-tight lg:text-4xl">
               We're building this alongside families like yours.

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
-import { FoundingBadge } from "@/components/founding-badge";
+
 import { FeedbackPrompt } from "@/components/feedback-prompt";
 import {
   ArrowRight,
@@ -48,14 +48,11 @@ export default function Dashboard() {
         title="Good morning, Maya."
         description="You're making progress. This does not need to be perfect — you can revisit anything, anytime."
         actions={
-          <div className="flex flex-wrap items-center gap-2">
-            <FoundingBadge size="md" />
-            <Link to="/assistant">
-              <Button>
-                Continue with AI <ArrowRight className="size-4" />
-              </Button>
-            </Link>
-          </div>
+          <Link to="/assistant">
+            <Button>
+              Continue with AI <ArrowRight className="size-4" />
+            </Button>
+          </Link>
         }
       />
 
