@@ -229,13 +229,13 @@ function Onboarding() {
         {step === 2 && (
           <Panel>
             <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
-              A gentle question
+              Step 2 · Why you're here
             </p>
             <h2 className="mt-3 font-display text-3xl font-medium tracking-tight lg:text-4xl">
-              What brought you here today?
+              What are you building this for?
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
-              Pick anything that feels true. You can choose more than one.
+              Pick everything that applies — we'll prioritize accordingly.
             </p>
             <div className="mt-7 flex flex-wrap gap-2">
               {reasons.map((r) => {
