@@ -198,13 +198,13 @@ function Onboarding() {
         {step === 1 && (
           <Panel>
             <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
-              First, a soft hello
+              Step 1 · You
             </p>
             <h2 className="mt-3 font-display text-3xl font-medium tracking-tight lg:text-4xl">
-              What should we call you?
+              Who's building this plan?
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
-              Just a first name is plenty. Your email helps us save your place.
+              First name is fine. Email locks in your place.
             </p>
             <div className="mt-7 space-y-4">
               <Field
