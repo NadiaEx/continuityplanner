@@ -95,19 +95,19 @@ export default function Assistant() {
           stage === "dump"
             ? `Tell me about ${lovedOneName}.`
             : stage === "analyzing"
-              ? "Reading what you shared…"
+              ? "Structuring what you shared…"
               : stage === "wizard"
-                ? "A few gentle follow-ups."
+                ? "Sharpening the details."
                 : "Your first pages are drafted."
         }
         description={
           stage === "dump"
-            ? "Take as long as you need. There's no wrong way to begin — type or speak, in any order. I'll quietly read it back and shape the rest of our conversation around what matters to you."
+            ? "You know them better than anyone. Type or speak — in any order, as much as you want. I'll structure it and bring back the right follow-ups."
             : stage === "analyzing"
-              ? "I'm noticing what you said and drafting a small set of follow-up questions, tailored to what you've shared."
+              ? "Pulling themes from what you wrote and drafting targeted follow-ups."
               : stage === "wizard"
-                ? "One quiet question at a time. Skip anything that doesn't apply."
-                : "I've turned what you shared into the first sections of the plan."
+                ? "One question at a time. Skip whatever doesn't apply."
+                : "What you shared is now the first sections of the plan."
         }
         actions={
           stage !== "dump" && stage !== "analyzing" ? (
@@ -290,19 +290,19 @@ function DumpStage({
       <div className="space-y-4">
         <Card className="bg-sage-50">
           <p className="text-xs font-semibold uppercase tracking-widest text-sage-700">
-            Some gentle prompts
+            Prompts to pull from
           </p>
           <ul className="mt-3 space-y-2 text-sm text-foreground">
-            <li>• What's something only you would know about {lovedOneName}?</li>
-            <li>• What does a good day look like?</li>
-            <li>• What worries you when you imagine not being there?</li>
-            <li>• Who else knows them well?</li>
+            <li>• What does only you know about {lovedOneName}?</li>
+            <li>• What does a great day actually look like?</li>
+            <li>• What would fall apart fastest without you?</li>
+            <li>• Who else already knows them well?</li>
           </ul>
         </Card>
         <Card>
           <p className="text-sm text-muted-foreground">
-            Nothing here is final. After you finish, I'll read it back and shape a small set
-            of follow-up questions around what you said.
+            Dump everything. After you finish, I'll structure it and bring back
+            targeted follow-ups based on what you actually said.
           </p>
         </Card>
       </div>
@@ -318,9 +318,9 @@ function AnalyzingStage() {
       <div className="grid size-14 place-items-center rounded-full bg-sage-100 text-sage-700">
         <Loader2 className="size-6 animate-spin" strokeWidth={1.5} />
       </div>
-      <p className="mt-5 font-display text-lg">Reading what you shared…</p>
+      <p className="mt-5 font-display text-lg">Structuring what you shared…</p>
       <p className="mt-1 max-w-md text-sm text-muted-foreground">
-        Looking for the themes and shaping a few quiet follow-ups.
+        Pulling themes and drafting targeted follow-ups.
       </p>
     </Card>
   );

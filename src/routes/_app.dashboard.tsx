@@ -86,7 +86,7 @@ export default function Dashboard() {
               <div className="h-full w-[68%] rounded-full bg-primary" />
             </div>
             <p className="mt-4 max-w-md text-sm text-muted-foreground">
-              Small steps matter. A few minutes today brings real peace of mind tomorrow.
+              Two-thirds of the way there. Finish the next section and your emergency packet becomes export-ready.
             </p>
           </div>
           <div className="rounded-2xl border border-border bg-card p-5">
@@ -171,7 +171,7 @@ export default function Dashboard() {
         <Card>
           <h3 className="mb-2 font-display text-lg font-medium">Next steps</h3>
           <p className="mb-5 text-sm text-muted-foreground">
-            Pick one when you have a quiet moment.
+            Each one closes a real gap in your plan.
           </p>
           <ul className="space-y-2">
             {next.map((n) => (

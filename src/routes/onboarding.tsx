@@ -7,10 +7,10 @@ import { FoundingBadge } from "@/components/founding-badge";
 export const Route = createFileRoute("/onboarding")({
   head: () => ({
     meta: [
-      { title: "Begin gently — Continuity" },
+      { title: "Set up your plan — Continuity" },
       {
         name: "description",
-        content: "A gentle onboarding into Continuity, your pay-what-you-can future care planning companion.",
+        content: "Set up Continuity — the pay-what-you-can planning tool built for the people who already do the hardest work.",
       },
     ],
   }),
@@ -179,17 +179,18 @@ function Onboarding() {
         {step === 0 && (
           <Panel illustration={<HearthIllustration className="h-full w-full" />}>
             <h1 className="text-balance font-display text-3xl font-medium leading-tight tracking-tight lg:text-4xl">
-              You do not have to organize everything today.
+              You're the expert. We're the system of record.
             </h1>
             <p className="mt-5 text-pretty text-muted-foreground">
-              Continuity helps you build a future care plan one small step at a
-              time. There's no rush, and nothing to prove.
+              You already carry the plan in your head. Continuity gives it a place
+              to live — structured, shareable, and ready the moment someone else
+              needs it.
             </p>
             <button
               onClick={next}
               className="mt-8 inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-sage-700"
             >
-              Begin gently <ArrowRight className="size-4" />
+              Let's set it up <ArrowRight className="size-4" />
             </button>
           </Panel>
         )}
@@ -197,13 +198,13 @@ function Onboarding() {
         {step === 1 && (
           <Panel>
             <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
-              First, a soft hello
+              Step 1 · You
             </p>
             <h2 className="mt-3 font-display text-3xl font-medium tracking-tight lg:text-4xl">
-              What should we call you?
+              Who's building this plan?
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
-              Just a first name is plenty. Your email helps us save your place.
+              First name is fine. Email locks in your place.
             </p>
             <div className="mt-7 space-y-4">
               <Field
@@ -228,13 +229,13 @@ function Onboarding() {
         {step === 2 && (
           <Panel>
             <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
-              A gentle question
+              Step 2 · Why you're here
             </p>
             <h2 className="mt-3 font-display text-3xl font-medium tracking-tight lg:text-4xl">
-              What brought you here today?
+              What are you building this for?
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
-              Pick anything that feels true. You can choose more than one.
+              Pick everything that applies — we'll prioritize accordingly.
             </p>
             <div className="mt-7 flex flex-wrap gap-2">
               {reasons.map((r) => {
@@ -469,15 +470,15 @@ function Onboarding() {
         {step === 5 && (
           <Panel illustration={<PathIllustration className="h-full w-full" />}>
             <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
-              A note before we begin
+              How this works
             </p>
             <h2 className="mt-3 font-display text-3xl font-medium leading-tight tracking-tight lg:text-4xl">
-              You can stop anytime.
+              You drive. We organize.
             </h2>
             <ul className="mt-6 space-y-2 text-pretty text-lg leading-relaxed text-muted-foreground">
-              <li>You can skip questions.</li>
-              <li>You can come back later.</li>
-              <li className="text-foreground">Small steps still matter.</li>
+              <li>Skip anything that doesn't apply.</li>
+              <li>Edit, expand, or rewrite any answer later.</li>
+              <li className="text-foreground">Every section you finish becomes a real, shareable document.</li>
             </ul>
             <button
               onClick={next}
@@ -498,13 +499,13 @@ function Onboarding() {
               <FoundingBadge size="md" />
             </div>
             <h2 className="font-display text-3xl font-medium leading-tight tracking-tight lg:text-4xl">
-              {caregiverName ? `Welcome, ${caregiverName}.` : "Welcome to the pilot."}
+              {caregiverName ? `You're in, ${caregiverName}.` : "You're in."}
             </h2>
             <p className="mt-4 text-pretty text-muted-foreground">
-              Your founding family status is reserved. Next, our gentle assistant
-              will help you turn what you've shared
-              {firstLovedOneName ? ` about ${firstLovedOneName}${dependents.length > 1 ? " and your other loved ones" : ""}` : ""} into the first pages
-              of your plan — one quiet question at a time.
+              Founding family status locked in. Next, the assistant turns what
+              you know
+              {firstLovedOneName ? ` about ${firstLovedOneName}${dependents.length > 1 ? " and the others" : ""}` : ""} into
+              the first real pages of your plan — in your words, on your terms.
             </p>
 
             <div className="mt-6 rounded-2xl border border-border bg-surface-soft p-5 text-sm">
