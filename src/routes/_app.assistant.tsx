@@ -98,7 +98,9 @@ export default function Assistant() {
               ? "Structuring what you shared…"
               : stage === "wizard"
                 ? "Sharpening the details."
-                : "Your first pages are drafted."
+                : stage === "ready"
+                  ? "We have enough for a first draft."
+                  : "Your first pages are drafted."
         }
         description={
           stage === "dump"
@@ -107,7 +109,9 @@ export default function Assistant() {
               ? "Pulling themes from what you wrote and drafting targeted follow-ups."
               : stage === "wizard"
                 ? "One question at a time. Skip whatever doesn't apply."
-                : "What you shared is now the first sections of the plan."
+                : stage === "ready"
+                  ? "You can keep filling gaps, or let me generate the first draft now. You'll be able to edit anything later."
+                  : "What you shared is now the first sections of the plan."
         }
         actions={
           stage !== "dump" && stage !== "analyzing" ? (
