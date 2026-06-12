@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as AppRouteImport } from './routes/_app'
@@ -26,6 +27,11 @@ import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
 import { Route as AppCareTeamRouteImport } from './routes/_app.care-team'
 import { Route as AppAssistantRouteImport } from './routes/_app.assistant'
 
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
+  '/welcome': typeof WelcomeRoute
   '/assistant': typeof AppAssistantRoute
   '/care-team': typeof AppCareTeamRoute
   '/dashboard': typeof AppDashboardRoute
@@ -127,6 +134,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
+  '/welcome': typeof WelcomeRoute
   '/assistant': typeof AppAssistantRoute
   '/care-team': typeof AppCareTeamRoute
   '/dashboard': typeof AppDashboardRoute
@@ -146,6 +154,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
+  '/welcome': typeof WelcomeRoute
   '/_app/assistant': typeof AppAssistantRoute
   '/_app/care-team': typeof AppCareTeamRoute
   '/_app/dashboard': typeof AppDashboardRoute
@@ -165,6 +174,7 @@ export interface FileRouteTypes {
     | '/'
     | '/onboarding'
     | '/pricing'
+    | '/welcome'
     | '/assistant'
     | '/care-team'
     | '/dashboard'
@@ -182,6 +192,7 @@ export interface FileRouteTypes {
     | '/'
     | '/onboarding'
     | '/pricing'
+    | '/welcome'
     | '/assistant'
     | '/care-team'
     | '/dashboard'
@@ -200,6 +211,7 @@ export interface FileRouteTypes {
     | '/_app'
     | '/onboarding'
     | '/pricing'
+    | '/welcome'
     | '/_app/assistant'
     | '/_app/care-team'
     | '/_app/dashboard'
@@ -219,10 +231,18 @@ export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren
   OnboardingRoute: typeof OnboardingRoute
   PricingRoute: typeof PricingRoute
+  WelcomeRoute: typeof WelcomeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pricing': {
       id: '/pricing'
       path: '/pricing'
@@ -375,6 +395,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
   OnboardingRoute: OnboardingRoute,
   PricingRoute: PricingRoute,
+  WelcomeRoute: WelcomeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowRight, ArrowLeft, Leaf, Check, Sparkle, Plus, X } from "lucide-react";
 import { HearthIllustration, PathIllustration, HandsIllustration } from "@/components/soft-illustration";
-import { FoundingBadge } from "@/components/founding-badge";
+
 
 export const Route = createFileRoute("/onboarding")({
   head: () => ({
@@ -509,14 +509,15 @@ function Onboarding() {
           <Panel illustration={<HandsIllustration className="h-full w-full" />}>
             <div className="mb-4 flex items-center gap-2 text-sage-700">
               <Sparkle className="size-4 fill-sage-600/40" strokeWidth={1.5} />
-              <FoundingBadge size="md" />
+              <span className="text-xs font-semibold uppercase tracking-widest">
+                You're in
+              </span>
             </div>
             <h2 className="font-display text-3xl font-medium leading-tight tracking-tight lg:text-4xl">
               {caregiverName ? `You're in, ${caregiverName}.` : "You're in."}
             </h2>
             <p className="mt-4 text-pretty text-muted-foreground">
-              Founding family status locked in. Next, the assistant turns what
-              you know
+              Next, the assistant turns what you know
               {firstLovedOneName ? ` about ${firstLovedOneName}${dependents.length > 1 ? " and the others" : ""}` : ""} into
               the first real pages of your plan — in your words, on your terms.
             </p>

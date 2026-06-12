@@ -1,7 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ArrowRight, Leaf, Heart, Sparkles, Check } from "lucide-react";
-import { toast } from "sonner";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -49,6 +48,7 @@ const ANCHORS = [
 const COST_PER_FAMILY_MONTHLY = 3.2;
 
 function PayWhatYouCan() {
+  const navigate = useNavigate();
   const [amount, setAmount] = useState<number>(40);
   const [tip, setTip] = useState<number>(0);
   const [zeroMode, setZeroMode] = useState(false);
@@ -74,19 +74,17 @@ function PayWhatYouCan() {
     setZeroMode(false);
   };
 
+  // For now this just routes to /welcome with the right search params.
+  // When real Stripe checkout is wired, this will create a Checkout Session
+  // whose success_url points at /welcome with the same shape.
   const submit = () => {
     if (zeroMode) {
-      toast.success("You're in. No payment needed.", {
-        description:
-          "Continuity is yours. If your situation changes later, the door is always open.",
-        duration: 6000,
-      });
+      navigate({ to: "/welcome", search: { free: true } });
       return;
     }
-    toast.success(`Thank you — $${total} lifetime.`, {
-      description:
-        "Checkout isn't wired up yet. This is where the real payment screen will open.",
-      duration: 6000,
+    navigate({
+      to: "/welcome",
+      search: { amount: Math.max(1, Math.round(amount)), tip: tip || undefined },
     });
   };
 

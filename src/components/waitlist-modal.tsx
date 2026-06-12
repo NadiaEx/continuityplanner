@@ -51,11 +51,11 @@ export function WaitlistModal({
               <Check className="size-5" />
             </div>
             <h3 className="font-display text-2xl font-medium tracking-tight">
-              Welcome to the pilot.
+              You're in.
             </h3>
             <p className="mx-auto mt-3 max-w-sm text-pretty text-sm text-muted-foreground">
-              We'll be in touch soon with your founding family access.
-              Thank you for helping us build this with care.
+              We'll be in touch soon. Thank you for helping us build this
+              with care.
             </p>
             <button
               onClick={onClose}
@@ -76,7 +76,7 @@ export function WaitlistModal({
                 <Leaf className="size-3.5 text-primary-foreground" />
               </span>
               <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                Founding Family Pilot
+                Get early access
               </p>
             </div>
             <h3 className="font-display text-2xl font-medium tracking-tight">
@@ -148,10 +148,10 @@ export function WaitlistModal({
               type="submit"
               className="mt-7 w-full rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition hover:bg-sage-700"
             >
-              Request founding family access
+              Request access
             </button>
             <p className="mt-3 text-center text-[11px] text-muted-foreground">
-              We'll never share your information. You can leave the pilot anytime.
+              We'll never share your information. You can leave anytime.
             </p>
           </form>
         )}

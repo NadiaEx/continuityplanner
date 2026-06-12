@@ -1,15 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHeader, Card, Chip } from "@/components/page-shell";
-import { FoundingBadge } from "@/components/founding-badge";
 import { Heart, FileText, Sparkles, Users, Compass, ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/_app/insights")({
-  head: () => ({ meta: [{ title: "Founder Insights — Continuity" }] }),
+  head: () => ({ meta: [{ title: "Insights — Continuity" }] }),
   component: Insights,
 });
 
 const metrics = [
-  { label: "Active founding families", value: "127", trend: "+18 this month", icon: Users },
+  { label: "Active families", value: "127", trend: "+18 this month", icon: Users },
   { label: "Avg. plan progress", value: "54%", trend: "Quiet, steady", icon: Compass },
   { label: "Emergency packets generated", value: "412", trend: "Most-used export", icon: ShieldCheck },
   { label: "Reflections received", value: "1,284", trend: "We read every one", icon: Heart },
@@ -44,10 +43,9 @@ function Insights() {
   return (
     <PageShell>
       <PageHeader
-        eyebrow="Pilot insights"
+        eyebrow="Insights"
         title="What we're learning together."
         description="A quiet, qualitative view into how families are using Continuity. No vanity metrics — just signals that help us care for what to build next."
-        actions={<FoundingBadge size="md" />}
       />
 
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

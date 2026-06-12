@@ -15,7 +15,7 @@ import {
   HeartHandshake,
   LineChart,
 } from "lucide-react";
-import { FoundingBadge } from "@/components/founding-badge";
+
 
 const nav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -28,7 +28,7 @@ const nav = [
   { to: "/documents", label: "Documents", icon: FolderLock },
   { to: "/assistant", label: "AI Assistant", icon: Sparkles },
   { to: "/exports", label: "Exports", icon: Download },
-  { to: "/insights", label: "Pilot Insights", icon: LineChart },
+  { to: "/insights", label: "Insights", icon: LineChart },
   { to: "/settings", label: "Settings", icon: Settings },
 ] as const;
 
@@ -47,9 +47,6 @@ export function AppSidebar() {
           Continuity
         </span>
       </Link>
-      <div className="mb-6 px-2">
-        <FoundingBadge size="sm" />
-      </div>
 
       <nav className="flex flex-1 flex-col gap-0.5">
         {nav.map(({ to, label, icon: Icon }) => {
