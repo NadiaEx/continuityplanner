@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+
 import {
   ShieldCheck,
   Users,
@@ -22,7 +22,7 @@ import {
   Gift,
 } from "lucide-react";
 import heroImage from "@/assets/hero.jpg";
-import { WaitlistModal } from "@/components/waitlist-modal";
+
 import { HearthIllustration } from "@/components/soft-illustration";
 
 export const Route = createFileRoute("/")({
@@ -40,27 +40,25 @@ export const Route = createFileRoute("/")({
 });
 
 function Landing() {
-  const [waitlistOpen, setWaitlistOpen] = useState(false);
   return (
     <div className="min-h-dvh bg-background text-foreground">
-      <SiteHeader onJoin={() => setWaitlistOpen(true)} />
+      <SiteHeader />
       <main>
-        <Hero onJoin={() => setWaitlistOpen(true)} />
+        <Hero />
         <WhyFamilies />
-        <PilotSection onJoin={() => setWaitlistOpen(true)} />
+        <PilotSection />
         <AiPreview />
         <Creates />
         <EmergencySection />
         <GentleProgress />
-        <CtaBand onJoin={() => setWaitlistOpen(true)} />
+        <CtaBand />
       </main>
       <SiteFooter />
-      <WaitlistModal open={waitlistOpen} onClose={() => setWaitlistOpen(false)} />
     </div>
   );
 }
 
-function SiteHeader({ onJoin }: { onJoin: () => void }) {
+function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 lg:px-8">
@@ -85,20 +83,20 @@ function SiteHeader({ onJoin }: { onJoin: () => void }) {
           >
             Demo Account
           </Link>
-          <button
-            onClick={onJoin}
+          <Link
+            to="/onboarding"
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
           >
-            Get started
+            Set up an account
             <ArrowRight className="size-3.5" />
-          </button>
+          </Link>
         </div>
       </div>
     </header>
   );
 }
 
-function Hero({ onJoin }: { onJoin: () => void }) {
+function Hero() {
   return (
     <section className="px-6 pb-16 pt-20 lg:px-8 lg:pb-24 lg:pt-28">
       <div className="mx-auto max-w-6xl">
@@ -117,13 +115,13 @@ function Hero({ onJoin }: { onJoin: () => void }) {
               own pace, with a community that's shaping the tool with you.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <button
-                onClick={onJoin}
+              <Link
+                to="/onboarding"
                 className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
               >
-                Get started
+                Set up an account
                 <ArrowRight className="size-4" />
-              </button>
+              </Link>
               <Link
                 to="/onboarding"
                 className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium text-foreground transition hover:bg-muted"
@@ -463,7 +461,7 @@ function GentleProgress() {
   );
 }
 
-function CtaBand({ onJoin }: { onJoin: () => void }) {
+function CtaBand() {
   return (
     <section className="px-6 py-20 lg:px-8">
       <div className="mx-auto max-w-4xl rounded-3xl border border-border bg-gradient-to-br from-sage-50/70 via-card to-mist-50/40 p-10 text-center lg:p-14">
@@ -478,12 +476,12 @@ function CtaBand({ onJoin }: { onJoin: () => void }) {
           you're ready — and shaped by every family who joins.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
-          <button
-            onClick={onJoin}
+          <Link
+            to="/onboarding"
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
           >
-            Get started <ArrowRight className="size-4" />
-          </button>
+            Set up an account <ArrowRight className="size-4" />
+          </Link>
         </div>
       </div>
     </section>
@@ -499,7 +497,7 @@ const pilotBenefits = [
   { icon: HeartPulse, title: "A direct line to the team", body: "We read every message personally and respond with care." },
 ];
 
-function PilotSection({ onJoin }: { onJoin: () => void }) {
+function PilotSection() {
   return (
     <section id="how" className="px-6 py-24 lg:px-8">
       <div className="mx-auto max-w-6xl">
@@ -520,12 +518,12 @@ function PilotSection({ onJoin }: { onJoin: () => void }) {
               away. Free access is always available, no questions asked.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <button
-                onClick={onJoin}
+              <Link
+                to="/onboarding"
                 className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground ring-2 ring-sage-600/15 transition hover:bg-sage-700"
               >
-                Get started <ArrowRight className="size-4" />
-              </button>
+                Set up an account <ArrowRight className="size-4" />
+              </Link>
               <Link
                 to="/pricing"
                 className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-6 py-3 text-sm font-medium hover:bg-muted"
