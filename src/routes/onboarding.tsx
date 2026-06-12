@@ -230,14 +230,11 @@ function Onboarding() {
 
         {step === 2 && (
           <Panel>
-            <p className="font-display text-xs uppercase tracking-[0.18em] text-muted-foreground">
-              Step 2 · Why you're here
-            </p>
-            <h2 className="mt-3 font-display text-3xl font-medium tracking-tight lg:text-4xl">
-              What are you building this for?
+            <h2 className="font-display text-3xl font-medium tracking-tight lg:text-4xl">
+              What brought you here?
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
-              Pick everything that applies — we'll prioritize accordingly.
+              Pick anything that hits. We'll prioritize the plan around it.
             </p>
             <div className="mt-7 flex flex-wrap gap-2">
               {reasons.map((r) => {
