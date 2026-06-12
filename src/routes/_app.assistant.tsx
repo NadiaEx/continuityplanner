@@ -555,3 +555,112 @@ function CompleteStage({
     </div>
   );
 }
+
+/* -------------------- Stage 3.5: Ready -------------------- */
+
+function ReadyStage({
+  plan,
+  answers,
+  questions,
+  onKeepGoing,
+  onGenerate,
+}: {
+  plan: Plan;
+  answers: Record<string, string>;
+  questions: Array<{ sectionId: string; sectionTitle: string; question: string }>;
+  onKeepGoing: (idx: number) => void;
+  onGenerate: () => void;
+}) {
+  const gaps = questions
+    .map((q, i) => ({ ...q, idx: i, answer: answers[`${q.sectionId}:${i}`] }))
+    .filter((q) => !q.answer?.trim());
+  const answered = questions.length - gaps.length;
+
+  return (
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_280px]">
+      <Card className="p-8 lg:p-10">
+        <div className="flex items-start gap-3">
+          <div className="grid size-9 place-items-center rounded-full bg-primary text-primary-foreground">
+            <Check className="size-4" />
+          </div>
+          <div>
+            <p className="font-display text-xl">
+              We have enough for a first draft. Should we start?
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              You've answered {answered} of {questions.length}. You can fill the remaining
+              gaps now, or generate the draft and refine anything later.
+            </p>
+          </div>
+        </div>
+
+        {gaps.length > 0 && (
+          <div className="mt-7">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              Gaps you can still fill ({gaps.length})
+            </p>
+            <ul className="mt-3 space-y-2">
+              {gaps.map((g) => (
+                <li
+                  key={`${g.sectionId}:${g.idx}`}
+                  className="flex items-start justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3"
+                >
+                  <div>
+                    <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+                      {g.sectionTitle}
+                    </p>
+                    <p className="mt-0.5 text-sm">{g.question}</p>
+                  </div>
+                  <button
+                    onClick={() => onKeepGoing(g.idx)}
+                    className="shrink-0 text-xs text-sage-700 hover:underline"
+                  >
+                    Answer
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <div className="mt-8 flex flex-wrap items-center justify-end gap-3">
+          <button
+            onClick={() => onKeepGoing(gaps[0]?.idx ?? 0)}
+            disabled={gaps.length === 0}
+            className="text-sm text-muted-foreground hover:text-foreground disabled:opacity-40"
+          >
+            Keep answering
+          </button>
+          <button
+            onClick={onGenerate}
+            className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-sage-700"
+          >
+            Yes, draft my plan <ArrowRight className="size-4" />
+          </button>
+        </div>
+      </Card>
+
+      <div className="space-y-4">
+        <Card className="bg-sage-50">
+          <p className="text-xs font-semibold uppercase tracking-widest text-sage-700">
+            What I'll draft
+          </p>
+          <ul className="mt-3 space-y-1.5 text-sm">
+            {plan.sections.map((s) => (
+              <li key={s.id} className="flex items-center gap-2">
+                <span className="size-1.5 rounded-full bg-primary" />
+                {s.title}
+              </li>
+            ))}
+          </ul>
+        </Card>
+        <Card>
+          <p className="text-sm text-muted-foreground">
+            Nothing is final. Every section stays editable, and you can come back to
+            unanswered questions anytime.
+          </p>
+        </Card>
+      </div>
+    </div>
+  );
+}
