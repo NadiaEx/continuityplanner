@@ -406,6 +406,20 @@ function WizardStage({
             className="mt-6 w-full resize-y rounded-2xl border border-border bg-card px-5 py-4 text-base leading-relaxed outline-none transition placeholder:text-muted-foreground/60 focus:border-sage-600/40 focus:ring-2 focus:ring-sage-600/10"
           />
 
+          {enoughForDraft && !isLast && (
+            <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-sage-600/30 bg-sage-50 px-4 py-3">
+              <p className="text-sm text-foreground">
+                We have enough for a first draft. You can keep going or generate it now.
+              </p>
+              <button
+                onClick={onDraftNow}
+                className="inline-flex items-center gap-1.5 rounded-full border border-sage-600/40 bg-card px-4 py-1.5 text-xs font-medium text-sage-700 transition hover:bg-sage-100"
+              >
+                Draft my plan now <ArrowRight className="size-3.5" />
+              </button>
+            </div>
+          )}
+
           <div className="mt-8 flex items-center justify-between">
             <button
               onClick={onBack}
