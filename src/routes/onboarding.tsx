@@ -499,13 +499,13 @@ function Onboarding() {
               <FoundingBadge size="md" />
             </div>
             <h2 className="font-display text-3xl font-medium leading-tight tracking-tight lg:text-4xl">
-              {caregiverName ? `Welcome, ${caregiverName}.` : "Welcome to the pilot."}
+              {caregiverName ? `You're in, ${caregiverName}.` : "You're in."}
             </h2>
             <p className="mt-4 text-pretty text-muted-foreground">
-              Your founding family status is reserved. Next, our gentle assistant
-              will help you turn what you've shared
-              {firstLovedOneName ? ` about ${firstLovedOneName}${dependents.length > 1 ? " and your other loved ones" : ""}` : ""} into the first pages
-              of your plan — one quiet question at a time.
+              Founding family status locked in. Next, the assistant turns what
+              you know
+              {firstLovedOneName ? ` about ${firstLovedOneName}${dependents.length > 1 ? " and the others" : ""}` : ""} into
+              the first real pages of your plan — in your words, on your terms.
             </p>
 
             <div className="mt-6 rounded-2xl border border-border bg-surface-soft p-5 text-sm">
