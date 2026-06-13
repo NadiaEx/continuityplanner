@@ -9,47 +9,17 @@ export const Route = createFileRoute("/_app/profile")({
 });
 
 
-const sections = [
-  {
-    title: "Diagnoses",
-    items: ["Autism Spectrum Disorder", "Sensory Processing Disorder", "Anxiety"],
-  },
-  {
-    title: "Communication Style",
-    items: ["Uses 2–3 word phrases", "Prefers visual schedules", "Echolalia common"],
-  },
-  {
-    title: "Medical Needs",
-    items: ["Daily melatonin (bedtime)", "Quarterly therapy reviews"],
-  },
-  {
-    title: "Allergies",
-    items: ["Peanuts (severe)", "Penicillin"],
-  },
-  {
-    title: "Medications",
-    items: ["Melatonin 3mg — 8:30 PM", "Children's Zyrtec — seasonal"],
-  },
-  {
-    title: "Safety Risks",
-    items: ["Wandering when overstimulated", "Doesn't recognize traffic danger"],
-  },
-  {
-    title: "Sensory Needs",
-    items: ["Noise-canceling headphones", "Weighted blanket", "Soft lighting"],
-  },
-  {
-    title: "Favorite Comforts",
-    items: ["Blue blanket", "\"Wake Up\" song", "Pretzel sticks"],
-  },
-  {
-    title: "Trigger Behaviors",
-    items: ["Unexpected loud noises", "Surprise schedule changes"],
-  },
-  {
-    title: "Calming Supports",
-    items: ["Deep pressure squeezes", "Headphones + dim lights", "Counting to 10 together"],
-  },
+const sectionTitles = [
+  "Diagnoses",
+  "Communication Style",
+  "Medical Needs",
+  "Allergies",
+  "Medications",
+  "Safety Risks",
+  "Sensory Needs",
+  "Favorite Comforts",
+  "Trigger Behaviors",
+  "Calming Supports",
 ];
 
 export default function Profile() {
@@ -90,20 +60,15 @@ export default function Profile() {
       </Card>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {sections.map((s) => (
-          <Card key={s.title}>
+        {sectionTitles.map((title) => (
+          <Card key={title}>
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="font-display text-base font-semibold">{s.title}</h3>
+              <h3 className="font-display text-base font-semibold">{title}</h3>
               <button className="text-xs text-muted-foreground hover:text-foreground">Edit</button>
             </div>
-            <ul className="space-y-1.5 text-sm text-foreground">
-              {s.items.map((i) => (
-                <li key={i} className="flex gap-2">
-                  <span className="mt-1.5 size-1 shrink-0 rounded-full bg-primary" />
-                  {i}
-                </li>
-              ))}
-            </ul>
+            <p className="text-xs text-muted-foreground">
+              Nothing here yet — add a note when you're ready.
+            </p>
             <button className="mt-4 inline-flex items-center gap-1 text-xs text-primary hover:underline">
               <Plus className="size-3" /> Add note
             </button>
