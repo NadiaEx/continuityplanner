@@ -18,6 +18,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppSettingsRouteImport } from './routes/_app.settings'
 import { Route as AppRoutinesRouteImport } from './routes/_app.routines'
 import { Route as AppProfileRouteImport } from './routes/_app.profile'
+import { Route as AppOnePageRouteImport } from './routes/_app.one-page'
 import { Route as AppMedicalRouteImport } from './routes/_app.medical'
 import { Route as AppInsightsRouteImport } from './routes/_app.insights'
 import { Route as AppFutureRouteImport } from './routes/_app.future'
@@ -70,6 +71,11 @@ const AppRoutinesRoute = AppRoutinesRouteImport.update({
 const AppProfileRoute = AppProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppOnePageRoute = AppOnePageRouteImport.update({
+  id: '/one-page',
+  path: '/one-page',
   getParentRoute: () => AppRoute,
 } as any)
 const AppMedicalRoute = AppMedicalRouteImport.update({
@@ -133,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/future': typeof AppFutureRoute
   '/insights': typeof AppInsightsRoute
   '/medical': typeof AppMedicalRoute
+  '/one-page': typeof AppOnePageRoute
   '/profile': typeof AppProfileRoute
   '/routines': typeof AppRoutinesRoute
   '/settings': typeof AppSettingsRoute
@@ -152,6 +159,7 @@ export interface FileRoutesByTo {
   '/future': typeof AppFutureRoute
   '/insights': typeof AppInsightsRoute
   '/medical': typeof AppMedicalRoute
+  '/one-page': typeof AppOnePageRoute
   '/profile': typeof AppProfileRoute
   '/routines': typeof AppRoutinesRoute
   '/settings': typeof AppSettingsRoute
@@ -173,6 +181,7 @@ export interface FileRoutesById {
   '/_app/future': typeof AppFutureRoute
   '/_app/insights': typeof AppInsightsRoute
   '/_app/medical': typeof AppMedicalRoute
+  '/_app/one-page': typeof AppOnePageRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/routines': typeof AppRoutinesRoute
   '/_app/settings': typeof AppSettingsRoute
@@ -194,6 +203,7 @@ export interface FileRouteTypes {
     | '/future'
     | '/insights'
     | '/medical'
+    | '/one-page'
     | '/profile'
     | '/routines'
     | '/settings'
@@ -213,6 +223,7 @@ export interface FileRouteTypes {
     | '/future'
     | '/insights'
     | '/medical'
+    | '/one-page'
     | '/profile'
     | '/routines'
     | '/settings'
@@ -233,6 +244,7 @@ export interface FileRouteTypes {
     | '/_app/future'
     | '/_app/insights'
     | '/_app/medical'
+    | '/_app/one-page'
     | '/_app/profile'
     | '/_app/routines'
     | '/_app/settings'
@@ -312,6 +324,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/one-page': {
+      id: '/_app/one-page'
+      path: '/one-page'
+      fullPath: '/one-page'
+      preLoaderRoute: typeof AppOnePageRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/medical': {
       id: '/_app/medical'
       path: '/medical'
@@ -388,6 +407,7 @@ interface AppRouteChildren {
   AppFutureRoute: typeof AppFutureRoute
   AppInsightsRoute: typeof AppInsightsRoute
   AppMedicalRoute: typeof AppMedicalRoute
+  AppOnePageRoute: typeof AppOnePageRoute
   AppProfileRoute: typeof AppProfileRoute
   AppRoutinesRoute: typeof AppRoutinesRoute
   AppSettingsRoute: typeof AppSettingsRoute
@@ -403,6 +423,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppFutureRoute: AppFutureRoute,
   AppInsightsRoute: AppInsightsRoute,
   AppMedicalRoute: AppMedicalRoute,
+  AppOnePageRoute: AppOnePageRoute,
   AppProfileRoute: AppProfileRoute,
   AppRoutinesRoute: AppRoutinesRoute,
   AppSettingsRoute: AppSettingsRoute,
@@ -421,3 +442,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
