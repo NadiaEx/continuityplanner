@@ -160,7 +160,7 @@ function Onboarding() {
           {
             user_id: session.user.id,
             section_id: "onboarding",
-            extracted_data: profile as unknown as Record<string, unknown>,
+            extracted_data: JSON.parse(JSON.stringify(profile)),
           },
           { onConflict: "user_id,section_id" } as never,
         );
