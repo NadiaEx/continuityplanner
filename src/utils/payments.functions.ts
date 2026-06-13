@@ -31,11 +31,11 @@ export const createContinuityTransaction = createServerFn({ method: "POST" })
       if (!Number.isInteger(data.amountCents) || data.amountCents < 70) {
         throw new Error("Minimum contribution is $0.70 (Paddle minimum).");
       }
-      if (data.amountCents > 1_000_000) throw new Error("Amount too large.");
+      if (data.amountCents > 10_000_000) throw new Error("Amount too large.");
       if (!Number.isInteger(data.tipCents) || data.tipCents < 0) {
         throw new Error("Invalid tip.");
       }
-      if (data.tipCents > 1_000_000) throw new Error("Tip too large.");
+      if (data.tipCents > 10_000_000) throw new Error("Tip too large.");
       if (data.environment !== "sandbox" && data.environment !== "live") {
         throw new Error("Invalid environment.");
       }
