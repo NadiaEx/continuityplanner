@@ -392,9 +392,15 @@ function PayWhatYouCan() {
             <li>· Every document & export</li>
             <li>· AI-guided care conversations</li>
             <li>· Care team sharing</li>
-            <li>· Lifetime access</li>
+            <li>· 2 years of secure storage included</li>
             <li>· Future updates included</li>
           </ul>
+          <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
+            Pay once and your plan is safely stored for 2 years. About 60
+            days before that ends, we'll email you to renew at-cost
+            (roughly $4/year) or download everything to keep. Nothing is
+            ever deleted without warning.
+          </p>
         </div>
       </section>
     </div>
