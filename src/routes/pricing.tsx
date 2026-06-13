@@ -9,13 +9,13 @@ export const Route = createFileRoute("/pricing")({
       {
         name: "description",
         content:
-          "Continuity is pay-what-you-can. Pay once and your plan is safely stored for 2 years. We'll email you 60 days before it ends to renew at-cost or download everything. Nothing is deleted without warning.",
+          "Continuity is pay-what-you-can. Pay once and your plan is safely stored for 1 year. We'll email you 60 days before it ends to renew at-cost or download everything. Nothing is deleted without warning.",
       },
       { property: "og:title", content: "Pay what you can — Continuity" },
       {
         property: "og:description",
         content:
-          "Pay-what-you-can. 2 years of secure storage included. Nobody turned away. Cover another caregiver if you can.",
+          "Pay-what-you-can. 1 year of secure storage included. Nobody turned away. Cover another caregiver if you can.",
       },
     ],
   }),
@@ -114,7 +114,7 @@ function PayWhatYouCan() {
         <div className="mx-auto max-w-2xl text-center">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-[11px] font-medium uppercase tracking-[0.15em] text-muted-foreground">
             <span className="size-1.5 rounded-full bg-primary" />
-            Pay what you can · 2 years included
+            Pay what you can · 1 year included
           </div>
           <h1 className="text-balance font-display text-4xl font-medium leading-[1.1] tracking-tight lg:text-5xl">
             Pay what you can.
@@ -132,7 +132,7 @@ function PayWhatYouCan() {
               covering someone who can't.
             </p>
             <p className="text-sm">
-              Pay once today. Your plan is safely stored for 2 years. About
+              Pay once today. Your plan is safely stored for 1 year. About
               60 days before that's up, we'll email you — renew at-cost
               (roughly $4/year) or download everything to keep. Nothing is
               ever deleted without a heads-up.
@@ -181,7 +181,7 @@ function PayWhatYouCan() {
                   </span>
                 </div>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  One time. 2 years of secure storage included. Nobody turned away.
+                  One time. 1 year of secure storage included. Nobody turned away.
                 </p>
                 <ul className="mt-6 space-y-2.5 text-sm">
                   {[
@@ -189,7 +189,7 @@ function PayWhatYouCan() {
                     "Every document & export",
                     "AI-guided care conversations",
                     "Care team sharing",
-                    "2 years of secure storage included",
+                    "1 year of secure storage included",
                     "Future updates included",
                   ].map((f) => (
                     <li key={f} className="flex items-start gap-2">
@@ -392,11 +392,11 @@ function PayWhatYouCan() {
             <li>· Every document & export</li>
             <li>· AI-guided care conversations</li>
             <li>· Care team sharing</li>
-            <li>· 2 years of secure storage included</li>
+            <li>· 1 year of secure storage included</li>
             <li>· Future updates included</li>
           </ul>
           <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
-            Pay once and your plan is safely stored for 2 years. About 60
+            Pay once and your plan is safely stored for 1 year. About 60
             days before that ends, we'll email you to renew at-cost
             (roughly $4/year) or download everything to keep. Nothing is
             ever deleted without warning.
