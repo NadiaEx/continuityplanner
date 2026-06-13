@@ -37,15 +37,6 @@ export const Route = createFileRoute("/_app/documents")({
   component: Documents,
 });
 
-const docs = [
-  { name: "IEP — Spring 2025.pdf", category: "Education", size: "1.2 MB", date: "Apr 12, 2025", icon: FileText },
-  { name: "Allergy testing results.pdf", category: "Medical", size: "420 KB", date: "Mar 02, 2025", icon: FileText },
-  { name: "Therapy report — April.pdf", category: "Medical", size: "880 KB", date: "Apr 30, 2025", icon: FileText },
-  { name: "Guardianship draft.docx", category: "Legal", size: "75 KB", date: "May 10, 2025", icon: FileText },
-  { name: "Family photo.jpg", category: "Family", size: "2.4 MB", date: "May 22, 2025", icon: FileImage },
-  { name: "Insurance card.pdf", category: "Medical", size: "210 KB", date: "Jan 04, 2025", icon: FileText },
-];
-
 const cats = ["All", "Medical", "Education", "Legal", "Family"];
 
 export default function Documents() {
@@ -82,24 +73,15 @@ export default function Documents() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {docs.map(({ name, category, size, date }) => (
-          <Card key={name}>
-            <DocThumbnail name={name} category={category} />
-            <div className="flex items-start justify-between gap-2">
-              <div className="min-w-0 flex-1">
-                <p className="truncate font-medium">{name}</p>
-                <div className="mt-1.5 flex items-center gap-2 text-xs text-muted-foreground">
-                  <span>{size}</span>
-                  <span>·</span>
-                  <span>{date}</span>
-                </div>
-              </div>
-              <FileLock className="size-3.5 shrink-0 text-muted-foreground" />
-            </div>
-          </Card>
-        ))}
-      </div>
+      <Card className="grid place-items-center py-16 text-center">
+        <FileImage className="mb-3 size-10 text-muted-foreground/40" strokeWidth={1.5} />
+        <p className="font-display text-lg font-medium">No documents yet</p>
+        <p className="mt-1.5 max-w-sm text-sm text-muted-foreground">
+          Upload IEPs, medical records, legal paperwork, or family photos — everything stays
+          encrypted and only visible to people you trust.
+        </p>
+        <Button className="mt-5"><Upload className="size-4" /> Upload your first document</Button>
+      </Card>
     </PageShell>
   );
 }
