@@ -92,7 +92,7 @@ export default function Dashboard() {
               Recommended next step
             </p>
             <h3 className="mt-2 font-display text-lg font-medium">
-              Document Leo's sensory triggers
+              Document {lovedOneName}'s sensory triggers
             </h3>
             <p className="mt-1 text-sm text-muted-foreground">
               A short 5-minute conversation with the AI assistant.
