@@ -1,26 +1,26 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
+import { PageShell, PageHeader, Card, Button } from "@/components/page-shell";
 import { Phone, Hospital, ShieldAlert, MapPin, Pill, Download, QrCode } from "lucide-react";
+import { useProfile } from "@/lib/use-profile";
 
 export const Route = createFileRoute("/_app/emergency")({
   head: () => ({ meta: [{ title: "Emergency Plan — Continuity" }] }),
   component: Emergency,
 });
 
-const contacts = [
-  { name: "Maya Henderson", role: "Parent", phone: "(415) 555-0142", priority: 1 },
-  { name: "Jordan Henderson", role: "Parent", phone: "(415) 555-0188", priority: 2 },
-  { name: "Dr. Anjali Patel", role: "Primary Pediatrician", phone: "(415) 555-0231", priority: 3 },
-  { name: "Aunt Rose", role: "Trusted family", phone: "(415) 555-0319", priority: 4 },
-];
 
 export default function Emergency() {
+  const { lovedOneName, caregiverName } = useProfile();
+  const contacts =
+    caregiverName !== "there"
+      ? [{ name: caregiverName, role: "Primary caregiver", phone: "—", priority: 1 }]
+      : [];
   return (
     <PageShell>
       <PageHeader
         eyebrow="Emergency Plan"
         title="Ready, just in case."
-        description="If you cannot be there, this is what others need to know to support Leo safely."
+        description={`If you cannot be there, this is what others need to know to support ${lovedOneName} safely.`}
         actions={
           <>
             <Button variant="secondary"><QrCode className="size-4" /> Generate QR tag</Button>
@@ -35,17 +35,11 @@ export default function Emergency() {
             <p className="text-xs font-semibold uppercase tracking-widest text-background/60">
               Quick reference summary
             </p>
-            <h3 className="mt-2 font-display text-2xl font-medium">Leo Henderson, 8</h3>
+            <h3 className="mt-2 font-display text-2xl font-medium">{lovedOneName}</h3>
             <p className="mt-2 max-w-xl text-sm text-background/70">
-              Non-verbal. Communicates via AAC device. Severe peanut allergy.
-              Sensitive to loud alarms — do not separate from headphones.
-              Wandering risk if overstimulated.
+              Add the most important things a stranger would need to know — allergies,
+              communication style, what calms {lovedOneName} down, and any safety risks.
             </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <Chip tone="warn">Peanut allergy</Chip>
-              <Chip tone="warn">Wandering risk</Chip>
-              <Chip tone="mist">AAC user</Chip>
-            </div>
           </div>
           <div className="rounded-2xl bg-background p-4">
             <div className="grid size-32 place-items-center rounded-lg bg-muted text-muted-foreground">
@@ -61,37 +55,41 @@ export default function Emergency() {
             <Phone className="size-4 text-primary" />
             <h3 className="font-display text-lg font-semibold">Emergency contacts</h3>
           </div>
-          <ul className="space-y-2">
-            {contacts.map((c) => (
-              <li
-                key={c.name}
-                className="flex items-center justify-between rounded-xl border border-border bg-surface-soft p-3"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="grid size-7 place-items-center rounded-full bg-sage-100 text-xs font-semibold text-sage-700">
-                    {c.priority}
-                  </span>
-                  <div>
-                    <p className="text-sm font-medium">{c.name}</p>
-                    <p className="text-xs text-muted-foreground">{c.role}</p>
+          {contacts.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              No contacts yet. Add the people who should be called first in a crisis.
+            </p>
+          ) : (
+            <ul className="space-y-2">
+              {contacts.map((c) => (
+                <li
+                  key={c.name}
+                  className="flex items-center justify-between rounded-xl border border-border bg-surface-soft p-3"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="grid size-7 place-items-center rounded-full bg-sage-100 text-xs font-semibold text-sage-700">
+                      {c.priority}
+                    </span>
+                    <div>
+                      <p className="text-sm font-medium">{c.name}</p>
+                      <p className="text-xs text-muted-foreground">{c.role}</p>
+                    </div>
                   </div>
-                </div>
-                <span className="font-mono text-xs text-muted-foreground">{c.phone}</span>
-              </li>
-            ))}
-          </ul>
+                  <span className="font-mono text-xs text-muted-foreground">{c.phone}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </Card>
+
 
         <Card>
           <div className="mb-4 flex items-center gap-2">
             <Hospital className="size-4 text-primary" />
             <h3 className="font-display text-lg font-semibold">Hospital instructions</h3>
           </div>
-          <ul className="space-y-2 text-sm">
-            <li>• Preferred hospital: UCSF Benioff Children's</li>
-            <li>• Always keep AAC device with him during transport</li>
-            <li>• Dim ambulance lights if possible</li>
-            <li>• Verbal narration before any touch helps</li>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li>Add a preferred hospital, transport notes, and anything a first responder should know.</li>
           </ul>
         </Card>
 
@@ -100,11 +98,9 @@ export default function Emergency() {
             <Pill className="size-4 text-primary" />
             <h3 className="font-display text-lg font-semibold">Medication summary</h3>
           </div>
-          <ul className="space-y-2 text-sm">
-            <li>• Melatonin 3mg — 8:30 PM nightly</li>
-            <li>• EpiPen Jr — emergency only (in backpack &amp; kitchen)</li>
-            <li>• Zyrtec 5mg — seasonal, as needed</li>
-          </ul>
+          <p className="text-sm text-muted-foreground">
+            List current medications, doses, timing, and where they're kept.
+          </p>
         </Card>
 
         <Card>
@@ -112,13 +108,12 @@ export default function Emergency() {
             <ShieldAlert className="size-4 text-primary" />
             <h3 className="font-display text-lg font-semibold">De-escalation strategies</h3>
           </div>
-          <ul className="space-y-2 text-sm">
-            <li>• Lower your voice. Don't crowd him.</li>
-            <li>• Offer headphones first, words second</li>
-            <li>• Deep pressure on shoulders (with consent)</li>
-            <li>• Never grab his arm — use AAC device to communicate</li>
-          </ul>
+          <p className="text-sm text-muted-foreground">
+            What works to help {lovedOneName} feel safe when overwhelmed — voice,
+            touch, space, and what to avoid.
+          </p>
         </Card>
+
 
         <Card className="lg:col-span-2">
           <div className="mb-4 flex items-center gap-2">
@@ -126,10 +121,8 @@ export default function Emergency() {
             <h3 className="font-display text-lg font-semibold">Wandering response</h3>
           </div>
           <p className="text-sm text-muted-foreground">
-            Leo is drawn to water and quiet, dim spaces. If missing, check bathrooms,
-            closets, and any nearby fountains or ponds first. He responds to his name
-            but may not approach strangers. Carry the laminated communication card
-            (in his backpack) to introduce yourself silently.
+            Note where {lovedOneName} might go if overwhelmed, what draws them, and
+            how a stranger should approach. Add details as you go — there's no rush.
           </p>
         </Card>
       </div>

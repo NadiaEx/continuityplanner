@@ -1,11 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
 import { Plus, Camera, Upload } from "lucide-react";
+import { useProfile } from "@/lib/use-profile";
 
 export const Route = createFileRoute("/_app/profile")({
   head: () => ({ meta: [{ title: "Child Profile — Continuity" }] }),
   component: Profile,
 });
+
 
 const sections = [
   {
@@ -51,12 +53,15 @@ const sections = [
 ];
 
 export default function Profile() {
+  const { lovedOneName, caregiverName, profile } = useProfile();
+  const persona = profile.dependents[0]?.persona;
+  const caredBy = caregiverName !== "there" ? `Cared for by ${caregiverName}` : "Add caregiver details";
   return (
     <PageShell>
       <PageHeader
         eyebrow="Child Profile"
-        title="Leo Henderson"
-        description="A living portrait of who Leo is, what he needs, and what brings him comfort."
+        title={lovedOneName}
+        description={`A living portrait of who ${lovedOneName} is, what they need, and what brings them comfort.`}
         actions={
           <>
             <Button variant="secondary"><Upload className="size-4" /> Upload document</Button>
@@ -70,12 +75,15 @@ export default function Profile() {
           <Camera className="size-7" strokeWidth={1.5} />
         </div>
         <div className="flex-1">
-          <h2 className="font-display text-2xl font-medium">Leo Henderson</h2>
-          <p className="text-sm text-muted-foreground">8 years old · Cared for by Maya &amp; Jordan</p>
+          <h2 className="font-display text-2xl font-medium">{lovedOneName}</h2>
+          <p className="text-sm text-muted-foreground">
+            {persona ? `${persona} · ` : ""}{caredBy}
+          </p>
           <div className="mt-3 flex flex-wrap gap-2">
-            <Chip tone="sage">Non-verbal communication</Chip>
-            <Chip tone="mist">Sensory sensitive</Chip>
-            <Chip tone="warn">Wandering risk</Chip>
+            {(profile.dependents[0]?.complexity ?? []).map((c) => (
+              <Chip key={c} tone="sage">{c}</Chip>
+            ))}
+
           </div>
         </div>
         <Button variant="secondary">Edit details</Button>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ArrowRight, ArrowLeft, Leaf, Check, Sparkle, Plus, X } from "lucide-react";
 import { HearthIllustration, PathIllustration, HandsIllustration } from "@/components/soft-illustration";
 import { getRestoredSession } from "@/lib/auth-flow";
+import { supabase } from "@/integrations/supabase/client";
 
 
 export const Route = createFileRoute("/onboarding")({
@@ -147,6 +148,27 @@ function Onboarding() {
     }
     const session = await getRestoredSession();
     if (session) {
+      // Persist caregiver name + onboarding payload to the user's profile row
+      try {
+        await supabase
+          .from("profiles")
+          .update({
+            display_name: caregiverName.trim() || null,
+          })
+          .eq("id", session.user.id);
+        await supabase
+          .from("responses")
+          .delete()
+          .eq("user_id", session.user.id)
+          .eq("section_id", "onboarding");
+        await supabase.from("responses").insert({
+          user_id: session.user.id,
+          section_id: "onboarding",
+          extracted_data: JSON.parse(JSON.stringify(profile)),
+        });
+      } catch {
+        // best-effort; localStorage already has it
+      }
       navigate({ to });
       return;
     }

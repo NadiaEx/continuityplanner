@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
 
 import { FeedbackPrompt } from "@/components/feedback-prompt";
+import { useProfile } from "@/lib/use-profile";
 import {
   ArrowRight,
   ShieldCheck,
@@ -28,12 +29,6 @@ const stats = [
   { label: "Future Planning Progress", value: 42, tint: "mist" as const, icon: Compass },
 ];
 
-const recent = [
-  { title: "Added Leo's calming song to bedtime routine", when: "2 hours ago" },
-  { title: "Updated Dr. Patel's contact information", when: "Yesterday" },
-  { title: "Generated draft Emergency Care Packet", when: "3 days ago" },
-];
-
 const next = [
   { title: "Tell us about morning transitions", time: "~5 min" },
   { title: "Add an emergency contact", time: "~2 min" },
@@ -41,11 +36,16 @@ const next = [
 ];
 
 export default function Dashboard() {
+  const { caregiverFirstName, lovedOneName } = useProfile();
+  const recent = [
+    { title: `Started ${lovedOneName}'s care plan`, when: "Just now" },
+    { title: "Welcome to Continuity", when: "Today" },
+  ];
   return (
     <PageShell>
       <PageHeader
         eyebrow="Welcome back"
-        title="Good morning, Maya."
+        title={`Good to see you, ${caregiverFirstName}.`}
         description="You're making progress. This does not need to be perfect — you can revisit anything, anytime."
         actions={
           <Link to="/assistant">
@@ -55,6 +55,7 @@ export default function Dashboard() {
           </Link>
         }
       />
+
 
       <div className="mb-6 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-50 px-2.5 py-1 text-sage-700">
@@ -91,7 +92,7 @@ export default function Dashboard() {
               Recommended next step
             </p>
             <h3 className="mt-2 font-display text-lg font-medium">
-              Document Leo's sensory triggers
+              Document {lovedOneName}'s sensory triggers
             </h3>
             <p className="mt-1 text-sm text-muted-foreground">
               A short 5-minute conversation with the AI assistant.
@@ -158,7 +159,7 @@ export default function Dashboard() {
               <div>
                 <p className="text-sm font-medium">Upcoming reminder</p>
                 <p className="text-xs text-muted-foreground">
-                  Review Leo's medication list with Dr. Patel — Monday, 10:00 AM
+                  Add your first reminder to see it here.
                 </p>
               </div>
             </div>

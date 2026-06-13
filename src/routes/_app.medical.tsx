@@ -1,54 +1,49 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
+import { PageShell, PageHeader, Card, Button } from "@/components/page-shell";
 import { Plus, Stethoscope, Pill, Syringe, FileText } from "lucide-react";
+import { useProfile } from "@/lib/use-profile";
 
 export const Route = createFileRoute("/_app/medical")({
   head: () => ({ meta: [{ title: "Medical Information — Continuity" }] }),
   component: Medical,
 });
 
-const meds = [
-  { name: "Melatonin", dose: "3 mg", time: "8:30 PM nightly", notes: "With water, after teeth brushed" },
-  { name: "EpiPen Jr", dose: "0.15 mg", time: "Emergency only", notes: "Backpack + kitchen drawer" },
-  { name: "Zyrtec", dose: "5 mg", time: "Seasonal AM", notes: "Spring allergies" },
-];
+const meds: { name: string; dose: string; time: string; notes: string }[] = [];
 
-const providers = [
-  { name: "Dr. Anjali Patel", role: "Pediatrician", phone: "(415) 555-0231" },
-  { name: "Sarah Kim, OT", role: "Occupational Therapist", phone: "(415) 555-0144" },
-  { name: "Dr. Marcus Lee", role: "Allergist", phone: "(415) 555-0277" },
-];
+const providers: { name: string; role: string; phone: string }[] = [];
+
 
 export default function Medical() {
+  const { lovedOneName } = useProfile();
   return (
     <PageShell>
       <PageHeader
         eyebrow="Medical Information"
         title="Quietly organized."
-        description="A clear, current picture of Leo's health — kept in one calm place."
+        description={`A clear, current picture of ${lovedOneName}'s health — kept in one calm place.`}
         actions={<Button><Plus className="size-4" /> Add record</Button>}
       />
+
 
       <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card>
           <Stethoscope className="mb-3 size-5 text-primary" strokeWidth={1.75} />
           <p className="text-sm text-muted-foreground">Conditions</p>
-          <p className="mt-1 font-display text-2xl font-medium">3</p>
-          <p className="mt-1 text-xs text-muted-foreground">Last reviewed: April 2025</p>
+          <p className="mt-1 font-display text-2xl font-medium">—</p>
+          <p className="mt-1 text-xs text-muted-foreground">Add when ready</p>
         </Card>
         <Card>
           <Pill className="mb-3 size-5 text-primary" strokeWidth={1.75} />
           <p className="text-sm text-muted-foreground">Active medications</p>
-          <p className="mt-1 font-display text-2xl font-medium">2</p>
-          <p className="mt-1 text-xs text-muted-foreground">+ 1 seasonal</p>
+          <p className="mt-1 font-display text-2xl font-medium">{meds.length}</p>
         </Card>
         <Card>
           <Syringe className="mb-3 size-5 text-primary" strokeWidth={1.75} />
           <p className="text-sm text-muted-foreground">Allergies</p>
-          <p className="mt-1 font-display text-2xl font-medium">2</p>
-          <Chip tone="warn">1 severe</Chip>
+          <p className="mt-1 font-display text-2xl font-medium">—</p>
         </Card>
       </div>
+
 
       <Card className="mb-8">
         <div className="mb-4 flex items-center justify-between">

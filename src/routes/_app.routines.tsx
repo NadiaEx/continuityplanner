@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
 import { Plus, Sunrise, UtensilsCrossed, School, Repeat, Bath, Moon } from "lucide-react";
+import { useProfile } from "@/lib/use-profile";
 
 export const Route = createFileRoute("/_app/routines")({
   head: () => ({ meta: [{ title: "Daily Routines — Continuity" }] }),
@@ -75,14 +76,16 @@ const blocks = [
 ];
 
 export default function Routines() {
+  const { lovedOneName } = useProfile();
   return (
     <PageShell>
       <PageHeader
         eyebrow="Daily Routines"
-        title="The rhythm of Leo's day."
-        description="The small habits and predictable moments that help Leo feel safe and successful."
+        title={`The rhythm of ${lovedOneName}'s day.`}
+        description={`The small habits and predictable moments that help ${lovedOneName} feel safe and successful.`}
         actions={<Button><Plus className="size-4" /> Add block</Button>}
       />
+
 
       <div className="space-y-5">
         {blocks.map(({ title, time, icon: Icon, steps, tip }) => (
