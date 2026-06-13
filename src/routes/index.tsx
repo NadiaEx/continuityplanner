@@ -25,7 +25,7 @@ import {
 import heroImage from "@/assets/hero.jpg";
 
 import { HearthIllustration } from "@/components/soft-illustration";
-import { supabase } from "@/integrations/supabase/client";
+import { getRestoredSession } from "@/lib/auth-flow";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -47,21 +47,14 @@ function Landing() {
   useEffect(() => {
     let cancelled = false;
 
-    supabase.auth.getSession().then(({ data }) => {
-      if (!cancelled && data.session) {
-        navigate({ to: "/dashboard", replace: true });
-      }
-    });
-
-    const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) {
+    getRestoredSession().then((session) => {
+      if (!cancelled && session) {
         navigate({ to: "/dashboard", replace: true });
       }
     });
 
     return () => {
       cancelled = true;
-      subscription.subscription.unsubscribe();
     };
   }, [navigate]);
 
