@@ -2,35 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHeader, Card, Button } from "@/components/page-shell";
 import { Upload, Search, FileImage } from "lucide-react";
 
-function DocThumbnail({ name, category }: { name: string; category: string }) {
-  const isPdf = name.endsWith(".pdf") || name.endsWith(".docx");
-  return (
-    <div className={`mb-4 flex aspect-[4/3] flex-col rounded-xl border border-border p-3 shadow-sm ${isPdf ? "bg-[#f6f5f3]" : "bg-surface-soft"}`}>
-      {isPdf ? (
-        <>
-          <div className="mb-2 flex items-center gap-1.5">
-            <div className="h-1.5 w-8 rounded bg-sage-100" />
-            <div className="h-1 w-6 rounded bg-muted/40" />
-          </div>
-          <div className="flex-1 space-y-1.5 rounded-md bg-white p-2 shadow-sm">
-            <div className="h-1 w-3/4 rounded bg-muted/50" />
-            <div className="h-1 w-full rounded bg-muted/40" />
-            <div className="h-1 w-5/6 rounded bg-muted/40" />
-            <div className="h-1 w-2/3 rounded bg-muted/40" />
-          </div>
-        </>
-      ) : (
-        <div className="grid flex-1 place-items-center">
-          <FileImage className="size-10 text-muted-foreground/40" strokeWidth={1.5} />
-        </div>
-      )}
-      <div className="mt-2 flex items-center justify-between text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-        <span>{category}</span>
-        <span>{isPdf ? "PDF" : "JPG"}</span>
-      </div>
-    </div>
-  );
-}
 
 export const Route = createFileRoute("/_app/documents")({
   head: () => ({ meta: [{ title: "Documents — Continuity" }] }),
