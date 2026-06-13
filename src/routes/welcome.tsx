@@ -74,7 +74,7 @@ function Welcome() {
               <>
                 <p>
                   <span className="text-foreground">${total} received.</span>{" "}
-                  One time. Lifetime. That's it.
+                  Pay once — your plan is safely stored for the next 2 years.
                 </p>
                 {tip && tip > 0 ? (
                   <p>
