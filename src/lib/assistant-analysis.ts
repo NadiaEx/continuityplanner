@@ -1,14 +1,10 @@
 // Assistant analysis layer.
 //
-// This module takes the open-ended "tell me about ___" dump from the
-// caregiver and returns a structured Plan: themes detected in what they
-// shared + a tailored set of follow-up questions to ask in the wizard.
-//
-// Today this is a deterministic local stub (keyword-based) so the whole
-// flow can be built and explored without any backend. To swap in Lovable
-// AI, replace the body of `analyzeDump()` with a server function that
-// calls Gemini with a structured-output schema returning the same `Plan`
-// shape — every caller imports from this file, so it's a one-file change.
+// Calls a Supabase Edge Function (analyze-care-dump) which proxies to the
+// Anthropic API server-side — the API key never touches the browser.
+// Falls back to a local keyword stub if the function is unavailable.
+
+import { supabase } from "@/integrations/supabase/client";
 
 export type PlanSection = {
   id: string;
@@ -32,8 +28,29 @@ export type AnalyzeInput = {
   dump: string;
 };
 
-// Keyword library used by the stub. Each entry maps to a plan section
-// with tailored follow-up questions.
+export async function analyzeDump(input: AnalyzeInput): Promise<Plan> {
+  const { lovedOneName, persona, dump } = input;
+
+  try {
+    const { data, error } = await supabase.functions.invoke("analyze-care-dump", {
+      body: { lovedOneName, persona, dump },
+    });
+
+    if (error) throw error;
+
+    if (!data?.summary || !Array.isArray(data?.sections) || !Array.isArray(data?.gaps)) {
+      throw new Error("Invalid plan shape returned from edge function");
+    }
+
+    return data as Plan;
+  } catch (err) {
+    console.error("[Continuity] Edge function failed, falling back to keywords:", err);
+    return keywordFallback(input);
+  }
+}
+
+// ── Keyword fallback ───────────────────────────────────────────────────────
+
 const THEMES: Array<{
   id: string;
   title: string;
@@ -139,24 +156,18 @@ const THEMES: Array<{
   },
 ];
 
-// Sections we always want to make sure get covered, even if not mentioned.
 const BASELINE_GAPS = [
   "Emergency contacts and what to do in a crisis",
   "Legal documents (guardianship, medical directives)",
   "Insurance and benefits",
 ];
 
-export async function analyzeDump(input: AnalyzeInput): Promise<Plan> {
-  // Simulate a thoughtful pause so the "analyzing" UI has room to breathe.
-  await new Promise((r) => setTimeout(r, 1400));
-
+function keywordFallback(input: AnalyzeInput): Plan {
   const { dump, lovedOneName } = input;
   const name = lovedOneName.trim() || "your loved one";
-  const text = dump.toLowerCase();
 
-  const matched = THEMES.filter((t) => t.keywords.test(text));
+  const matched = THEMES.filter((t) => t.keywords.test(dump));
 
-  // If they wrote almost nothing, fall back to a gentle core set.
   const sections: PlanSection[] =
     matched.length > 0
       ? matched.map((t) => ({
@@ -182,7 +193,17 @@ export async function analyzeDump(input: AnalyzeInput): Promise<Plan> {
     .slice(0, 2)
     .map((t) => t.title);
 
-  const summary = buildSummary(name, dump, sections.map((s) => s.title));
+  const wordCount = dump.trim().split(/\s+/).filter(Boolean).length;
+  const themeTitles = sections.map((s) => s.title);
+  const themes =
+    themeTitles.length <= 2
+      ? themeTitles.join(" and ")
+      : `${themeTitles.slice(0, -1).join(", ")}, and ${themeTitles.at(-1)}`;
+
+  const summary =
+    wordCount < 8
+      ? `Thank you for starting. We'll gently walk through a few questions about ${name} together.`
+      : `From what you shared about ${name}, I'm noticing themes around ${themes.toLowerCase()}. I've drafted a few gentle follow-up questions for each.`;
 
   return {
     summary,
@@ -197,16 +218,4 @@ function extractEvidence(dump: string, pattern: RegExp): string[] {
     .map((s) => s.trim())
     .filter(Boolean);
   return sentences.filter((s) => pattern.test(s)).slice(0, 2);
-}
-
-function buildSummary(name: string, dump: string, themeTitles: string[]): string {
-  const wordCount = dump.trim().split(/\s+/).filter(Boolean).length;
-  if (wordCount < 8) {
-    return `Thank you for starting. We'll gently walk through a few questions about ${name} together.`;
-  }
-  const themes =
-    themeTitles.length <= 2
-      ? themeTitles.join(" and ")
-      : `${themeTitles.slice(0, -1).join(", ")}, and ${themeTitles.at(-1)}`;
-  return `From what you shared about ${name}, I'm noticing themes around ${themes.toLowerCase()}. I've drafted a few gentle follow-up questions for each.`;
 }
