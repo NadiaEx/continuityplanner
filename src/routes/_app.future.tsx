@@ -81,8 +81,8 @@ export default function Future() {
             <div>
               <h3 className="font-display text-lg font-semibold">Letters &amp; videos</h3>
               <p className="mt-1 max-w-xl text-sm text-muted-foreground">
-                Record short notes or videos for future caregivers, guardians, or Leo
-                himself. These can be played at any milestone.
+                Record short notes or videos for future caregivers, guardians, or
+                {" "}{lovedOneName} themselves. These can be played at any milestone.
               </p>
             </div>
           </div>
