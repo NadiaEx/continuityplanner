@@ -26,21 +26,19 @@ async function handleTransactionCompleted(data: any, env: PaddleEnv) {
   const tipCents = Number(data.customData?.tipCents ?? data.customData?.tip_cents ?? 0);
   const currency = (data.currencyCode ?? "USD").toLowerCase();
 
-  await getSupabase()
-    .from("contributions")
-    .upsert(
-      {
-        user_id: userId,
-        paddle_transaction_id: data.id,
-        amount_cents: amountCents,
-        tip_cents: tipCents,
-        currency,
-        environment: env,
-        status: "completed",
-        paid_at: data.billedAt ?? new Date().toISOString(),
-      },
-      { onConflict: "paddle_transaction_id" },
-    );
+  await (getSupabase().from("contributions") as any).upsert(
+    {
+      user_id: userId,
+      paddle_transaction_id: data.id,
+      amount_cents: amountCents,
+      tip_cents: tipCents,
+      currency,
+      environment: env,
+      status: "completed",
+      paid_at: data.billedAt ?? new Date().toISOString(),
+    },
+    { onConflict: "paddle_transaction_id" },
+  );
 }
 
 async function handleWebhook(req: Request, env: PaddleEnv) {
