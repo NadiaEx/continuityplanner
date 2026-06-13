@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowRight, ArrowLeft, Leaf, Check, Sparkle, Plus, X } from "lucide-react";
 import { HearthIllustration, PathIllustration, HandsIllustration } from "@/components/soft-illustration";
+import { supabase } from "@/integrations/supabase/client";
 
 
 export const Route = createFileRoute("/onboarding")({
@@ -131,7 +132,7 @@ function Onboarding() {
 
   const active = dependents[activeIdx] ?? dependents[0];
 
-  const saveAndGo = (to: "/assistant" | "/dashboard") => {
+  const saveAndGo = async (to: "/assistant" | "/dashboard") => {
     const profile: Profile = {
       caregiverName,
       caregiverEmail,
@@ -144,7 +145,12 @@ function Onboarding() {
     } catch {
       // ignore storage errors
     }
-    navigate({ to });
+    const { data } = await supabase.auth.getSession();
+    if (data.session) {
+      navigate({ to });
+      return;
+    }
+    navigate({ to: "/auth", search: { redirect: to } });
   };
 
   const firstLovedOneName = dependents[0]?.name || "";
