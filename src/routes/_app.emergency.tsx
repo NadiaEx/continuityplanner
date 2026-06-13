@@ -88,11 +88,8 @@ export default function Emergency() {
             <Hospital className="size-4 text-primary" />
             <h3 className="font-display text-lg font-semibold">Hospital instructions</h3>
           </div>
-          <ul className="space-y-2 text-sm">
-            <li>• Preferred hospital: UCSF Benioff Children's</li>
-            <li>• Always keep AAC device with him during transport</li>
-            <li>• Dim ambulance lights if possible</li>
-            <li>• Verbal narration before any touch helps</li>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li>Add a preferred hospital, transport notes, and anything a first responder should know.</li>
           </ul>
         </Card>
 
@@ -101,11 +98,9 @@ export default function Emergency() {
             <Pill className="size-4 text-primary" />
             <h3 className="font-display text-lg font-semibold">Medication summary</h3>
           </div>
-          <ul className="space-y-2 text-sm">
-            <li>• Melatonin 3mg — 8:30 PM nightly</li>
-            <li>• EpiPen Jr — emergency only (in backpack &amp; kitchen)</li>
-            <li>• Zyrtec 5mg — seasonal, as needed</li>
-          </ul>
+          <p className="text-sm text-muted-foreground">
+            List current medications, doses, timing, and where they're kept.
+          </p>
         </Card>
 
         <Card>
@@ -113,13 +108,12 @@ export default function Emergency() {
             <ShieldAlert className="size-4 text-primary" />
             <h3 className="font-display text-lg font-semibold">De-escalation strategies</h3>
           </div>
-          <ul className="space-y-2 text-sm">
-            <li>• Lower your voice. Don't crowd him.</li>
-            <li>• Offer headphones first, words second</li>
-            <li>• Deep pressure on shoulders (with consent)</li>
-            <li>• Never grab his arm — use AAC device to communicate</li>
-          </ul>
+          <p className="text-sm text-muted-foreground">
+            What works to help {lovedOneName} feel safe when overwhelmed — voice,
+            touch, space, and what to avoid.
+          </p>
         </Card>
+
 
         <Card className="lg:col-span-2">
           <div className="mb-4 flex items-center gap-2">
