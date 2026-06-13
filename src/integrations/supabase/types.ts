@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      contributions: {
+        Row: {
+          amount_cents: number
+          created_at: string
+          currency: string
+          environment: string
+          id: string
+          paddle_transaction_id: string | null
+          paid_at: string
+          status: string
+          tip_cents: number
+          user_id: string
+        }
+        Insert: {
+          amount_cents?: number
+          created_at?: string
+          currency?: string
+          environment?: string
+          id?: string
+          paddle_transaction_id?: string | null
+          paid_at?: string
+          status?: string
+          tip_cents?: number
+          user_id: string
+        }
+        Update: {
+          amount_cents?: number
+          created_at?: string
+          currency?: string
+          environment?: string
+          id?: string
+          paddle_transaction_id?: string | null
+          paid_at?: string
+          status?: string
+          tip_cents?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
