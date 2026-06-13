@@ -103,7 +103,9 @@ function PayWhatYouCan() {
 
   return (
     <div className="min-h-dvh bg-background text-foreground">
+      <PaymentTestModeBanner />
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur">
+
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4 lg:px-8">
           <Link to="/" className="flex items-center gap-2">
             <span className="grid size-7 place-items-center rounded-md bg-primary">
