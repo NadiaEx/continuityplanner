@@ -159,7 +159,7 @@ export default function Dashboard() {
               <div>
                 <p className="text-sm font-medium">Upcoming reminder</p>
                 <p className="text-xs text-muted-foreground">
-                  Review Leo's medication list with Dr. Patel — Monday, 10:00 AM
+                  Add your first reminder to see it here.
                 </p>
               </div>
             </div>
