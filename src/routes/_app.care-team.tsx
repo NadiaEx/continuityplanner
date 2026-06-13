@@ -1,34 +1,39 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
 import { Plus, Mail, Phone } from "lucide-react";
+import { useProfile } from "@/lib/use-profile";
 
 export const Route = createFileRoute("/_app/care-team")({
   head: () => ({ meta: [{ title: "Care Team — Continuity" }] }),
   component: CareTeam,
 });
 
-const team = [
-  { name: "Maya Henderson", role: "Parent", category: "Family", priority: 1, email: "maya@example.com", phone: "(415) 555-0142" },
-  { name: "Jordan Henderson", role: "Parent", category: "Family", priority: 2, email: "jordan@example.com", phone: "(415) 555-0188" },
-  { name: "Aunt Rose", role: "Trusted family", category: "Family", priority: 3, email: "rose@example.com", phone: "(415) 555-0319" },
-  { name: "Dr. Anjali Patel", role: "Pediatrician", category: "Medical", priority: 4, email: "patel@clinic.com", phone: "(415) 555-0231" },
-  { name: "Sarah Kim", role: "Occupational Therapist", category: "Therapist", priority: 5, email: "skim@therapy.com", phone: "(415) 555-0144" },
-  { name: "Ms. Carter", role: "Lead Teacher", category: "School", priority: 6, email: "carter@school.org", phone: "(415) 555-0410" },
-  { name: "Robert Lin", role: "Estate Attorney", category: "Legal", priority: 7, email: "rlin@law.com", phone: "(415) 555-0509" },
-  { name: "Maria Alvarez", role: "Respite Caregiver", category: "Respite", priority: 8, email: "maria@care.com", phone: "(415) 555-0612" },
-];
-
 const categories = ["All", "Family", "Medical", "Therapist", "School", "Legal", "Respite"];
 
 export default function CareTeam() {
+  const { lovedOneName, caregiverName, caregiverEmail } = useProfile();
+  const team =
+    caregiverName !== "there"
+      ? [
+          {
+            name: caregiverName,
+            role: "Primary caregiver",
+            category: "Family",
+            priority: 1,
+            email: caregiverEmail || "—",
+            phone: "—",
+          },
+        ]
+      : [];
   return (
     <PageShell>
       <PageHeader
         eyebrow="Care Team"
-        title="The people in Leo's circle."
-        description="Everyone who helps care for Leo, ordered by who to call first."
+        title={`The people in ${lovedOneName}'s circle.`}
+        description={`Everyone who helps care for ${lovedOneName}, ordered by who to call first.`}
         actions={<Button><Plus className="size-4" /> Add person</Button>}
       />
+
 
       <div className="mb-6 flex flex-wrap gap-2">
         {categories.map((c, i) => (
