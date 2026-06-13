@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
 
 import { FeedbackPrompt } from "@/components/feedback-prompt";
+import { useProfile } from "@/lib/use-profile";
 import {
   ArrowRight,
   ShieldCheck,
