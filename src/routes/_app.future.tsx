@@ -56,14 +56,18 @@ export default function Future() {
               <h3 className="font-display text-lg font-semibold">{title}</h3>
             </div>
             <p className="mb-4 text-sm text-muted-foreground">{body}</p>
-            <ul className="space-y-1.5 text-sm">
-              {items.map((i) => (
-                <li key={i} className="flex gap-2">
-                  <span className="mt-1.5 size-1 shrink-0 rounded-full bg-primary" />
-                  {i}
-                </li>
-              ))}
-            </ul>
+            {items.length === 0 ? (
+              <p className="text-xs text-muted-foreground">Nothing here yet — add a note when you're ready.</p>
+            ) : (
+              <ul className="space-y-1.5 text-sm">
+                {items.map((i) => (
+                  <li key={i} className="flex gap-2">
+                    <span className="mt-1.5 size-1 shrink-0 rounded-full bg-primary" />
+                    {i}
+                  </li>
+                ))}
+              </ul>
+            )}
           </Card>
         ))}
       </div>
