@@ -1,21 +1,18 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { getPaddleClient, type PaddleEnv } from "@/lib/paddle.server";
+import { gatewayFetch, type PaddleEnv } from "@/lib/paddle.server";
 
 const PRODUCT_EXTERNAL_ID = "continuity_one_year";
 
 async function resolveProductId(env: PaddleEnv): Promise<string> {
-  const paddle = getPaddleClient(env);
-  const collection = paddle.products.list({ status: ["active"] });
-  for await (const product of collection) {
-    if (product.customData) {
-      // no-op; just iterating
-    }
-    if ((product as any).importMeta?.externalId === PRODUCT_EXTERNAL_ID) {
-      return product.id;
-    }
-  }
-  throw new Error(`Product ${PRODUCT_EXTERNAL_ID} not found in ${env}`);
+  const res = await gatewayFetch(
+    env,
+    `/products?external_id=${encodeURIComponent(PRODUCT_EXTERNAL_ID)}`,
+  );
+  const json: any = await res.json();
+  const id = json?.data?.[0]?.id;
+  if (!id) throw new Error(`Product ${PRODUCT_EXTERNAL_ID} not found in ${env}`);
+  return id;
 }
 
 /**
