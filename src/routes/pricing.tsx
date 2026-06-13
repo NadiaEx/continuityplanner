@@ -77,18 +77,28 @@ function PayWhatYouCan() {
     setZeroMode(false);
   };
 
-  // For now this just routes to /welcome with the right search params.
-  // When real Stripe checkout is wired, this will create a Checkout Session
-  // whose success_url points at /welcome with the same shape.
-  const submit = () => {
+  const { contribute, contributeFree, loading } = usePaddleCheckout();
+
+  const submit = async () => {
     if (zeroMode) {
-      navigate({ to: "/welcome", search: { free: true } });
+      try {
+        await contributeFree();
+        navigate({ to: "/welcome", search: { free: true } });
+      } catch (e) {
+        toast.error(e instanceof Error ? e.message : "Something went wrong.");
+      }
       return;
     }
-    navigate({
-      to: "/welcome",
-      search: { amount: Math.max(1, Math.round(amount)), tip: tip || undefined },
-    });
+    const amountCents = Math.max(100, Math.round(amount * 100));
+    const tipCents = Math.max(0, Math.round(tip * 100));
+    const successUrl =
+      `${window.location.origin}/welcome?amount=${Math.round(amount)}` +
+      (tip > 0 ? `&tip=${tip}` : "");
+    try {
+      await contribute({ amountCents, tipCents, successUrl });
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Couldn't start checkout.");
+    }
   };
 
   return (
