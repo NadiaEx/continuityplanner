@@ -50,33 +50,42 @@ export default function CareTeam() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {team.map((p) => (
-          <Card key={p.name}>
-            <div className="mb-3 flex items-start justify-between">
-              <div className="flex items-center gap-3">
-                <div className="grid size-11 place-items-center rounded-full bg-sage-100 font-display text-sm font-semibold text-sage-700">
-                  {p.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .slice(0, 2)
-                    .join("")}
+      {team.length === 0 ? (
+        <Card>
+          <p className="text-sm text-muted-foreground">
+            No one added yet. Start with the people who already help — family, doctors,
+            therapists, teachers — and add more anytime.
+          </p>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {team.map((p) => (
+            <Card key={p.name}>
+              <div className="mb-3 flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="grid size-11 place-items-center rounded-full bg-sage-100 font-display text-sm font-semibold text-sage-700">
+                    {p.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .slice(0, 2)
+                      .join("")}
+                  </div>
+                  <div>
+                    <p className="font-medium">{p.name}</p>
+                    <p className="text-xs text-muted-foreground">{p.role}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-medium">{p.name}</p>
-                  <p className="text-xs text-muted-foreground">{p.role}</p>
-                </div>
+                <Chip tone="sage">#{p.priority}</Chip>
               </div>
-              <Chip tone="sage">#{p.priority}</Chip>
-            </div>
-            <Chip tone="mist">{p.category}</Chip>
-            <div className="mt-4 space-y-1.5 text-xs text-muted-foreground">
-              <p className="flex items-center gap-2"><Mail className="size-3" /> {p.email}</p>
-              <p className="flex items-center gap-2"><Phone className="size-3" /> {p.phone}</p>
-            </div>
-          </Card>
-        ))}
-      </div>
+              <Chip tone="mist">{p.category}</Chip>
+              <div className="mt-4 space-y-1.5 text-xs text-muted-foreground">
+                <p className="flex items-center gap-2"><Mail className="size-3" /> {p.email}</p>
+                <p className="flex items-center gap-2"><Phone className="size-3" /> {p.phone}</p>
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
     </PageShell>
   );
 }
