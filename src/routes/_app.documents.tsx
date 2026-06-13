@@ -42,7 +42,7 @@ const docs = [
   { name: "Allergy testing results.pdf", category: "Medical", size: "420 KB", date: "Mar 02, 2025", icon: FileText },
   { name: "Therapy report — April.pdf", category: "Medical", size: "880 KB", date: "Apr 30, 2025", icon: FileText },
   { name: "Guardianship draft.docx", category: "Legal", size: "75 KB", date: "May 10, 2025", icon: FileText },
-  { name: "Leo & Rose at park.jpg", category: "Family", size: "2.4 MB", date: "May 22, 2025", icon: FileImage },
+  { name: "Family photo.jpg", category: "Family", size: "2.4 MB", date: "May 22, 2025", icon: FileImage },
   { name: "Insurance card.pdf", category: "Medical", size: "210 KB", date: "Jan 04, 2025", icon: FileText },
 ];
 
