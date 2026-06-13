@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppSettingsRouteImport } from './routes/_app.settings'
@@ -40,6 +41,11 @@ const PricingRoute = PricingRouteImport.update({
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppRoute = AppRouteImport.update({
@@ -114,6 +120,7 @@ const AppAssistantRoute = AppAssistantRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/welcome': typeof WelcomeRoute
@@ -132,6 +139,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/welcome': typeof WelcomeRoute
@@ -152,6 +160,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
+  '/auth': typeof AuthRoute
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/welcome': typeof WelcomeRoute
@@ -172,6 +181,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/onboarding'
     | '/pricing'
     | '/welcome'
@@ -190,6 +200,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/onboarding'
     | '/pricing'
     | '/welcome'
@@ -209,6 +220,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_app'
+    | '/auth'
     | '/onboarding'
     | '/pricing'
     | '/welcome'
@@ -229,6 +241,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
+  AuthRoute: typeof AuthRoute
   OnboardingRoute: typeof OnboardingRoute
   PricingRoute: typeof PricingRoute
   WelcomeRoute: typeof WelcomeRoute
@@ -255,6 +268,13 @@ declare module '@tanstack/react-router' {
       path: '/onboarding'
       fullPath: '/onboarding'
       preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app': {
@@ -393,6 +413,7 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
+  AuthRoute: AuthRoute,
   OnboardingRoute: OnboardingRoute,
   PricingRoute: PricingRoute,
   WelcomeRoute: WelcomeRoute,
