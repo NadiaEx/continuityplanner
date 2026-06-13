@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 export type StoredDependent = {
@@ -57,16 +57,28 @@ function isPopulated(p: StoredProfile) {
   return p.dependents.length > 0 || !!p.caregiverName;
 }
 
+export function makeDependent(
+  patch: Partial<StoredDependent> = {},
+): StoredDependent {
+  return {
+    id: Math.random().toString(36).slice(2, 9),
+    persona: null,
+    name: "",
+    living: null,
+    complexity: [],
+    ...patch,
+  };
+}
+
 export function useProfile() {
   const [profile, setProfile] = useState<StoredProfile>(EMPTY);
+  const [activeIdx, setActiveIdx] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
-    // 1. Seed from localStorage immediately for fast paint
     const local = readLocal();
     if (isPopulated(local)) setProfile(local);
 
-    // 2. Fetch authoritative copy from Supabase
     (async () => {
       const { data: sessionData } = await supabase.auth.getSession();
       const session = sessionData.session;
@@ -95,8 +107,45 @@ export function useProfile() {
     };
   }, []);
 
-  const firstDependent = profile.dependents[0];
-  const lovedOneName = firstDependent?.name?.trim() || "your loved one";
+  const saveProfile = useCallback(async (next: StoredProfile) => {
+    setProfile(next);
+    writeLocal(next);
+    const { data: sessionData } = await supabase.auth.getSession();
+    const session = sessionData.session;
+    if (!session) return;
+    try {
+      await supabase
+        .from("responses")
+        .delete()
+        .eq("user_id", session.user.id)
+        .eq("section_id", "onboarding");
+      await supabase.from("responses").insert({
+        user_id: session.user.id,
+        section_id: "onboarding",
+        extracted_data: JSON.parse(JSON.stringify(next)),
+      });
+    } catch {
+      // best effort
+    }
+  }, []);
+
+  const addDependent = useCallback(
+    async (patch: Partial<StoredDependent>) => {
+      const dep = makeDependent(patch);
+      const next: StoredProfile = {
+        ...profile,
+        dependents: [...profile.dependents, dep],
+      };
+      await saveProfile(next);
+      setActiveIdx(next.dependents.length - 1);
+      return dep;
+    },
+    [profile, saveProfile],
+  );
+
+  const safeIdx = Math.min(activeIdx, Math.max(0, profile.dependents.length - 1));
+  const activeDependent = profile.dependents[safeIdx];
+  const lovedOneName = activeDependent?.name?.trim() || "your loved one";
   const caregiverName = profile.caregiverName?.trim() || "there";
   const caregiverFirstName = caregiverName.split(/\s+/)[0] || "there";
 
@@ -107,6 +156,11 @@ export function useProfile() {
     caregiverFirstName,
     caregiverEmail: profile.caregiverEmail,
     dependents: profile.dependents,
+    activeIdx: safeIdx,
+    setActiveIdx,
+    activeDependent,
+    addDependent,
+    saveProfile,
     hasOnboarded: isPopulated(profile),
   };
 }
