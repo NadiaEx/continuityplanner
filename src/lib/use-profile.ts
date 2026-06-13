@@ -70,10 +70,19 @@ export function makeDependent(
   };
 }
 
+export type LatestContribution = {
+  amountCents: number;
+  tipCents: number;
+  currency: string;
+  paidAt: string;
+  status: string;
+};
+
 export function useProfile() {
   const [profile, setProfile] = useState<StoredProfile>(EMPTY);
   const [activeIdx, setActiveIdx] = useState(0);
   const [registeredAt, setRegisteredAt] = useState<string | null>(null);
+  const [contribution, setContribution] = useState<LatestContribution | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -93,6 +102,22 @@ export function useProfile() {
       if (!cancelled) {
         const ts = profileRow?.created_at ?? session.user.created_at ?? null;
         if (ts) setRegisteredAt(ts);
+      }
+
+      const { data: contribRow } = await (supabase.from("contributions") as any)
+        .select("amount_cents, tip_cents, currency, paid_at, status")
+        .eq("user_id", session.user.id)
+        .order("paid_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (!cancelled && contribRow) {
+        setContribution({
+          amountCents: contribRow.amount_cents,
+          tipCents: contribRow.tip_cents,
+          currency: contribRow.currency,
+          paidAt: contribRow.paid_at,
+          status: contribRow.status,
+        });
       }
 
       const { data, error } = await supabase
@@ -119,8 +144,11 @@ export function useProfile() {
     };
   }, []);
 
-  const oneYearMark = registeredAt
-    ? new Date(new Date(registeredAt).getTime() + 365 * 24 * 60 * 60 * 1000).toISOString()
+  // 1-year clock starts at first paid contribution if there is one;
+  // otherwise it starts at account registration.
+  const clockStart = contribution?.paidAt ?? registeredAt;
+  const oneYearMark = clockStart
+    ? new Date(new Date(clockStart).getTime() + 365 * 24 * 60 * 60 * 1000).toISOString()
     : null;
 
   const saveProfile = useCallback(async (next: StoredProfile) => {
@@ -180,5 +208,7 @@ export function useProfile() {
     hasOnboarded: isPopulated(profile),
     registeredAt,
     oneYearMark,
+    contribution,
+    hasPaid: !!contribution && contribution.amountCents > 0,
   };
 }

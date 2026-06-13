@@ -1,6 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { ArrowRight, Leaf, Heart, Sparkles, Check } from "lucide-react";
+import { ArrowRight, Leaf, Heart, Sparkles, Check, Loader2 } from "lucide-react";
+import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
+import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -74,23 +77,35 @@ function PayWhatYouCan() {
     setZeroMode(false);
   };
 
-  // For now this just routes to /welcome with the right search params.
-  // When real Stripe checkout is wired, this will create a Checkout Session
-  // whose success_url points at /welcome with the same shape.
-  const submit = () => {
+  const { contribute, contributeFree, loading } = usePaddleCheckout();
+
+  const submit = async () => {
     if (zeroMode) {
-      navigate({ to: "/welcome", search: { free: true } });
+      try {
+        await contributeFree();
+        navigate({ to: "/welcome", search: { free: true } });
+      } catch (e) {
+        toast.error(e instanceof Error ? e.message : "Something went wrong.");
+      }
       return;
     }
-    navigate({
-      to: "/welcome",
-      search: { amount: Math.max(1, Math.round(amount)), tip: tip || undefined },
-    });
+    const amountCents = Math.max(100, Math.round(amount * 100));
+    const tipCents = Math.max(0, Math.round(tip * 100));
+    const successUrl =
+      `${window.location.origin}/welcome?amount=${Math.round(amount)}` +
+      (tip > 0 ? `&tip=${tip}` : "");
+    try {
+      await contribute({ amountCents, tipCents, successUrl });
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Couldn't start checkout.");
+    }
   };
 
   return (
     <div className="min-h-dvh bg-background text-foreground">
+      <PaymentTestModeBanner />
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur">
+
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4 lg:px-8">
           <Link to="/" className="flex items-center gap-2">
             <span className="grid size-7 place-items-center rounded-md bg-primary">
@@ -327,9 +342,14 @@ function PayWhatYouCan() {
             </div>
             <button
               onClick={submit}
-              className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition hover:bg-sage-700"
+              disabled={loading}
+              className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition hover:bg-sage-700 disabled:opacity-60"
             >
-              {zeroMode ? (
+              {loading ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" /> One moment…
+                </>
+              ) : zeroMode ? (
                 <>
                   Continue free <ArrowRight className="size-4" />
                 </>
