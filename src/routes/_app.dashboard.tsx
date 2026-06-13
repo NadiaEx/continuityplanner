@@ -29,12 +29,6 @@ const stats = [
   { label: "Future Planning Progress", value: 42, tint: "mist" as const, icon: Compass },
 ];
 
-const recent = [
-  { title: "Added Leo's calming song to bedtime routine", when: "2 hours ago" },
-  { title: "Updated Dr. Patel's contact information", when: "Yesterday" },
-  { title: "Generated draft Emergency Care Packet", when: "3 days ago" },
-];
-
 const next = [
   { title: "Tell us about morning transitions", time: "~5 min" },
   { title: "Add an emergency contact", time: "~2 min" },
@@ -42,11 +36,16 @@ const next = [
 ];
 
 export default function Dashboard() {
+  const { caregiverFirstName, lovedOneName } = useProfile();
+  const recent = [
+    { title: `Started ${lovedOneName}'s care plan`, when: "Just now" },
+    { title: "Welcome to Continuity", when: "Today" },
+  ];
   return (
     <PageShell>
       <PageHeader
         eyebrow="Welcome back"
-        title="Good morning, Maya."
+        title={`Good to see you, ${caregiverFirstName}.`}
         description="You're making progress. This does not need to be perfect — you can revisit anything, anytime."
         actions={
           <Link to="/assistant">
@@ -56,6 +55,7 @@ export default function Dashboard() {
           </Link>
         }
       />
+
 
       <div className="mb-6 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-50 px-2.5 py-1 text-sage-700">
