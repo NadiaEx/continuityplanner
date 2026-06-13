@@ -66,6 +66,59 @@ export default function Settings() {
           <ToggleRow label="High contrast" />
         </Card>
       </div>
+
+      <div className="mt-8">
+        <Card>
+          <div className="mb-4 flex items-center gap-3">
+            <div className="grid size-9 place-items-center rounded-lg bg-sage-50 text-sage-700">
+              <Shield className="size-4" />
+            </div>
+            <h3 className="font-display text-lg font-semibold">Your data is safe.</h3>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Everything you share in Continuity is private, encrypted, and yours.
+          </p>
+          <ul className="mt-5 space-y-3 text-sm">
+            <li className="flex gap-3">
+              <span aria-hidden className="select-none">🔒</span>
+              <span>All data is encrypted in transit and at rest</span>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden className="select-none">🚫</span>
+              <span>Your information is never sold, shared, or shown to advertisers</span>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden className="select-none">🤖</span>
+              <span>Your care plans are never used to train AI models</span>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden className="select-none">📦</span>
+              <span>You can export or delete everything at any time</span>
+            </li>
+            <li className="flex gap-3">
+              <span aria-hidden className="select-none">💙</span>
+              <span>Only you can see what you've shared about your loved one</span>
+            </li>
+          </ul>
+          <p className="mt-5 text-sm text-muted-foreground">
+            Continuity runs on{" "}
+            <span className="font-medium text-foreground">Supabase</span>,
+            enterprise-grade infrastructure trusted by thousands of companies
+            worldwide. We chose it specifically because your family's
+            information deserves serious protection.
+          </p>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Questions about your data? Email us at{" "}
+            <a
+              href="mailto:hello@continuityplanner.app"
+              className="font-medium text-foreground underline underline-offset-4"
+            >
+              hello@continuityplanner.app
+            </a>{" "}
+            — a real person will respond.
+          </p>
+        </Card>
+      </div>
     </PageShell>
   );
 }
