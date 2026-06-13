@@ -132,8 +132,10 @@ function PayWhatYouCan() {
               covering someone who can't.
             </p>
             <p className="text-sm">
-              One time. Lifetime access. No subscription, no renewal, no
-              upsell email later.
+              Pay once today. Your plan is safely stored for 2 years. About
+              60 days before that's up, we'll email you — renew at-cost
+              (roughly $4/year) or download everything to keep. Nothing is
+              ever deleted without a heads-up.
             </p>
           </div>
         </div>
