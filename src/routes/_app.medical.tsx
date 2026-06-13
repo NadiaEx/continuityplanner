@@ -21,14 +21,16 @@ const providers = [
 ];
 
 export default function Medical() {
+  const { lovedOneName } = useProfile();
   return (
     <PageShell>
       <PageHeader
         eyebrow="Medical Information"
         title="Quietly organized."
-        description="A clear, current picture of Leo's health — kept in one calm place."
+        description={`A clear, current picture of ${lovedOneName}'s health — kept in one calm place.`}
         actions={<Button><Plus className="size-4" /> Add record</Button>}
       />
+
 
       <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card>
