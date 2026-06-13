@@ -14,12 +14,13 @@ import {
   Leaf,
   HeartHandshake,
   LineChart,
+  FileText,
 } from "lucide-react";
-
 
 const nav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/profile", label: "Child Profile", icon: User },
+  { to: "/one-page", label: "One-Page About Them", icon: FileText },
   { to: "/routines", label: "Daily Routines", icon: Sun },
   { to: "/emergency", label: "Emergency Plan", icon: ShieldAlert },
   { to: "/medical", label: "Medical Information", icon: Stethoscope },
@@ -36,7 +37,6 @@ void HeartHandshake;
 
 export function AppSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-
   return (
     <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 flex-col border-r border-border bg-sidebar p-5 lg:flex">
       <Link to="/" className="mb-6 flex items-center gap-2 px-2">
@@ -47,8 +47,7 @@ export function AppSidebar() {
           Continuity
         </span>
       </Link>
-
-      <nav className="flex flex-1 flex-col gap-0.5">
+      <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto">
         {nav.map(({ to, label, icon: Icon }) => {
           const active = pathname === to;
           return (
@@ -67,7 +66,6 @@ export function AppSidebar() {
           );
         })}
       </nav>
-
       <div className="mt-6 rounded-xl bg-sage-100 p-4 ring-1 ring-black/5">
         <p className="text-[11px] font-semibold uppercase tracking-wider text-sage-700">
           Continuity Score
