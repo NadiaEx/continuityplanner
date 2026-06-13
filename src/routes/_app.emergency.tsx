@@ -1,18 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
 import { Phone, Hospital, ShieldAlert, MapPin, Pill, Download, QrCode } from "lucide-react";
+import { useProfile } from "@/lib/use-profile";
 
 export const Route = createFileRoute("/_app/emergency")({
   head: () => ({ meta: [{ title: "Emergency Plan — Continuity" }] }),
   component: Emergency,
 });
 
-const contacts = [
-  { name: "Maya Henderson", role: "Parent", phone: "(415) 555-0142", priority: 1 },
-  { name: "Jordan Henderson", role: "Parent", phone: "(415) 555-0188", priority: 2 },
-  { name: "Dr. Anjali Patel", role: "Primary Pediatrician", phone: "(415) 555-0231", priority: 3 },
-  { name: "Aunt Rose", role: "Trusted family", phone: "(415) 555-0319", priority: 4 },
-];
 
 export default function Emergency() {
   return (
