@@ -116,8 +116,9 @@ function Welcome() {
               </div>
             </dl>
             <p className="mt-5 text-xs leading-relaxed text-muted-foreground">
-              No subscription. No renewals. You will not get an upsell email
-              later.
+              No subscription. About 60 days before your 2 years are up,
+              we'll email you to renew at-cost (roughly $4/year) or download
+              everything. Nothing is ever deleted without warning.
             </p>
           </div>
         </section>
