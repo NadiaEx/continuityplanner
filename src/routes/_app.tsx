@@ -9,7 +9,7 @@ export const Route = createFileRoute("/_app")({
     if (!data.session) {
       throw redirect({
         to: "/auth",
-        search: { redirect: location.pathname },
+        search: { redirect: location.pathname === "/" ? "/dashboard" : location.pathname },
       });
     }
     return { user: data.session.user };
