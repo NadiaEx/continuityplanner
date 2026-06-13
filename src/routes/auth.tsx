@@ -7,7 +7,40 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+const APP_REDIRECTS = [
+  "/dashboard",
+  "/assistant",
+  "/one-page",
+  "/profile",
+  "/medical",
+  "/routines",
+  "/emergency",
+  "/care-team",
+  "/documents",
+  "/future",
+  "/insights",
+  "/exports",
+  "/settings",
+] as const;
+
+type AppRedirect = (typeof APP_REDIRECTS)[number];
+type AuthSearch = { redirect?: string };
+
+function getSafeRedirect(value: string | undefined): AppRedirect {
+  return APP_REDIRECTS.includes(value as AppRedirect) ? (value as AppRedirect) : "/dashboard";
+}
+
+function getAuthRedirectUrl(nextPath: AppRedirect) {
+  const url = new URL("/auth", window.location.origin);
+  url.searchParams.set("redirect", nextPath);
+  return url.toString();
+}
+
 export const Route = createFileRoute("/auth")({
+  ssr: false,
+  validateSearch: (search: Record<string, unknown>): AuthSearch => ({
+    redirect: typeof search.redirect === "string" ? search.redirect : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Sign in | Continuity" },
@@ -19,20 +52,26 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const { redirect } = Route.useSearch();
+  const nextPath = getSafeRedirect(redirect);
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/dashboard" });
+      if (!cancelled && data.session) navigate({ to: nextPath, replace: true });
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (session) navigate({ to: "/dashboard" });
+      if (session) navigate({ to: nextPath, replace: true });
     });
-    return () => sub.subscription.unsubscribe();
-  }, [navigate]);
+    return () => {
+      cancelled = true;
+      sub.subscription.unsubscribe();
+    };
+  }, [navigate, nextPath]);
 
   async function handleEmail(e: React.FormEvent) {
     e.preventDefault();
