@@ -181,7 +181,7 @@ function PayWhatYouCan() {
                   </span>
                 </div>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  One time. Lifetime access. Nobody turned away.
+                  One time. 2 years of secure storage included. Nobody turned away.
                 </p>
                 <ul className="mt-6 space-y-2.5 text-sm">
                   {[
@@ -189,7 +189,7 @@ function PayWhatYouCan() {
                     "Every document & export",
                     "AI-guided care conversations",
                     "Care team sharing",
-                    "Lifetime access",
+                    "2 years of secure storage included",
                     "Future updates included",
                   ].map((f) => (
                     <li key={f} className="flex items-start gap-2">
