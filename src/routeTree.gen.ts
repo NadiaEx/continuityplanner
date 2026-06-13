@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WelcomeRouteImport } from './routes/welcome'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -34,6 +35,11 @@ import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/publi
 const WelcomeRoute = WelcomeRouteImport.update({
   id: '/welcome',
   path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -143,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
+  '/terms': typeof TermsRoute
   '/welcome': typeof WelcomeRoute
   '/assistant': typeof AppAssistantRoute
   '/care-team': typeof AppCareTeamRoute
@@ -165,6 +172,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
+  '/terms': typeof TermsRoute
   '/welcome': typeof WelcomeRoute
   '/assistant': typeof AppAssistantRoute
   '/care-team': typeof AppCareTeamRoute
@@ -189,6 +197,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
+  '/terms': typeof TermsRoute
   '/welcome': typeof WelcomeRoute
   '/_app/assistant': typeof AppAssistantRoute
   '/_app/care-team': typeof AppCareTeamRoute
@@ -213,6 +222,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/onboarding'
     | '/pricing'
+    | '/terms'
     | '/welcome'
     | '/assistant'
     | '/care-team'
@@ -235,6 +245,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/onboarding'
     | '/pricing'
+    | '/terms'
     | '/welcome'
     | '/assistant'
     | '/care-team'
@@ -258,6 +269,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/onboarding'
     | '/pricing'
+    | '/terms'
     | '/welcome'
     | '/_app/assistant'
     | '/_app/care-team'
@@ -282,6 +294,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   OnboardingRoute: typeof OnboardingRoute
   PricingRoute: typeof PricingRoute
+  TermsRoute: typeof TermsRoute
   WelcomeRoute: typeof WelcomeRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   LovableEmailQueueProcessRoute: typeof LovableEmailQueueProcessRoute
@@ -294,6 +307,13 @@ declare module '@tanstack/react-router' {
       path: '/welcome'
       fullPath: '/welcome'
       preLoaderRoute: typeof WelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -479,6 +499,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   OnboardingRoute: OnboardingRoute,
   PricingRoute: PricingRoute,
+  TermsRoute: TermsRoute,
   WelcomeRoute: WelcomeRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
   LovableEmailQueueProcessRoute: LovableEmailQueueProcessRoute,
