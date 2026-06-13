@@ -1,11 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
 import { Plus, Camera, Upload } from "lucide-react";
+import { useProfile } from "@/lib/use-profile";
 
 export const Route = createFileRoute("/_app/profile")({
   head: () => ({ meta: [{ title: "Child Profile — Continuity" }] }),
   component: Profile,
 });
+
 
 const sections = [
   {
