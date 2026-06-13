@@ -45,7 +45,6 @@ export const createContinuityTransaction = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { amountCents, tipCents, environment } = data;
     const productId = await resolveProductId(environment);
-    const paddle = getPaddleClient(environment);
 
     const items: any[] = [
       {
@@ -73,9 +72,6 @@ export const createContinuityTransaction = createServerFn({ method: "POST" })
       });
     }
 
-    // Use raw HTTP via the SDK's underlying call — the typed SDK doesn't
-    // expose non-catalog inline prices cleanly, so we hit the API directly.
-    const { gatewayFetch } = await import("@/lib/paddle.server");
     const res = await gatewayFetch(environment, "/transactions", {
       method: "POST",
       body: JSON.stringify({
