@@ -81,7 +81,7 @@ function AuthPage() {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin },
+          options: { emailRedirectTo: getAuthRedirectUrl(nextPath) },
         });
         if (error) throw error;
         toast.success("Check your email to confirm your account.");
@@ -99,7 +99,7 @@ function AuthPage() {
   async function handleGoogle() {
     setLoading(true);
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+      redirect_uri: getAuthRedirectUrl(nextPath),
     });
     if (result.error) {
       toast.error(result.error.message || "Could not sign in with Google");
