@@ -8,17 +8,10 @@ export const Route = createFileRoute("/_app/medical")({
   component: Medical,
 });
 
-const meds = [
-  { name: "Melatonin", dose: "3 mg", time: "8:30 PM nightly", notes: "With water, after teeth brushed" },
-  { name: "EpiPen Jr", dose: "0.15 mg", time: "Emergency only", notes: "Backpack + kitchen drawer" },
-  { name: "Zyrtec", dose: "5 mg", time: "Seasonal AM", notes: "Spring allergies" },
-];
+const meds: { name: string; dose: string; time: string; notes: string }[] = [];
 
-const providers = [
-  { name: "Dr. Anjali Patel", role: "Pediatrician", phone: "(415) 555-0231" },
-  { name: "Sarah Kim, OT", role: "Occupational Therapist", phone: "(415) 555-0144" },
-  { name: "Dr. Marcus Lee", role: "Allergist", phone: "(415) 555-0277" },
-];
+const providers: { name: string; role: string; phone: string }[] = [];
+
 
 export default function Medical() {
   const { lovedOneName } = useProfile();
