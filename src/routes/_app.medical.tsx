@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
+import { PageShell, PageHeader, Card, Button } from "@/components/page-shell";
 import { Plus, Stethoscope, Pill, Syringe, FileText } from "lucide-react";
 import { useProfile } from "@/lib/use-profile";
 
