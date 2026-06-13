@@ -68,17 +68,13 @@ export function AppSidebar() {
       </nav>
       <div className="mt-6 rounded-xl bg-sage-100 p-4 ring-1 ring-black/5">
         <p className="text-[11px] font-semibold uppercase tracking-wider text-sage-700">
-          Continuity Score
+          Your plan
         </p>
-        <div className="mt-2 flex items-baseline gap-1">
-          <span className="font-display text-2xl font-medium text-foreground">68</span>
-          <span className="text-xs text-muted-foreground">/100</span>
-        </div>
-        <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-background/70">
-          <div className="h-full w-2/3 bg-primary" />
-        </div>
-        <p className="mt-3 text-xs leading-relaxed text-sage-700/80">
-          You're building protection over time.
+        <p className="mt-2 font-display text-base font-medium text-foreground">
+          Just getting started
+        </p>
+        <p className="mt-2 text-xs leading-relaxed text-sage-700/80">
+          Add what you can, when you can. Every note makes the plan stronger.
         </p>
       </div>
     </aside>
