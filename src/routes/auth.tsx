@@ -67,8 +67,9 @@ function AuthPage() {
         if (error) throw error;
         toast.success("Check your email to confirm your account.");
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        if (data.session) navigate({ to: nextPath, replace: true });
       }
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Something went wrong");
@@ -85,6 +86,11 @@ function AuthPage() {
     if (result.error) {
       toast.error(result.error.message || "Could not sign in with Google");
       setLoading(false);
+      return;
+    }
+    if (!result.redirected) {
+      const session = await getRestoredSession();
+      if (session) navigate({ to: nextPath, replace: true });
     }
   }
 
