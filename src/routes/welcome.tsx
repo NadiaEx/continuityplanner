@@ -14,7 +14,7 @@ export const Route = createFileRoute("/welcome")({
       {
         name: "description",
         content:
-          "You're in. Continuity is yours. Pay once — 2 years of secure storage included. We'll email you before it ends so nothing is lost.",
+          "You're in. Continuity is yours. Pay once — 1 year of secure storage included. We'll email you before it ends so nothing is lost.",
       },
     ],
   }),
@@ -74,7 +74,7 @@ function Welcome() {
               <>
                 <p>
                   <span className="text-foreground">${total} received.</span>{" "}
-                  Pay once — your plan is safely stored for the next 2 years.
+                  Pay once — your plan is safely stored for the next 1 year.
                 </p>
                 {tip && tip > 0 ? (
                   <p>
@@ -116,7 +116,7 @@ function Welcome() {
               </div>
             </dl>
             <p className="mt-5 text-xs leading-relaxed text-muted-foreground">
-              No subscription. About 60 days before your 2 years are up,
+              No subscription. About 60 days before your 1 year are up,
               we'll email you to renew at-cost (roughly $4/year) or download
               everything. Nothing is ever deleted without warning.
             </p>
