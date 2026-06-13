@@ -156,14 +156,16 @@ function Onboarding() {
             display_name: caregiverName.trim() || null,
           })
           .eq("id", session.user.id);
-        await supabase.from("responses").upsert(
-          {
-            user_id: session.user.id,
-            section_id: "onboarding",
-            extracted_data: JSON.parse(JSON.stringify(profile)),
-          },
-          { onConflict: "user_id,section_id" } as never,
-        );
+        await supabase
+          .from("responses")
+          .delete()
+          .eq("user_id", session.user.id)
+          .eq("section_id", "onboarding");
+        await supabase.from("responses").insert({
+          user_id: session.user.id,
+          section_id: "onboarding",
+          extracted_data: JSON.parse(JSON.stringify(profile)),
+        });
       } catch {
         // best-effort; localStorage already has it
       }
