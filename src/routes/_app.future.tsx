@@ -8,42 +8,43 @@ export const Route = createFileRoute("/_app/future")({
   component: Future,
 });
 
-const sections = [
-  {
-    title: "Guardian planning",
-    icon: Heart,
-    body: "Designated guardians, decision-making preferences, and the people we trust most to step in.",
-    items: ["Primary: Aunt Rose", "Secondary: Uncle David", "Final letter prepared (May 2025)"],
-  },
-  {
-    title: "Future living preferences",
-    icon: Home,
-    body: "Where and how Leo might live well into adulthood.",
-    items: ["Small group home with sensory-friendly design", "Near family within 30 min", "Familiar caregivers prioritized"],
-  },
-  {
-    title: "Adulthood transition notes",
-    icon: Sparkles,
-    body: "What kind of life we hope Leo can grow into.",
-    items: ["Continue art classes — they bring him joy", "Daily walks near water", "Annual visits to the same vacation home"],
-  },
-  {
-    title: "Things I hope never change",
-    icon: Heart,
-    body: "The small constants that make Leo, Leo.",
-    items: ["Sunday pancakes", "Blue blanket always within reach", "His favorite song at bedtime"],
-  },
-];
-
 export default function Future() {
+  const { lovedOneName } = useProfile();
+  const sections = [
+    {
+      title: "Guardian planning",
+      icon: Heart,
+      body: "Designated guardians, decision-making preferences, and the people you trust most to step in.",
+      items: [] as string[],
+    },
+    {
+      title: "Future living preferences",
+      icon: Home,
+      body: `Where and how ${lovedOneName} might live well into adulthood.`,
+      items: [] as string[],
+    },
+    {
+      title: "Adulthood transition notes",
+      icon: Sparkles,
+      body: `What kind of life you hope ${lovedOneName} can grow into.`,
+      items: [] as string[],
+    },
+    {
+      title: "Things I hope never change",
+      icon: Heart,
+      body: `The small constants that make ${lovedOneName}, ${lovedOneName}.`,
+      items: [] as string[],
+    },
+  ];
   return (
     <PageShell>
       <PageHeader
         eyebrow="Future Planning"
         title="The long view."
-        description="Where Leo is headed, who's responsible, and the decisions you want made when you're not in the room."
+        description={`Where ${lovedOneName} is headed, who's responsible, and the decisions you want made when you're not in the room.`}
         actions={<Button><Plus className="size-4" /> Add section</Button>}
       />
+
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {sections.map(({ title, icon: Icon, body, items }) => (
