@@ -178,5 +178,7 @@ export function useProfile() {
     addDependent,
     saveProfile,
     hasOnboarded: isPopulated(profile),
+    registeredAt,
+    oneYearMark,
   };
 }
