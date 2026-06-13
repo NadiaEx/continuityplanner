@@ -114,7 +114,7 @@ function PayWhatYouCan() {
         <div className="mx-auto max-w-2xl text-center">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-[11px] font-medium uppercase tracking-[0.15em] text-muted-foreground">
             <span className="size-1.5 rounded-full bg-primary" />
-            Pay what you can · lifetime
+            Pay what you can · 2 years included
           </div>
           <h1 className="text-balance font-display text-4xl font-medium leading-[1.1] tracking-tight lg:text-5xl">
             Pay what you can.
