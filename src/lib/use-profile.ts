@@ -73,6 +73,7 @@ export function makeDependent(
 export function useProfile() {
   const [profile, setProfile] = useState<StoredProfile>(EMPTY);
   const [activeIdx, setActiveIdx] = useState(0);
+  const [registeredAt, setRegisteredAt] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -83,6 +84,17 @@ export function useProfile() {
       const { data: sessionData } = await supabase.auth.getSession();
       const session = sessionData.session;
       if (!session) return;
+
+      const { data: profileRow } = await supabase
+        .from("profiles")
+        .select("created_at")
+        .eq("id", session.user.id)
+        .maybeSingle();
+      if (!cancelled) {
+        const ts = profileRow?.created_at ?? session.user.created_at ?? null;
+        if (ts) setRegisteredAt(ts);
+      }
+
       const { data, error } = await supabase
         .from("responses")
         .select("extracted_data")
@@ -106,6 +118,10 @@ export function useProfile() {
       window.removeEventListener("storage", onStorage);
     };
   }, []);
+
+  const oneYearMark = registeredAt
+    ? new Date(new Date(registeredAt).getTime() + 365 * 24 * 60 * 60 * 1000).toISOString()
+    : null;
 
   const saveProfile = useCallback(async (next: StoredProfile) => {
     setProfile(next);
@@ -162,5 +178,7 @@ export function useProfile() {
     addDependent,
     saveProfile,
     hasOnboarded: isPopulated(profile),
+    registeredAt,
+    oneYearMark,
   };
 }
