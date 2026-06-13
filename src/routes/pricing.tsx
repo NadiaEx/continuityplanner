@@ -9,13 +9,13 @@ export const Route = createFileRoute("/pricing")({
       {
         name: "description",
         content:
-          "Continuity is pay-what-you-can. Lifetime access for caregivers. Nobody is turned away for cost. Pay $0 if that's what you can afford. Cover someone else if you can.",
+          "Continuity is pay-what-you-can. Pay once and your plan is safely stored for 2 years. We'll email you 60 days before it ends to renew at-cost or download everything. Nothing is deleted without warning.",
       },
       { property: "og:title", content: "Pay what you can — Continuity" },
       {
         property: "og:description",
         content:
-          "Lifetime access. Pay-what-you-can. Nobody turned away. Cover another caregiver if you can.",
+          "Pay-what-you-can. 2 years of secure storage included. Nobody turned away. Cover another caregiver if you can.",
       },
     ],
   }),
