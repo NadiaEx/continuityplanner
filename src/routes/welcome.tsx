@@ -14,7 +14,7 @@ export const Route = createFileRoute("/welcome")({
       {
         name: "description",
         content:
-          "You're in. Continuity is yours. Lifetime access, no subscription, no renewal.",
+          "You're in. Continuity is yours. Pay once — 2 years of secure storage included. We'll email you before it ends so nothing is lost.",
       },
     ],
   }),
