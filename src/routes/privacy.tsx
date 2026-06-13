@@ -160,15 +160,45 @@ function PrivacyPage() {
           </p>
         </Section>
 
-        <Section title="Security">
+        <Section title="Data security">
           <p>
-            We take reasonable steps to protect your information, including
-            encryption in transit and access controls on our systems. No
-            online service can promise perfect security, but we do our best,
-            and if something ever went wrong in a way that affected you, we'd
-            tell you.
+            We take the sensitivity of this information seriously. These are
+            families trusting us with details about their most vulnerable
+            loved ones, and we treat it that way.
+          </p>
+          <p>
+            All of your data is stored with{" "}
+            <span className="font-medium text-foreground">Supabase</span>,
+            enterprise-grade cloud infrastructure used by companies of every
+            size. Your information is{" "}
+            <span className="font-medium text-foreground">
+              encrypted in transit and at rest
+            </span>
+            , protected by industry-standard access controls and isolated
+            per-account by database-level security rules.
+          </p>
+          <p>
+            We{" "}
+            <span className="font-medium text-foreground">
+              never share care information with third parties, advertisers, or
+              AI training datasets
+            </span>
+            . Not now, not later, not for any amount of money.
+          </p>
+          <p>
+            When you use the AI assistant inside Continuity, it processes
+            what you share in order to help you build and shape the care
+            plan in the moment. It does not store your personal conversations
+            as training data, and your loved one's information is not used
+            to train AI models — ours or anyone else's.
+          </p>
+          <p>
+            No online service can promise perfect security, but we do our
+            best, and if something ever went wrong in a way that affected
+            you, we'd tell you directly and quickly.
           </p>
         </Section>
+
 
         <Section title="Governing law">
           <p>
