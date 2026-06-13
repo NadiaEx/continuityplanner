@@ -29,22 +29,21 @@ export default function Medical() {
         <Card>
           <Stethoscope className="mb-3 size-5 text-primary" strokeWidth={1.75} />
           <p className="text-sm text-muted-foreground">Conditions</p>
-          <p className="mt-1 font-display text-2xl font-medium">3</p>
-          <p className="mt-1 text-xs text-muted-foreground">Last reviewed: April 2025</p>
+          <p className="mt-1 font-display text-2xl font-medium">—</p>
+          <p className="mt-1 text-xs text-muted-foreground">Add when ready</p>
         </Card>
         <Card>
           <Pill className="mb-3 size-5 text-primary" strokeWidth={1.75} />
           <p className="text-sm text-muted-foreground">Active medications</p>
-          <p className="mt-1 font-display text-2xl font-medium">2</p>
-          <p className="mt-1 text-xs text-muted-foreground">+ 1 seasonal</p>
+          <p className="mt-1 font-display text-2xl font-medium">{meds.length}</p>
         </Card>
         <Card>
           <Syringe className="mb-3 size-5 text-primary" strokeWidth={1.75} />
           <p className="text-sm text-muted-foreground">Allergies</p>
-          <p className="mt-1 font-display text-2xl font-medium">2</p>
-          <Chip tone="warn">1 severe</Chip>
+          <p className="mt-1 font-display text-2xl font-medium">—</p>
         </Card>
       </div>
+
 
       <Card className="mb-8">
         <div className="mb-4 flex items-center justify-between">
