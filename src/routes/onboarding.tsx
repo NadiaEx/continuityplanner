@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ArrowRight, ArrowLeft, Leaf, Check, Sparkle, Plus, X } from "lucide-react";
 import { HearthIllustration, PathIllustration, HandsIllustration } from "@/components/soft-illustration";
 import { getRestoredSession } from "@/lib/auth-flow";
+import { supabase } from "@/integrations/supabase/client";
 
 
 export const Route = createFileRoute("/onboarding")({
