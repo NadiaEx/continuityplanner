@@ -127,10 +127,8 @@ export default function Emergency() {
             <h3 className="font-display text-lg font-semibold">Wandering response</h3>
           </div>
           <p className="text-sm text-muted-foreground">
-            Leo is drawn to water and quiet, dim spaces. If missing, check bathrooms,
-            closets, and any nearby fountains or ponds first. He responds to his name
-            but may not approach strangers. Carry the laminated communication card
-            (in his backpack) to introduce yourself silently.
+            Note where {lovedOneName} might go if overwhelmed, what draws them, and
+            how a stranger should approach. Add details as you go — there's no rush.
           </p>
         </Card>
       </div>
