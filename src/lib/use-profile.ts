@@ -208,5 +208,7 @@ export function useProfile() {
     hasOnboarded: isPopulated(profile),
     registeredAt,
     oneYearMark,
+    contribution,
+    hasPaid: !!contribution && contribution.amountCents > 0,
   };
 }
