@@ -111,7 +111,10 @@ function AuthPage() {
     <div className="flex min-h-dvh items-center justify-center bg-background px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center">
-          <Link to="/" className="font-display text-xs uppercase tracking-[0.2em] text-muted-foreground">
+          <Link
+            to="/"
+            className="font-display text-xs uppercase tracking-[0.2em] text-muted-foreground"
+          >
             Continuity
           </Link>
           <h1 className="mt-6 font-display text-4xl font-medium text-foreground">
