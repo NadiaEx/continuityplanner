@@ -489,7 +489,7 @@ function CtaBand() {
 }
 
 const pilotBenefits = [
-  { icon: InfinityIcon, title: "Lifetime access", body: "One time. No subscription, no renewal, no upsell email later. Yours to keep." },
+  { icon: InfinityIcon, title: "2 years of storage included", body: "Pay once. Your plan is safely stored for 2 years. 60 days before it ends, we'll email you to renew at-cost (~$4/year) or download everything. Never deleted without warning." },
   { icon: MessagesSquare, title: "Help shape what comes next", body: "Your reflections directly inform what we build next, in plain conversation." },
   { icon: Sparkles, title: "New tools as they land", body: "Try new care templates and AI guidance as soon as they're ready." },
   { icon: Users, title: "Built with caregivers", body: "A small, considered group of caregivers building this together." },
