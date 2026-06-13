@@ -342,9 +342,14 @@ function PayWhatYouCan() {
             </div>
             <button
               onClick={submit}
-              className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition hover:bg-sage-700"
+              disabled={loading}
+              className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition hover:bg-sage-700 disabled:opacity-60"
             >
-              {zeroMode ? (
+              {loading ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" /> One moment…
+                </>
+              ) : zeroMode ? (
                 <>
                   Continue free <ArrowRight className="size-4" />
                 </>
