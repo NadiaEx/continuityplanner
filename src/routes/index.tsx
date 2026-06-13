@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 import {
   ShieldCheck,
@@ -24,6 +25,7 @@ import {
 import heroImage from "@/assets/hero.jpg";
 
 import { HearthIllustration } from "@/components/soft-illustration";
+import { getRestoredSession } from "@/lib/auth-flow";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -40,6 +42,22 @@ export const Route = createFileRoute("/")({
 });
 
 function Landing() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let cancelled = false;
+
+    getRestoredSession().then((session) => {
+      if (!cancelled && session) {
+        navigate({ to: "/dashboard", replace: true });
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [navigate]);
+
   return (
     <div className="min-h-dvh bg-background text-foreground">
       <SiteHeader />

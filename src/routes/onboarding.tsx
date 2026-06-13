@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowRight, ArrowLeft, Leaf, Check, Sparkle, Plus, X } from "lucide-react";
 import { HearthIllustration, PathIllustration, HandsIllustration } from "@/components/soft-illustration";
-import { supabase } from "@/integrations/supabase/client";
+import { getRestoredSession } from "@/lib/auth-flow";
 
 
 export const Route = createFileRoute("/onboarding")({
@@ -145,8 +145,8 @@ function Onboarding() {
     } catch {
       // ignore storage errors
     }
-    const { data } = await supabase.auth.getSession();
-    if (data.session) {
+    const session = await getRestoredSession();
+    if (session) {
       navigate({ to });
       return;
     }

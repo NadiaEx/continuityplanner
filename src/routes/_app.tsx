@@ -1,18 +1,18 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { AppSidebar, MobileTopBar } from "@/components/app-sidebar";
-import { supabase } from "@/integrations/supabase/client";
+import { getRestoredSession } from "@/lib/auth-flow";
 
 export const Route = createFileRoute("/_app")({
   ssr: false,
   beforeLoad: async ({ location }) => {
-    const { data } = await supabase.auth.getSession();
-    if (!data.session) {
+    const session = await getRestoredSession();
+    if (!session) {
       throw redirect({
         to: "/auth",
         search: { redirect: location.pathname === "/" ? "/dashboard" : location.pathname },
       });
     }
-    return { user: data.session.user };
+    return { user: session.user };
   },
   component: AppLayout,
 });
