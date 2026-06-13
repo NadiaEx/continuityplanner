@@ -9,47 +9,17 @@ export const Route = createFileRoute("/_app/profile")({
 });
 
 
-const sections = [
-  {
-    title: "Diagnoses",
-    items: ["Autism Spectrum Disorder", "Sensory Processing Disorder", "Anxiety"],
-  },
-  {
-    title: "Communication Style",
-    items: ["Uses 2–3 word phrases", "Prefers visual schedules", "Echolalia common"],
-  },
-  {
-    title: "Medical Needs",
-    items: ["Daily melatonin (bedtime)", "Quarterly therapy reviews"],
-  },
-  {
-    title: "Allergies",
-    items: ["Peanuts (severe)", "Penicillin"],
-  },
-  {
-    title: "Medications",
-    items: ["Melatonin 3mg — 8:30 PM", "Children's Zyrtec — seasonal"],
-  },
-  {
-    title: "Safety Risks",
-    items: ["Wandering when overstimulated", "Doesn't recognize traffic danger"],
-  },
-  {
-    title: "Sensory Needs",
-    items: ["Noise-canceling headphones", "Weighted blanket", "Soft lighting"],
-  },
-  {
-    title: "Favorite Comforts",
-    items: ["Blue blanket", "\"Wake Up\" song", "Pretzel sticks"],
-  },
-  {
-    title: "Trigger Behaviors",
-    items: ["Unexpected loud noises", "Surprise schedule changes"],
-  },
-  {
-    title: "Calming Supports",
-    items: ["Deep pressure squeezes", "Headphones + dim lights", "Counting to 10 together"],
-  },
+const sectionTitles = [
+  "Diagnoses",
+  "Communication Style",
+  "Medical Needs",
+  "Allergies",
+  "Medications",
+  "Safety Risks",
+  "Sensory Needs",
+  "Favorite Comforts",
+  "Trigger Behaviors",
+  "Calming Supports",
 ];
 
 export default function Profile() {
