@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
+import { PageShell, PageHeader, Card, Button } from "@/components/page-shell";
 import { Upload, Search, FileText, FileImage, FileLock } from "lucide-react";
 
 function DocThumbnail({ name, category }: { name: string; category: string }) {
