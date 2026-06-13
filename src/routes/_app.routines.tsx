@@ -76,14 +76,16 @@ const blocks = [
 ];
 
 export default function Routines() {
+  const { lovedOneName } = useProfile();
   return (
     <PageShell>
       <PageHeader
         eyebrow="Daily Routines"
-        title="The rhythm of Leo's day."
-        description="The small habits and predictable moments that help Leo feel safe and successful."
+        title={`The rhythm of ${lovedOneName}'s day.`}
+        description={`The small habits and predictable moments that help ${lovedOneName} feel safe and successful.`}
         actions={<Button><Plus className="size-4" /> Add block</Button>}
       />
+
 
       <div className="space-y-5">
         {blocks.map(({ title, time, icon: Icon, steps, tip }) => (
