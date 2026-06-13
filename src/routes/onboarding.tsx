@@ -148,6 +148,25 @@ function Onboarding() {
     }
     const session = await getRestoredSession();
     if (session) {
+      // Persist caregiver name + onboarding payload to the user's profile row
+      try {
+        await supabase
+          .from("profiles")
+          .update({
+            display_name: caregiverName.trim() || null,
+          })
+          .eq("id", session.user.id);
+        await supabase.from("responses").upsert(
+          {
+            user_id: session.user.id,
+            section_id: "onboarding",
+            extracted_data: profile as unknown as Record<string, unknown>,
+          },
+          { onConflict: "user_id,section_id" } as never,
+        );
+      } catch {
+        // best-effort; localStorage already has it
+      }
       navigate({ to });
       return;
     }
