@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { PageShell, PageHeader, Card, Button } from "@/components/page-shell";
 import { Plus, Heart, Home, Sparkles, FileVideo, Trash2 } from "lucide-react";
 import { useProfile } from "@/lib/use-profile";
+import { DependentTabs } from "@/components/dependent-tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -128,6 +129,10 @@ function Future() {
         title="The long view."
         description={`Where ${lovedOneName} is headed, who's responsible, and the decisions you want made when you're not in the room.`}
       />
+
+      <DependentTabs />
+
+
 
       {!dependentId && (
         <Card className="mb-6">

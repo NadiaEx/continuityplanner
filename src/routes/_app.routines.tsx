@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
 import { Plus, Sunrise, Trash2, Pencil, X, Check } from "lucide-react";
 import { useProfile } from "@/lib/use-profile";
+import { DependentTabs } from "@/components/dependent-tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -165,6 +166,10 @@ function Routines() {
           </Button>
         }
       />
+
+      <DependentTabs />
+
+
 
       {!dependentId && (
         <Card className="mb-6">

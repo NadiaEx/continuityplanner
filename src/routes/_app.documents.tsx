@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { PageShell, PageHeader, Card, Button } from "@/components/page-shell";
 import { Upload, Search, FileText, Trash2, Download } from "lucide-react";
 import { useProfile } from "@/lib/use-profile";
+import { DependentTabs } from "@/components/dependent-tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -165,6 +166,10 @@ function Documents() {
           </>
         }
       />
+
+      <DependentTabs />
+
+
 
       {!dependentId && (
         <Card className="mb-6">
