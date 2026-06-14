@@ -86,6 +86,29 @@ function Insights() {
         description="A gentle snapshot of what you've documented so far. Everything here is private to you."
       />
 
+      <Link
+        to="/feedback"
+        className="mb-8 flex flex-col items-start justify-between gap-4 rounded-2xl border border-sage-200/60 bg-gradient-to-br from-sage-50/70 via-card to-mist-50/40 p-6 transition hover:shadow-sm sm:flex-row sm:items-center"
+      >
+        <div className="flex items-start gap-4">
+          <div className="grid size-10 shrink-0 place-items-center rounded-xl bg-sage-100/80 text-sage-700">
+            <MessageCircleHeart className="size-5" strokeWidth={1.75} />
+          </div>
+          <div>
+            <h3 className="font-display text-base font-medium text-foreground">
+              Share your feedback
+            </h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Tell us about the site, the process, or caregiving life. We read all of it.
+            </p>
+          </div>
+        </div>
+        <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
+          Open survey <ArrowRight className="size-3.5" />
+        </span>
+      </Link>
+
+
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {metrics.map(({ label, value, trend, icon: Icon }) => (
           <Card key={label}>
