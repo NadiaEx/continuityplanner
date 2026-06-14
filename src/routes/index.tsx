@@ -96,10 +96,10 @@ function SiteHeader() {
         </nav>
         <div className="flex items-center gap-2">
           <Link
-            to="/dashboard"
+            to="/auth"
             className="hidden rounded-full px-4 py-2 text-sm text-muted-foreground hover:text-foreground md:inline-flex"
           >
-            Demo Account
+            Sign in
           </Link>
           <Link
             to="/onboarding"
