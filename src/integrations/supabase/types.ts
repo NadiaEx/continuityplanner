@@ -365,6 +365,45 @@ export type Database = {
         }
         Relationships: []
       }
+      routine_blocks: {
+        Row: {
+          created_at: string
+          dependent_id: string
+          id: string
+          position: number
+          steps: string[]
+          time_label: string | null
+          tip: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          dependent_id: string
+          id?: string
+          position?: number
+          steps?: string[]
+          time_label?: string | null
+          tip?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          dependent_id?: string
+          id?: string
+          position?: number
+          steps?: string[]
+          time_label?: string | null
+          tip?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       suppressed_emails: {
         Row: {
           created_at: string
