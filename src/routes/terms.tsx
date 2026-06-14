@@ -192,10 +192,10 @@ function TermsPage() {
           <p>
             Questions, concerns, or just want to tell us what's working? Email{" "}
             <a
-              href="mailto:[your email]"
+              href="mailto:hello@continuityplanner.app"
               className="font-medium text-foreground underline underline-offset-4"
             >
-              [your email]
+              hello@continuityplanner.app
             </a>
             . A real person reads every message.
           </p>
