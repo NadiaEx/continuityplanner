@@ -25,6 +25,7 @@ import { Route as AppOnePageRouteImport } from './routes/_app.one-page'
 import { Route as AppMedicalRouteImport } from './routes/_app.medical'
 import { Route as AppInsightsRouteImport } from './routes/_app.insights'
 import { Route as AppFutureRouteImport } from './routes/_app.future'
+import { Route as AppFeedbackRouteImport } from './routes/_app.feedback'
 import { Route as AppExportsRouteImport } from './routes/_app.exports'
 import { Route as AppEmergencyRouteImport } from './routes/_app.emergency'
 import { Route as AppDocumentsRouteImport } from './routes/_app.documents'
@@ -113,6 +114,11 @@ const AppFutureRoute = AppFutureRouteImport.update({
   path: '/future',
   getParentRoute: () => AppRoute,
 } as any)
+const AppFeedbackRoute = AppFeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppExportsRoute = AppExportsRouteImport.update({
   id: '/exports',
   path: '/exports',
@@ -171,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/documents': typeof AppDocumentsRoute
   '/emergency': typeof AppEmergencyRoute
   '/exports': typeof AppExportsRoute
+  '/feedback': typeof AppFeedbackRoute
   '/future': typeof AppFutureRoute
   '/insights': typeof AppInsightsRoute
   '/medical': typeof AppMedicalRoute
@@ -196,6 +203,7 @@ export interface FileRoutesByTo {
   '/documents': typeof AppDocumentsRoute
   '/emergency': typeof AppEmergencyRoute
   '/exports': typeof AppExportsRoute
+  '/feedback': typeof AppFeedbackRoute
   '/future': typeof AppFutureRoute
   '/insights': typeof AppInsightsRoute
   '/medical': typeof AppMedicalRoute
@@ -223,6 +231,7 @@ export interface FileRoutesById {
   '/_app/documents': typeof AppDocumentsRoute
   '/_app/emergency': typeof AppEmergencyRoute
   '/_app/exports': typeof AppExportsRoute
+  '/_app/feedback': typeof AppFeedbackRoute
   '/_app/future': typeof AppFutureRoute
   '/_app/insights': typeof AppInsightsRoute
   '/_app/medical': typeof AppMedicalRoute
@@ -250,6 +259,7 @@ export interface FileRouteTypes {
     | '/documents'
     | '/emergency'
     | '/exports'
+    | '/feedback'
     | '/future'
     | '/insights'
     | '/medical'
@@ -275,6 +285,7 @@ export interface FileRouteTypes {
     | '/documents'
     | '/emergency'
     | '/exports'
+    | '/feedback'
     | '/future'
     | '/insights'
     | '/medical'
@@ -301,6 +312,7 @@ export interface FileRouteTypes {
     | '/_app/documents'
     | '/_app/emergency'
     | '/_app/exports'
+    | '/_app/feedback'
     | '/_app/future'
     | '/_app/insights'
     | '/_app/medical'
@@ -440,6 +452,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFutureRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/feedback': {
+      id: '/_app/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof AppFeedbackRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/exports': {
       id: '/_app/exports'
       path: '/exports'
@@ -506,6 +525,7 @@ interface AppRouteChildren {
   AppDocumentsRoute: typeof AppDocumentsRoute
   AppEmergencyRoute: typeof AppEmergencyRoute
   AppExportsRoute: typeof AppExportsRoute
+  AppFeedbackRoute: typeof AppFeedbackRoute
   AppFutureRoute: typeof AppFutureRoute
   AppInsightsRoute: typeof AppInsightsRoute
   AppMedicalRoute: typeof AppMedicalRoute
@@ -522,6 +542,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppDocumentsRoute: AppDocumentsRoute,
   AppEmergencyRoute: AppEmergencyRoute,
   AppExportsRoute: AppExportsRoute,
+  AppFeedbackRoute: AppFeedbackRoute,
   AppFutureRoute: AppFutureRoute,
   AppInsightsRoute: AppInsightsRoute,
   AppMedicalRoute: AppMedicalRoute,

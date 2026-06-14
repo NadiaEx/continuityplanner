@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PageShell, PageHeader, Card, Chip } from "@/components/page-shell";
-import { Heart, FileText, Sparkles, Users, Compass, ShieldCheck } from "lucide-react";
+import { Heart, FileText, Sparkles, Users, Compass, ShieldCheck, ArrowRight, MessageCircleHeart } from "lucide-react";
+
 import { supabase } from "@/integrations/supabase/client";
 import { useProfile } from "@/lib/use-profile";
 
