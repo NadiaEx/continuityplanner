@@ -11,9 +11,18 @@ export const Route = createFileRoute("/_app/settings")({
 });
 
 export default function Settings() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const handleSignOut = async () => {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  };
   return (
     <PageShell>
       <PageHeader
+
         eyebrow="Settings"
         title="Your preferences."
         description="Small adjustments so Continuity feels right for you."
