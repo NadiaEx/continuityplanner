@@ -85,6 +85,9 @@ const UNLOCKS: Unlock[] = [
 
 export const Route = createFileRoute("/_app/assistant")({
   head: () => ({ meta: [{ title: "First conversation — Continuity" }] }),
+  validateSearch: (search: Record<string, unknown>) => ({
+    prompt: typeof search.prompt === "string" ? search.prompt : undefined,
+  }),
   component: Assistant,
 });
 
@@ -96,6 +99,7 @@ type StoredProfile = {
 };
 
 export default function Assistant() {
+  const { prompt } = Route.useSearch();
   const [profile, setProfile] = useState<StoredProfile>({});
   const [activeDependentIdx, setActiveDependentIdx] = useState(0);
   const [stage, setStage] = useState<Stage>("dump");
@@ -112,6 +116,13 @@ export default function Assistant() {
       // ignore
     }
   }, []);
+
+  // Deep link: prefill the dump textarea when ?prompt=... is provided.
+  useEffect(() => {
+    if (prompt && !dump) setDump(prompt);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prompt]);
+
 
   const dependent = profile.dependents?.[activeDependentIdx];
   const lovedOneName = dependent?.name || "your loved one";

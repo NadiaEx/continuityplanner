@@ -15,11 +15,27 @@ export const Route = createFileRoute("/_app/dashboard")({
   component: Dashboard,
 });
 
-const next = [
-  { title: "Tell us about morning transitions", time: "~5 min" },
-  { title: "Add an emergency contact", time: "~2 min" },
-  { title: "Note one comfort support", time: "~3 min" },
+const next: Array<{ title: string; time: string; prompt: string }> = [
+  {
+    title: "Tell us about morning transitions",
+    time: "~5 min",
+    prompt:
+      "I want to talk about morning transitions — what waking up, getting ready, and leaving the house actually looks like for them. What helps, what doesn't, and where it tends to fall apart.",
+  },
+  {
+    title: "Add an emergency contact",
+    time: "~2 min",
+    prompt:
+      "I want to add an emergency contact — who they are, how to reach them, and what role they'd play if something happened to me.",
+  },
+  {
+    title: "Note one comfort support",
+    time: "~3 min",
+    prompt:
+      "I want to note one thing that reliably comforts them — an object, a phrase, a routine, a person — and when it tends to be needed most.",
+  },
 ];
+
 
 export default function Dashboard() {
   const { caregiverFirstName, lovedOneName, hasOnboarded } = useProfile();
@@ -73,18 +89,23 @@ export default function Dashboard() {
           </p>
           <ul className="space-y-2">
             {next.map((n) => (
-              <li
-                key={n.title}
-                className="flex items-center gap-3 rounded-lg p-2 transition hover:bg-muted"
-              >
-                <Circle className="size-4 text-muted-foreground" />
-                <div className="flex-1">
-                  <p className="text-sm">{n.title}</p>
-                  <p className="text-xs text-muted-foreground">{n.time}</p>
-                </div>
+              <li key={n.title}>
+                <Link
+                  to="/assistant"
+                  search={{ prompt: n.prompt }}
+                  className="flex items-center gap-3 rounded-lg p-2 transition hover:bg-muted"
+                >
+                  <Circle className="size-4 text-muted-foreground" />
+                  <div className="flex-1">
+                    <p className="text-sm">{n.title}</p>
+                    <p className="text-xs text-muted-foreground">{n.time}</p>
+                  </div>
+                  <ArrowRight className="size-4 text-muted-foreground" />
+                </Link>
               </li>
             ))}
           </ul>
+
           <Link to="/assistant" className="mt-5 inline-flex">
             <Button variant="secondary">
               <Sparkles className="size-4" /> Open AI assistant
