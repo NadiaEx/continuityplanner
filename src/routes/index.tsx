@@ -586,6 +586,7 @@ function SiteFooter() {
           </span>
         </div>
         <div className="flex flex-wrap items-center gap-x-8 gap-y-2">
+          <Link to="/pricing" className="hover:text-foreground">Pricing</Link>
           <Link to="/auth" className="hover:text-foreground">Sign in</Link>
           <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
           <Link to="/terms" className="hover:text-foreground">Terms</Link>
