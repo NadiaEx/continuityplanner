@@ -1,6 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { PageShell, PageHeader, Card, Button } from "@/components/page-shell";
-import { Bell, Shield, Users, Palette } from "lucide-react";
+import { Bell, Shield, Users, Palette, LogOut } from "lucide-react";
+
 
 export const Route = createFileRoute("/_app/settings")({
   head: () => ({ meta: [{ title: "Settings — Continuity" }] }),
