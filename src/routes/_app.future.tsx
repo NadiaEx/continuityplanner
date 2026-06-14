@@ -130,6 +130,10 @@ function Future() {
         description={`Where ${lovedOneName} is headed, who's responsible, and the decisions you want made when you're not in the room.`}
       />
 
+      <DependentTabs />
+
+
+
       {!dependentId && (
         <Card className="mb-6">
           <p className="text-sm text-muted-foreground">
