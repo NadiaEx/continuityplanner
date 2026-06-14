@@ -164,6 +164,39 @@ export type Database = {
         }
         Relationships: []
       }
+      reflections: {
+        Row: {
+          created_at: string
+          id: string
+          note: string | null
+          page_path: string | null
+          question: string
+          score: number
+          score_label: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          note?: string | null
+          page_path?: string | null
+          question: string
+          score: number
+          score_label?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          note?: string | null
+          page_path?: string | null
+          question?: string
+          score?: number
+          score_label?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       responses: {
         Row: {
           created_at: string
