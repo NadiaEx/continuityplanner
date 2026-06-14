@@ -586,9 +586,9 @@ function SiteFooter() {
           </span>
         </div>
         <div className="flex flex-wrap items-center gap-x-8 gap-y-2">
-          <a href="#" className="hover:text-foreground">Privacy</a>
-          <a href="#" className="hover:text-foreground">Terms</a>
-          <a href="#" className="hover:text-foreground">Contact</a>
+          <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
+          <Link to="/terms" className="hover:text-foreground">Terms</Link>
+          <Link to="/refund" className="hover:text-foreground">Refund</Link>
         </div>
         <p>© {new Date().getFullYear()} Continuity. Preserving care, together.</p>
       </div>
