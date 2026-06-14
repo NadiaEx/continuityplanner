@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      care_team_members: {
+        Row: {
+          category: string
+          created_at: string
+          email: string | null
+          id: string
+          is_emergency_contact: boolean
+          name: string
+          notes: string | null
+          phone: string | null
+          priority: number
+          role: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          is_emergency_contact?: boolean
+          name: string
+          notes?: string | null
+          phone?: string | null
+          priority?: number
+          role?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          is_emergency_contact?: boolean
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          priority?: number
+          role?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       contributions: {
         Row: {
           amount_cents: number
@@ -137,6 +182,33 @@ export type Database = {
           id?: string
           token?: string
           used_at?: string | null
+        }
+        Relationships: []
+      }
+      emergency_plan_notes: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          kind: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content?: string
+          created_at?: string
+          id?: string
+          kind: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
