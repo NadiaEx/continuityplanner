@@ -90,9 +90,17 @@ export function AppSidebar() {
           Add what you can, when you can. Every note makes the plan stronger.
         </p>
       </div>
+      <button
+        onClick={handleSignOut}
+        className="mt-3 flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition hover:bg-sidebar-accent/60 hover:text-foreground"
+      >
+        <LogOut className="size-4 shrink-0" strokeWidth={1.75} />
+        Sign out
+      </button>
     </aside>
   );
 }
+
 
 export function MobileTopBar() {
   return (
