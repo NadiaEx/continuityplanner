@@ -96,10 +96,10 @@ function SiteHeader() {
         </nav>
         <div className="flex items-center gap-2">
           <Link
-            to="/dashboard"
+            to="/auth"
             className="hidden rounded-full px-4 py-2 text-sm text-muted-foreground hover:text-foreground md:inline-flex"
           >
-            Demo Account
+            Sign in
           </Link>
           <Link
             to="/onboarding"
@@ -586,6 +586,7 @@ function SiteFooter() {
           </span>
         </div>
         <div className="flex flex-wrap items-center gap-x-8 gap-y-2">
+          <Link to="/auth" className="hover:text-foreground">Sign in</Link>
           <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
           <Link to="/terms" className="hover:text-foreground">Terms</Link>
           <Link to="/refund" className="hover:text-foreground">Refund</Link>
