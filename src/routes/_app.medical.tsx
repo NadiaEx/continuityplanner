@@ -124,6 +124,10 @@ function Medical() {
         description={`A clear, current picture of ${lovedOneName}'s health — kept in one calm place.`}
       />
 
+      <DependentTabs />
+
+
+
       {!dependentId && (
         <Card className="mb-6">
           <p className="text-sm text-muted-foreground">
