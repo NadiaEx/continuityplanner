@@ -89,18 +89,23 @@ export default function Dashboard() {
           </p>
           <ul className="space-y-2">
             {next.map((n) => (
-              <li
-                key={n.title}
-                className="flex items-center gap-3 rounded-lg p-2 transition hover:bg-muted"
-              >
-                <Circle className="size-4 text-muted-foreground" />
-                <div className="flex-1">
-                  <p className="text-sm">{n.title}</p>
-                  <p className="text-xs text-muted-foreground">{n.time}</p>
-                </div>
+              <li key={n.title}>
+                <Link
+                  to="/assistant"
+                  search={{ prompt: n.prompt }}
+                  className="flex items-center gap-3 rounded-lg p-2 transition hover:bg-muted"
+                >
+                  <Circle className="size-4 text-muted-foreground" />
+                  <div className="flex-1">
+                    <p className="text-sm">{n.title}</p>
+                    <p className="text-xs text-muted-foreground">{n.time}</p>
+                  </div>
+                  <ArrowRight className="size-4 text-muted-foreground" />
+                </Link>
               </li>
             ))}
           </ul>
+
           <Link to="/assistant" className="mt-5 inline-flex">
             <Button variant="secondary">
               <Sparkles className="size-4" /> Open AI assistant
