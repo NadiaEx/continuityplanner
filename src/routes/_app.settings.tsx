@@ -131,9 +131,27 @@ export default function Settings() {
           </p>
         </Card>
       </div>
+
+      <div className="mt-8">
+        <Card>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h3 className="font-display text-lg font-semibold">Sign out</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                You can sign back in anytime — your plan stays right where you left it.
+              </p>
+            </div>
+            <Button onClick={handleSignOut}>
+              <LogOut className="mr-2 inline size-4" strokeWidth={1.75} />
+              Sign out
+            </Button>
+          </div>
+        </Card>
+      </div>
     </PageShell>
   );
 }
+
 
 function ToggleRow({ label, defaultOn = false }: { label: string; defaultOn?: boolean }) {
   return (
