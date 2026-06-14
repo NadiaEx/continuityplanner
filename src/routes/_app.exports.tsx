@@ -1,60 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { PageShell, PageHeader, Card, Chip, Button } from "@/components/page-shell";
-import { Download, FileText, Cloud, ShieldCheck, Sun, Users, Stethoscope, Compass, Contact } from "lucide-react";
-
-function PdfThumbnail({
-  icon: Icon,
-  label,
-  pages,
-}: {
-  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  label: string;
-  pages: string;
-}) {
-  return (
-    <div className="flex aspect-[3/4] flex-col rounded-xl border border-border bg-[#f6f5f3] p-4 shadow-sm">
-      <div className="mb-3 flex items-center gap-2">
-        <div className="grid size-7 place-items-center rounded-md bg-sage-50 text-sage-700">
-          <Icon className="size-3.5" strokeWidth={1.75} />
-        </div>
-        <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-          {label}
-        </span>
-      </div>
-      <div className="flex-1 space-y-2 rounded-lg bg-white p-3 shadow-sm">
-        <div className="h-1.5 w-1/2 rounded bg-sage-100" />
-        <div className="h-1 w-full rounded bg-muted/60" />
-        <div className="h-1 w-5/6 rounded bg-muted/60" />
-        <div className="h-1 w-4/5 rounded bg-muted/60" />
-        <div className="h-1 w-2/3 rounded bg-muted/60" />
-        <div className="mt-2 h-16 w-full rounded bg-mist-50/60" />
-        <div className="h-1 w-3/4 rounded bg-muted/60" />
-        <div className="h-1 w-full rounded bg-muted/60" />
-      </div>
-      <div className="mt-3 flex items-center justify-between text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-        <span>{pages}</span>
-        <span>PDF · DOCX</span>
-      </div>
-    </div>
-  );
-}
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { PageShell, PageHeader, Card } from "@/components/page-shell";
+import { FileText, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/_app/exports")({
   head: () => ({ meta: [{ title: "Exports — Continuity" }] }),
   component: Exports,
 });
 
-const packets = [
-  { name: "Full Care Continuity Plan", desc: "Everything in one comprehensive document.", icon: FileText, pages: "84 pages" },
-  { name: "Emergency Care Packet", desc: "Critical safety info for any caregiver.", icon: ShieldCheck, pages: "6 pages" },
-  { name: "Daily Care Guide", desc: "Hour-by-hour routines and supports.", icon: Sun, pages: "18 pages" },
-  { name: "Caregiver Handbook", desc: "Day-one guide for a new caregiver.", icon: Users, pages: "42 pages" },
-  { name: "Medical Summary", desc: "Diagnoses, medications, providers.", icon: Stethoscope, pages: "8 pages" },
-  { name: "Future Care Blueprint", desc: "Long-term wishes and guardianship.", icon: Compass, pages: "12 pages" },
-  { name: "Trusted Contacts Sheet", desc: "Family, providers, responders.", icon: Contact, pages: "2 pages" },
-] as const;
-
-export default function Exports() {
+function Exports() {
   return (
     <PageShell>
       <PageHeader
@@ -63,24 +16,31 @@ export default function Exports() {
         description="Beautifully formatted documents you can hand to a caregiver, school, or doctor."
       />
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {packets.map(({ name, desc, icon: Icon, pages }) => (
-          <Card key={name}>
-            <PdfThumbnail icon={Icon} label={name} pages={pages} />
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <h4 className="truncate font-medium">{name}</h4>
-                <p className="mt-1 text-xs text-muted-foreground">{desc}</p>
-              </div>
-              <Chip tone="sage">Ready</Chip>
-            </div>
-            <div className="mt-4 flex gap-2">
-              <Button className="flex-1"><Download className="size-4" /> PDF</Button>
-              <Button variant="secondary"><Cloud className="size-4" /> Drive</Button>
-            </div>
-          </Card>
-        ))}
-      </div>
+      <Card className="text-center">
+        <div className="mx-auto mb-4 grid size-12 place-items-center rounded-full bg-sage-50 text-sage-700">
+          <FileText className="size-5" strokeWidth={1.75} />
+        </div>
+        <h3 className="font-display text-lg font-medium">No exports yet</h3>
+        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
+          As you fill in your plan, we'll assemble shareable packets here —
+          emergency care, daily routines, medical summaries, and more. Nothing
+          to download until your details are in.
+        </p>
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <Link
+            to="/profile"
+            className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition hover:bg-sage-700"
+          >
+            Open your profile <ArrowRight className="size-3.5" />
+          </Link>
+          <Link
+            to="/emergency"
+            className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-5 py-2 text-sm font-medium text-foreground transition hover:bg-muted"
+          >
+            Build emergency plan
+          </Link>
+        </div>
+      </Card>
     </PageShell>
   );
 }
