@@ -119,7 +119,7 @@ Please analyze this and return the structured JSON plan.`;
   } catch (err) {
     console.error("[analyze-care-dump]", err);
     return new Response(
-      JSON.stringify({ error: err instanceof Error ? err.message : "Unknown error" }),
+      JSON.stringify({ error: "Analysis failed. Please try again." }),
       { status: 500, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } },
     );
   }
