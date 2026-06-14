@@ -41,8 +41,17 @@ void HeartHandshake;
 
 export function AppSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const handleSignOut = async () => {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  };
   return (
     <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 flex-col border-r border-border bg-sidebar p-5 lg:flex">
+
       <Link to="/" className="mb-6 flex items-center gap-2 px-2">
         <span className="grid size-7 place-items-center rounded-md bg-primary ring-1 ring-sage-700/10">
           <Leaf className="size-3.5 text-primary-foreground" />
