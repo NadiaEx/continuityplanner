@@ -217,6 +217,7 @@ export function useProfile() {
     setActiveIdx,
     activeDependent,
     addDependent,
+    updateDependent,
     saveProfile,
     hasOnboarded: isPopulated(profile),
     registeredAt,
