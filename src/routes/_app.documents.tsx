@@ -167,6 +167,10 @@ function Documents() {
         }
       />
 
+      <DependentTabs />
+
+
+
       {!dependentId && (
         <Card className="mb-6">
           <p className="text-sm text-muted-foreground">
