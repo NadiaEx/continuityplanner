@@ -9,6 +9,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useCallback } from "react";
 import { PageShell, PageHeader, Card, Button } from "@/components/page-shell";
+import { DependentTabs } from "@/components/dependent-tabs";
+import { useProfile } from "@/lib/use-profile";
 import {
   Plus,
   Pencil,
