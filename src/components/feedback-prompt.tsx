@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Check } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const faces = [
   { label: "Hard", emoji: "🌧" },
@@ -19,6 +21,37 @@ export function FeedbackPrompt({
   const [score, setScore] = useState<number | null>(null);
   const [note, setNote] = useState("");
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSend = async () => {
+    if (score === null) return;
+    setSubmitting(true);
+    try {
+      const { data: userData } = await supabase.auth.getUser();
+      const user = userData.user;
+      if (!user) {
+        toast.error("Please sign in to send a reflection.");
+        setSubmitting(false);
+        return;
+      }
+      const { error } = await supabase.from("reflections").insert({
+        user_id: user.id,
+        question,
+        score,
+        score_label: faces[score].label,
+        note: note.trim() || null,
+        page_path:
+          typeof window !== "undefined" ? window.location.pathname : null,
+      });
+      if (error) throw error;
+      setSent(true);
+    } catch (err) {
+      console.error("Failed to save reflection", err);
+      toast.error("Couldn't save your reflection. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   if (sent) {
     return (
@@ -62,6 +95,7 @@ export function FeedbackPrompt({
         value={note}
         onChange={(e) => setNote(e.target.value)}
         rows={2}
+        maxLength={2000}
         placeholder="Anything that felt missing or overwhelming?"
         className="mt-4 w-full resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm placeholder:text-muted-foreground/70 focus:border-sage-600/40 focus:outline-none"
       />
@@ -71,11 +105,11 @@ export function FeedbackPrompt({
         </p>
         <button
           type="button"
-          onClick={() => setSent(true)}
-          disabled={score === null}
+          onClick={handleSend}
+          disabled={score === null || submitting}
           className="rounded-full bg-primary px-4 py-1.5 text-xs font-medium text-primary-foreground transition hover:bg-sage-700 disabled:opacity-50"
         >
-          Send reflection
+          {submitting ? "Sending…" : "Send reflection"}
         </button>
       </div>
     </div>
