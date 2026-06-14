@@ -373,6 +373,8 @@ export default function OnePageDocument() {
         }
       />
 
+      <DependentTabs />
+
       {/* Progress bar */}
       <div className="mb-8">
         <div className="mb-2 flex items-center justify-between text-xs text-muted-foreground">
