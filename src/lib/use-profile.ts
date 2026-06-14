@@ -187,6 +187,19 @@ export function useProfile() {
     [profile, saveProfile],
   );
 
+  const updateDependent = useCallback(
+    async (id: string, patch: Partial<StoredDependent>) => {
+      const next: StoredProfile = {
+        ...profile,
+        dependents: profile.dependents.map((d) =>
+          d.id === id ? { ...d, ...patch } : d,
+        ),
+      };
+      await saveProfile(next);
+    },
+    [profile, saveProfile],
+  );
+
   const safeIdx = Math.min(activeIdx, Math.max(0, profile.dependents.length - 1));
   const activeDependent = profile.dependents[safeIdx];
   const lovedOneName = activeDependent?.name?.trim() || "your loved one";
