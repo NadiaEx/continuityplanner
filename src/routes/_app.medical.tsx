@@ -1,112 +1,249 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { PageShell, PageHeader, Card, Button } from "@/components/page-shell";
-import { Plus, Stethoscope, Pill, Syringe, FileText } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { PageShell, PageHeader, Card } from "@/components/page-shell";
+import { Plus, Stethoscope, Pill, Syringe, Users, Trash2 } from "lucide-react";
 import { useProfile } from "@/lib/use-profile";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/_app/medical")({
   head: () => ({ meta: [{ title: "Medical Information — Continuity" }] }),
   component: Medical,
 });
 
-const meds: { name: string; dose: string; time: string; notes: string }[] = [];
+type Note = { id: string; section: string; content: string; created_at: string };
+const MAX_NOTE = 2000;
 
-const providers: { name: string; role: string; phone: string }[] = [];
+function Medical() {
+  const { lovedOneName, activeDependent } = useProfile();
+  const dependentId = activeDependent?.id ?? null;
 
+  const sections = [
+    {
+      key: "medical_conditions",
+      title: "Conditions & diagnoses",
+      icon: Stethoscope,
+      body: `Diagnoses, sensitivities, and the medical picture for ${lovedOneName}.`,
+      placeholder: "e.g. Type 1 diabetes — diagnosed 2019, well managed",
+    },
+    {
+      key: "medical_medications",
+      title: "Medications",
+      icon: Pill,
+      body: "One per note: name, dose, schedule, and any notes.",
+      placeholder: "e.g. Lamotrigine 50mg — twice daily with food",
+    },
+    {
+      key: "medical_allergies",
+      title: "Allergies & reactions",
+      icon: Syringe,
+      body: "Anything to avoid and what happens when exposed.",
+      placeholder: "e.g. Peanuts — anaphylaxis, EpiPen in backpack",
+    },
+    {
+      key: "medical_providers",
+      title: "Care providers",
+      icon: Users,
+      body: "Doctors, therapists, specialists, and how to reach them.",
+      placeholder: "e.g. Dr. Patel, neurologist — (555) 123-4567",
+    },
+  ];
 
-export default function Medical() {
-  const { lovedOneName } = useProfile();
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [drafts, setDrafts] = useState<Record<string, string>>({});
+  const [addingFor, setAddingFor] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!dependentId) {
+      setNotes([]);
+      setLoading(false);
+      return;
+    }
+    let cancelled = false;
+    setLoading(true);
+    (async () => {
+      const { data, error } = await supabase
+        .from("profile_notes")
+        .select("id, section, content, created_at")
+        .eq("dependent_id", dependentId)
+        .in("section", sections.map((s) => s.key))
+        .order("created_at", { ascending: false });
+      if (cancelled) return;
+      if (error) toast.error("Couldn't load medical info.");
+      else setNotes((data ?? []) as Note[]);
+      setLoading(false);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [dependentId]);
+
+  const addNote = async (section: string) => {
+    const content = (drafts[section] ?? "").trim();
+    if (!content) return;
+    if (!dependentId) {
+      toast.error("Add a loved one first.");
+      return;
+    }
+    const { data: userData } = await supabase.auth.getUser();
+    if (!userData.user) return toast.error("Please sign in.");
+    const { data, error } = await supabase
+      .from("profile_notes")
+      .insert({
+        user_id: userData.user.id,
+        dependent_id: dependentId,
+        section,
+        content: content.slice(0, MAX_NOTE),
+      })
+      .select("id, section, content, created_at")
+      .single();
+    if (error || !data) return toast.error("Couldn't save.");
+    setNotes((prev) => [data as Note, ...prev]);
+    setDrafts((prev) => ({ ...prev, [section]: "" }));
+    setAddingFor(null);
+  };
+
+  const deleteNote = async (id: string) => {
+    const prev = notes;
+    setNotes((p) => p.filter((n) => n.id !== id));
+    const { error } = await supabase.from("profile_notes").delete().eq("id", id);
+    if (error) {
+      toast.error("Couldn't delete.");
+      setNotes(prev);
+    }
+  };
+
+  const countFor = (key: string) => notes.filter((n) => n.section === key).length;
+
   return (
     <PageShell>
       <PageHeader
         eyebrow="Medical Information"
         title="Quietly organized."
         description={`A clear, current picture of ${lovedOneName}'s health — kept in one calm place.`}
-        actions={<Button><Plus className="size-4" /> Add record</Button>}
       />
 
+      {!dependentId && (
+        <Card className="mb-6">
+          <p className="text-sm text-muted-foreground">
+            Add a loved one in your <Link to="/profile" className="underline">profile</Link> to start adding medical info.
+          </p>
+        </Card>
+      )}
 
-      <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
         <Card>
           <Stethoscope className="mb-3 size-5 text-primary" strokeWidth={1.75} />
           <p className="text-sm text-muted-foreground">Conditions</p>
-          <p className="mt-1 font-display text-2xl font-medium">—</p>
-          <p className="mt-1 text-xs text-muted-foreground">Add when ready</p>
+          <p className="mt-1 font-display text-2xl font-medium">
+            {loading ? "—" : countFor("medical_conditions")}
+          </p>
         </Card>
         <Card>
           <Pill className="mb-3 size-5 text-primary" strokeWidth={1.75} />
-          <p className="text-sm text-muted-foreground">Active medications</p>
-          <p className="mt-1 font-display text-2xl font-medium">{meds.length}</p>
+          <p className="text-sm text-muted-foreground">Medications</p>
+          <p className="mt-1 font-display text-2xl font-medium">
+            {loading ? "—" : countFor("medical_medications")}
+          </p>
         </Card>
         <Card>
           <Syringe className="mb-3 size-5 text-primary" strokeWidth={1.75} />
           <p className="text-sm text-muted-foreground">Allergies</p>
-          <p className="mt-1 font-display text-2xl font-medium">—</p>
+          <p className="mt-1 font-display text-2xl font-medium">
+            {loading ? "—" : countFor("medical_allergies")}
+          </p>
         </Card>
       </div>
 
-
-      <Card className="mb-8">
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="font-display text-lg font-semibold">Medications</h3>
-          <button className="text-xs text-muted-foreground hover:text-foreground">Edit</button>
-        </div>
-        <div className="overflow-hidden rounded-xl border border-border">
-          <table className="w-full text-sm">
-            <thead className="bg-surface-soft text-xs uppercase tracking-wider text-muted-foreground">
-              <tr>
-                <th className="px-4 py-2 text-left font-medium">Medication</th>
-                <th className="px-4 py-2 text-left font-medium">Dose</th>
-                <th className="px-4 py-2 text-left font-medium">Schedule</th>
-                <th className="px-4 py-2 text-left font-medium">Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              {meds.map((m) => (
-                <tr key={m.name} className="border-t border-border">
-                  <td className="px-4 py-3 font-medium">{m.name}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{m.dose}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{m.time}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{m.notes}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Card>
-
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <Card>
-          <h3 className="mb-4 font-display text-lg font-semibold">Care providers</h3>
-          <ul className="space-y-2">
-            {providers.map((p) => (
-              <li
-                key={p.name}
-                className="flex items-center justify-between rounded-xl border border-border bg-surface-soft p-3"
-              >
-                <div>
-                  <p className="text-sm font-medium">{p.name}</p>
-                  <p className="text-xs text-muted-foreground">{p.role}</p>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {sections.map(({ key, title, icon: Icon, body, placeholder }) => {
+          const items = notes.filter((n) => n.section === key);
+          const isAdding = addingFor === key;
+          return (
+            <Card key={key}>
+              <div className="mb-3 flex items-center gap-3">
+                <div className="grid size-10 place-items-center rounded-xl bg-sage-50 text-sage-700">
+                  <Icon className="size-5" strokeWidth={1.75} />
                 </div>
-                <span className="font-mono text-xs text-muted-foreground">{p.phone}</span>
-              </li>
-            ))}
-          </ul>
-        </Card>
+                <h3 className="font-display text-lg font-semibold">{title}</h3>
+              </div>
+              <p className="mb-4 text-sm text-muted-foreground">{body}</p>
 
-        <Card>
-          <h3 className="mb-4 font-display text-lg font-semibold">Recent documents</h3>
-          <ul className="space-y-2">
-            {["IEP — Spring 2025.pdf", "Allergy testing results.pdf", "Therapy report — April.pdf"].map(
-              (f) => (
-                <li key={f} className="flex items-center gap-3 rounded-xl border border-border bg-surface-soft p-3">
-                  <FileText className="size-4 text-muted-foreground" />
-                  <span className="flex-1 text-sm">{f}</span>
-                  <span className="text-xs text-muted-foreground">PDF</span>
-                </li>
-              ),
-            )}
-          </ul>
-        </Card>
+              {loading ? (
+                <p className="text-xs text-muted-foreground">Loading…</p>
+              ) : items.length === 0 && !isAdding ? (
+                <p className="text-xs text-muted-foreground">
+                  Nothing here yet — add when you're ready.
+                </p>
+              ) : (
+                <ul className="space-y-2 text-sm">
+                  {items.map((n) => (
+                    <li
+                      key={n.id}
+                      className="group flex items-start justify-between gap-3 rounded-xl border border-border bg-surface-soft px-3 py-2"
+                    >
+                      <span className="whitespace-pre-wrap">{n.content}</span>
+                      <button
+                        type="button"
+                        onClick={() => deleteNote(n.id)}
+                        className="opacity-0 transition group-hover:opacity-100"
+                        aria-label="Delete"
+                      >
+                        <Trash2 className="size-3.5 text-muted-foreground hover:text-foreground" />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {isAdding ? (
+                <div className="mt-3">
+                  <textarea
+                    rows={3}
+                    maxLength={MAX_NOTE}
+                    value={drafts[key] ?? ""}
+                    onChange={(e) =>
+                      setDrafts((prev) => ({ ...prev, [key]: e.target.value }))
+                    }
+                    placeholder={placeholder}
+                    className="w-full resize-none rounded-xl border border-border bg-background px-3 py-2 text-sm focus:border-sage-600/40 focus:outline-none"
+                    autoFocus
+                  />
+                  <div className="mt-2 flex justify-end gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAddingFor(null);
+                        setDrafts((prev) => ({ ...prev, [key]: "" }));
+                      }}
+                      className="rounded-full px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => addNote(key)}
+                      disabled={!(drafts[key] ?? "").trim()}
+                      className="rounded-full bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground disabled:opacity-50"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setAddingFor(key)}
+                  disabled={!dependentId}
+                  className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted disabled:opacity-50"
+                >
+                  <Plus className="size-3.5" /> Add
+                </button>
+              )}
+            </Card>
+          );
+        })}
       </div>
     </PageShell>
   );
