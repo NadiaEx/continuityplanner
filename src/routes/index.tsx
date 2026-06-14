@@ -591,6 +591,7 @@ function SiteFooter() {
           <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
           <Link to="/terms" className="hover:text-foreground">Terms</Link>
           <Link to="/refund" className="hover:text-foreground">Refund</Link>
+          <a href="mailto:nadia@expositollc.com" className="hover:text-foreground">Contact</a>
         </div>
         <p>© {new Date().getFullYear()} Continuity. Preserving care, together.</p>
       </div>
