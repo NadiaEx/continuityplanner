@@ -224,7 +224,23 @@ function getSlotCount(sections: Section[]) {
 // ── Main component ─────────────────────────────────────────────────────────
 
 export default function OnePageDocument() {
-  const [sections, setSections] = useState<Section[]>(makeTemplate);
+  const { activeDependent } = useProfile();
+  const key = activeDependent?.id ?? "__none";
+  const [byDep, setByDep] = useState<Record<string, Section[]>>({});
+  const sections = byDep[key] ?? makeTemplate();
+  const setSections = useCallback(
+    (updater: Section[] | ((prev: Section[]) => Section[])) => {
+      setByDep((prev) => {
+        const current = prev[key] ?? makeTemplate();
+        const next =
+          typeof updater === "function"
+            ? (updater as (p: Section[]) => Section[])(current)
+            : updater;
+        return { ...prev, [key]: next };
+      });
+    },
+    [key],
+  );
   const [editingSlot, setEditingSlot] = useState<string | null>(null);
   const [draftValue, setDraftValue] = useState("");
   const [copied, setCopied] = useState(false);
