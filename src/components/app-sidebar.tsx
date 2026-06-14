@@ -1,4 +1,6 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import {
   LayoutDashboard,
   User,
@@ -15,7 +17,9 @@ import {
   HeartHandshake,
   LineChart,
   FileText,
+  LogOut,
 } from "lucide-react";
+
 
 const nav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -37,8 +41,17 @@ void HeartHandshake;
 
 export function AppSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const handleSignOut = async () => {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  };
   return (
     <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 flex-col border-r border-border bg-sidebar p-5 lg:flex">
+
       <Link to="/" className="mb-6 flex items-center gap-2 px-2">
         <span className="grid size-7 place-items-center rounded-md bg-primary ring-1 ring-sage-700/10">
           <Leaf className="size-3.5 text-primary-foreground" />
@@ -77,9 +90,17 @@ export function AppSidebar() {
           Add what you can, when you can. Every note makes the plan stronger.
         </p>
       </div>
+      <button
+        onClick={handleSignOut}
+        className="mt-3 flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition hover:bg-sidebar-accent/60 hover:text-foreground"
+      >
+        <LogOut className="size-4 shrink-0" strokeWidth={1.75} />
+        Sign out
+      </button>
     </aside>
   );
 }
+
 
 export function MobileTopBar() {
   return (

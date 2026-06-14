@@ -1,6 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { PageShell, PageHeader, Card, Button } from "@/components/page-shell";
-import { Bell, Shield, Users, Palette } from "lucide-react";
+import { Bell, Shield, Users, Palette, LogOut } from "lucide-react";
+
 
 export const Route = createFileRoute("/_app/settings")({
   head: () => ({ meta: [{ title: "Settings — Continuity" }] }),
@@ -8,9 +11,18 @@ export const Route = createFileRoute("/_app/settings")({
 });
 
 export default function Settings() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const handleSignOut = async () => {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  };
   return (
     <PageShell>
       <PageHeader
+
         eyebrow="Settings"
         title="Your preferences."
         description="Small adjustments so Continuity feels right for you."
@@ -119,9 +131,27 @@ export default function Settings() {
           </p>
         </Card>
       </div>
+
+      <div className="mt-8">
+        <Card>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h3 className="font-display text-lg font-semibold">Sign out</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                You can sign back in anytime — your plan stays right where you left it.
+              </p>
+            </div>
+            <Button onClick={handleSignOut}>
+              <LogOut className="mr-2 inline size-4" strokeWidth={1.75} />
+              Sign out
+            </Button>
+          </div>
+        </Card>
+      </div>
     </PageShell>
   );
 }
+
 
 function ToggleRow({ label, defaultOn = false }: { label: string; defaultOn?: boolean }) {
   return (
