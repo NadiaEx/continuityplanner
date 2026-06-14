@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { PageShell, PageHeader, Card } from "@/components/page-shell";
 import { Plus, Stethoscope, Pill, Syringe, Users, Trash2 } from "lucide-react";
 import { useProfile } from "@/lib/use-profile";
+import { DependentTabs } from "@/components/dependent-tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
