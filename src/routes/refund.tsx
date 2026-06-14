@@ -86,7 +86,7 @@ function RefundPage() {
             being useful to you, or something went wrong, or you just feel off
             about it,{" "}
             <a
-              href="mailto:[your email]"
+              href="mailto:hello@continuityplanner.app"
               className="font-medium text-foreground underline underline-offset-4"
             >
               email us
@@ -108,10 +108,10 @@ function RefundPage() {
           <p>
             Email{" "}
             <a
-              href="mailto:[your email]"
+              href="mailto:hello@continuityplanner.app"
               className="font-medium text-foreground underline underline-offset-4"
             >
-              [your email]
+              hello@continuityplanner.app
             </a>
             . A real person reads every message, usually within a couple of
             days.
