@@ -15,11 +15,27 @@ export const Route = createFileRoute("/_app/dashboard")({
   component: Dashboard,
 });
 
-const next = [
-  { title: "Tell us about morning transitions", time: "~5 min" },
-  { title: "Add an emergency contact", time: "~2 min" },
-  { title: "Note one comfort support", time: "~3 min" },
+const next: Array<{ title: string; time: string; prompt: string }> = [
+  {
+    title: "Tell us about morning transitions",
+    time: "~5 min",
+    prompt:
+      "I want to talk about morning transitions — what waking up, getting ready, and leaving the house actually looks like for them. What helps, what doesn't, and where it tends to fall apart.",
+  },
+  {
+    title: "Add an emergency contact",
+    time: "~2 min",
+    prompt:
+      "I want to add an emergency contact — who they are, how to reach them, and what role they'd play if something happened to me.",
+  },
+  {
+    title: "Note one comfort support",
+    time: "~3 min",
+    prompt:
+      "I want to note one thing that reliably comforts them — an object, a phrase, a routine, a person — and when it tends to be needed most.",
+  },
 ];
+
 
 export default function Dashboard() {
   const { caregiverFirstName, lovedOneName, hasOnboarded } = useProfile();
