@@ -1,51 +1,88 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { PageShell, PageHeader, Card, Chip } from "@/components/page-shell";
 import { Heart, FileText, Sparkles, Users, Compass, ShieldCheck } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useProfile } from "@/lib/use-profile";
 
 export const Route = createFileRoute("/_app/insights")({
   head: () => ({ meta: [{ title: "Insights — Continuity" }] }),
   component: Insights,
 });
 
-const metrics = [
-  { label: "Active families", value: "127", trend: "+18 this month", icon: Users },
-  { label: "Avg. plan progress", value: "54%", trend: "Quiet, steady", icon: Compass },
-  { label: "Emergency packets generated", value: "412", trend: "Most-used export", icon: ShieldCheck },
-  { label: "Reflections received", value: "1,284", trend: "We read every one", icon: Heart },
-];
+type Counts = {
+  reflections: number;
+  careTeam: number;
+  documents: number;
+  emergencyNotes: number;
+  notes: number;
+};
 
-const sections = [
-  { name: "Daily routines", completed: 88, skipped: 4 },
-  { name: "Sensory & comfort", completed: 76, skipped: 9 },
-  { name: "Medical information", completed: 71, skipped: 12 },
-  { name: "Emergency plan", completed: 64, skipped: 7 },
-  { name: "Care team", completed: 52, skipped: 14 },
-  { name: "Future planning", completed: 28, skipped: 31 },
-];
-
-const difficulty = [
-  { label: "Daily routines", score: 1.6 },
-  { label: "Sensory & comfort", score: 1.9 },
-  { label: "Medical information", score: 2.4 },
-  { label: "Emergency plan", score: 3.1 },
-  { label: "Future planning", score: 4.2 },
-];
-
-const requests = [
-  "Shared editing with co-caregivers",
-  "Printable wallet card for first responders",
-  "Voice-only assistant mode",
-  "School handoff template",
-  "Spanish language support",
-];
+type RecentReflection = {
+  id: string;
+  note: string | null;
+  score_label: string | null;
+  question: string;
+  created_at: string;
+};
 
 function Insights() {
+  const { dependents } = useProfile();
+  const [counts, setCounts] = useState<Counts>({
+    reflections: 0,
+    careTeam: 0,
+    documents: 0,
+    emergencyNotes: 0,
+    notes: 0,
+  });
+  const [recent, setRecent] = useState<RecentReflection[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const head = { count: "exact" as const, head: true };
+      const [r, c, d, e, n, recentRes] = await Promise.all([
+        supabase.from("reflections").select("*", head),
+        supabase.from("care_team_members").select("*", head),
+        supabase.from("profile_documents").select("*", head),
+        supabase.from("emergency_plan_notes").select("*", head),
+        supabase.from("profile_notes").select("*", head),
+        supabase
+          .from("reflections")
+          .select("id, note, score_label, question, created_at")
+          .order("created_at", { ascending: false })
+          .limit(5),
+      ]);
+      if (cancelled) return;
+      setCounts({
+        reflections: r.count ?? 0,
+        careTeam: c.count ?? 0,
+        documents: d.count ?? 0,
+        emergencyNotes: e.count ?? 0,
+        notes: n.count ?? 0,
+      });
+      setRecent((recentRes.data ?? []) as RecentReflection[]);
+      setLoading(false);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const metrics = [
+    { label: "Loved ones", value: String(dependents.length), trend: "In your plan", icon: Users },
+    { label: "Care team members", value: String(counts.careTeam), trend: "People you trust", icon: Compass },
+    { label: "Emergency notes", value: String(counts.emergencyNotes), trend: "Ready when needed", icon: ShieldCheck },
+    { label: "Reflections shared", value: String(counts.reflections), trend: "Thank you", icon: Heart },
+  ];
+
   return (
     <PageShell>
       <PageHeader
         eyebrow="Insights"
-        title="What we're learning together."
-        description="A quiet, qualitative view into how families are using Continuity. No vanity metrics — just signals that help us care for what to build next."
+        title="A quiet view of your plan."
+        description="A gentle snapshot of what you've documented so far. Everything here is private to you."
       />
 
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -55,7 +92,7 @@ function Insights() {
               <Icon className="size-4" strokeWidth={1.75} />
             </div>
             <p className="text-sm text-muted-foreground">{label}</p>
-            <p className="mt-2 font-display text-2xl font-medium">{value}</p>
+            <p className="mt-2 font-display text-2xl font-medium">{loading ? "—" : value}</p>
             <p className="mt-1 text-xs text-muted-foreground">{trend}</p>
           </Card>
         ))}
@@ -64,95 +101,60 @@ function Insights() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <div className="mb-5 flex items-center justify-between">
-            <h3 className="font-display text-lg font-medium">Section engagement</h3>
-            <Chip tone="sage">Last 30 days</Chip>
+            <h3 className="font-display text-lg font-medium">What you've captured</h3>
+            <Chip tone="sage">Your plan</Chip>
           </div>
-          <ul className="space-y-4">
-            {sections.map((s) => (
-              <li key={s.name}>
-                <div className="mb-1.5 flex items-center justify-between text-sm">
-                  <span className="text-foreground">{s.name}</span>
-                  <span className="text-xs text-muted-foreground">
-                    {s.completed}% completed · {s.skipped}% skipped
-                  </span>
-                </div>
-                <div className="flex h-2 w-full overflow-hidden rounded-full bg-muted">
-                  <div
-                    className="h-full bg-primary"
-                    style={{ width: `${s.completed}%` }}
-                  />
-                  <div
-                    className="h-full bg-amber-300/70"
-                    style={{ width: `${s.skipped}%` }}
-                  />
-                </div>
-              </li>
-            ))}
-          </ul>
-        </Card>
-
-        <Card>
-          <div className="mb-5 flex items-center justify-between">
-            <h3 className="font-display text-lg font-medium">Emotional difficulty</h3>
-            <Chip tone="mist">1–5 scale</Chip>
-          </div>
-          <ul className="space-y-3">
-            {difficulty.map((d) => (
-              <li key={d.label}>
-                <div className="mb-1 flex items-center justify-between text-sm">
-                  <span>{d.label}</span>
-                  <span className="text-xs text-muted-foreground">{d.score.toFixed(1)}</span>
-                </div>
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
-                  <div
-                    className="h-full rounded-full bg-mist-600"
-                    style={{ width: `${(d.score / 5) * 100}%` }}
-                  />
-                </div>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-5 text-xs leading-relaxed text-muted-foreground">
-            Higher scores show where families need more reassurance and softer pacing.
-          </p>
-        </Card>
-
-        <Card className="lg:col-span-2">
-          <div className="mb-5 flex items-center justify-between">
-            <h3 className="font-display text-lg font-medium">Most requested features</h3>
-            <Chip tone="sage">From the community</Chip>
-          </div>
-          <ul className="space-y-2">
-            {requests.map((r, i) => (
-              <li
-                key={r}
-                className="flex items-center gap-3 rounded-xl border border-border bg-surface-soft p-4 text-sm"
-              >
-                <span className="grid size-7 place-items-center rounded-full bg-sage-50 text-xs font-medium text-sage-700">
-                  {i + 1}
-                </span>
-                <span className="text-foreground/90">{r}</span>
-              </li>
-            ))}
+          <ul className="space-y-3 text-sm">
+            <Row label="Profile notes" value={counts.notes} />
+            <Row label="Documents uploaded" value={counts.documents} />
+            <Row label="Emergency plan notes" value={counts.emergencyNotes} />
+            <Row label="Care team members" value={counts.careTeam} />
+            <Row label="Reflections shared" value={counts.reflections} />
           </ul>
         </Card>
 
         <Card>
           <div className="mb-3 flex items-center gap-2">
             <Sparkles className="size-4 text-sage-700" />
-            <h3 className="font-display text-lg font-medium">Reflections</h3>
+            <h3 className="font-display text-lg font-medium">Your reflections</h3>
           </div>
-          <blockquote className="rounded-xl bg-sage-50/60 p-4 text-sm italic leading-relaxed text-sage-700">
-            "This is the first time I've sat with these questions and not felt afraid."
-          </blockquote>
-          <blockquote className="mt-3 rounded-xl bg-mist-50/60 p-4 text-sm italic leading-relaxed text-mist-600">
-            "I came back to it three times. The pacing made it possible."
-          </blockquote>
+          {recent.length === 0 ? (
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              When you share a reflection from anywhere in Continuity, it'll show up here — only ever visible to you.
+            </p>
+          ) : (
+            <ul className="space-y-3">
+              {recent.map((r) => (
+                <li
+                  key={r.id}
+                  className="rounded-xl bg-sage-50/60 p-3 text-sm leading-relaxed text-sage-700"
+                >
+                  {r.note ? (
+                    <p className="italic">"{r.note}"</p>
+                  ) : (
+                    <p className="italic text-muted-foreground">{r.score_label ?? "Shared a reflection"}</p>
+                  )}
+                  <p className="mt-1 text-[11px] text-muted-foreground">
+                    {new Date(r.created_at).toLocaleDateString()}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          )}
           <p className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
-            <FileText className="size-3.5" /> 1,284 reflections, manually reviewed
+            <FileText className="size-3.5" /> Private to you
           </p>
         </Card>
       </div>
     </PageShell>
+  );
+}
+
+function Row({ label, value }: { label: string; value: number }) {
+  return (
+    <li className="flex items-center justify-between rounded-xl border border-border bg-surface-soft px-4 py-3">
+      <span className="text-foreground/90">{label}</span>
+      <span className="font-mono text-sm tabular-nums text-muted-foreground">{value}</span>
+    </li>
   );
 }
